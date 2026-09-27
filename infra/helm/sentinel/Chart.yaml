@@ -1,0 +1,7 @@
+apiVersion: v2
+name: sentinel
+description: Sentinel telemetry, frozen inference and evidence Console
+type: application
+version: 0.10.0
+appVersion: "0.1.0"
+kubeVersion: ">=1.35.0-0 <1.38.0-0"

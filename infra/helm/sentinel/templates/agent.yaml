@@ -1,0 +1,51 @@
+{{- if .Values.nodeAgent.enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-agent
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Release.Name }}-agent
+spec:
+  selector:
+    matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: node-agent}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: node-agent}
+    spec:
+      serviceAccountName: {{ .Release.Name }}-agent
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets: {{ .Values.imagePullSecrets | toYaml | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      nodeSelector: {kubernetes.io/os: linux, kubernetes.io/arch: amd64}
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: agent
+          image: {{ include "sentinel.image" (list . "agent") | quote }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports: [{name: metrics, containerPort: 9101}]
+          env:
+            - {name: HOST_ID, valueFrom: {fieldRef: {fieldPath: spec.nodeName}}}
+            - {name: HOST_NAME, valueFrom: {fieldRef: {fieldPath: spec.nodeName}}}
+            - {name: ENVIRONMENT, value: {{ .Values.environment }}}
+            - {name: AGENT_BIND_ADDRESS, valueFrom: {fieldRef: {fieldPath: status.hostIP}}}
+            - {name: AGENT_PROCFS_PATH, value: /host/proc}
+            - {name: AGENT_DISK_PATH, value: /host/root}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          resources: {{ .Values.resources.agent | toYaml | nindent 12 }}
+          volumeMounts:
+            - {name: proc, mountPath: /host/proc, readOnly: true}
+            - {name: root, mountPath: /host/root, readOnly: true}
+          readinessProbe: {httpGet: {path: /metrics, port: metrics}}
+          livenessProbe: {httpGet: {path: /metrics, port: metrics}}
+      volumes:
+        - {name: proc, hostPath: {path: /proc, type: Directory}}
+        - {name: root, hostPath: {path: /, type: Directory}}
+{{- end }}

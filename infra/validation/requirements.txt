@@ -1,0 +1,3 @@
+# Release tooling only; excluded from application runtimes.
+PyYAML==6.0.3
+bcrypt==5.0.0

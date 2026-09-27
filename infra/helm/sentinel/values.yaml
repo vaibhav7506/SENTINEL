@@ -1,0 +1,58 @@
+# Credentials are pre-created Secrets, never Helm values.
+environment: demo
+imageRegistry: ""
+imageTag: ""
+imagePullPolicy: IfNotPresent
+imageDigests: {}
+existingSecret: sentinel-credentials
+imagePullSecrets: []
+ingress:
+  enabled: false
+  className: ""
+  host: ""
+  tlsSecret: ""
+  annotations: {}
+  controllerNamespace: ingress-system
+database:
+  internal: true
+  image: timescale/timescaledb:2.30.1-pg17
+  host: ""
+  port: 5432
+  name: sentinel
+  user: sentinel
+  storage: 10Gi
+  storageClass: ""
+  externalCIDR: ""
+  sslmode: verify-full
+prometheus:
+  image: prom/prometheus:v3.15.0
+  storage: 10Gi
+  storageClass: ""
+grafana:
+  image: grafana/grafana:13.2.2
+  adminUser: sentinel
+  expose: false
+  storage: 2Gi
+  storageClass: ""
+nodeAgent:
+  enabled: true
+demo:
+  enabled: true
+chaos:
+  enabled: false
+networkPolicy:
+  enabled: true
+featureHostServiceMap:
+  sentinel-demo: demo-service
+observationHostId: sentinel-demo
+resources:
+  api: {requests: {cpu: 100m, memory: 128Mi}, limits: {cpu: "1", memory: 512Mi}}
+  worker: {requests: {cpu: 100m, memory: 128Mi}, limits: {cpu: "1", memory: 512Mi}}
+  observer: {requests: {cpu: 50m, memory: 128Mi}, limits: {cpu: 500m, memory: 256Mi}}
+  inference: {requests: {cpu: 250m, memory: 512Mi}, limits: {cpu: "2", memory: 2Gi}}
+  frontend: {requests: {cpu: 50m, memory: 32Mi}, limits: {cpu: 500m, memory: 128Mi}}
+  agent: {requests: {cpu: 50m, memory: 32Mi}, limits: {cpu: 250m, memory: 128Mi}}
+  demo: {requests: {cpu: 50m, memory: 64Mi}, limits: {cpu: 500m, memory: 256Mi}}
+  prometheus: {requests: {cpu: 100m, memory: 256Mi}, limits: {cpu: "1", memory: 1Gi}}
+  grafana: {requests: {cpu: 100m, memory: 128Mi}, limits: {cpu: "1", memory: 512Mi}}
+  database: {requests: {cpu: 250m, memory: 256Mi}, limits: {cpu: "2", memory: 1Gi}}

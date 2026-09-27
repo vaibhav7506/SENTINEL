@@ -1,0 +1,175 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-prometheus
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-prometheus
+rules:
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-prometheus
+subjects:
+  - {kind: ServiceAccount, name: {{ .Release.Name }}-prometheus, namespace: {{ .Release.Namespace }}}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: {{ .Release.Name }}-prometheus}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-prometheus
+data:
+  prometheus.yml: |
+    global: {scrape_interval: 15s, evaluation_interval: 15s}
+    scrape_configs:
+      - job_name: prometheus
+        static_configs: [{targets: ["localhost:9090"]}]
+      - job_name: sentinel-api
+        static_configs: [{targets: ["{{ .Release.Name }}-api:8000"]}]
+      - job_name: sentinel-worker
+        static_configs: [{targets: ["{{ .Release.Name }}-worker:8002"]}]
+      - job_name: sentinel-inference
+        static_configs: [{targets: ["{{ .Release.Name }}-inference:8004"]}]
+      {{- if .Values.demo.enabled }}
+      - job_name: sentinel-observer
+        static_configs: [{targets: ["{{ .Release.Name }}-observer:8003"]}]
+      - job_name: demo-service
+        static_configs: [{targets: ["demo-service:8000"]}]
+      - job_name: sentinel-demo-agent
+        static_configs: [{targets: ["demo-service:9101"]}]
+      {{- end }}
+      {{- if .Values.nodeAgent.enabled }}
+      - job_name: sentinel-agent
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces: {names: [{{ .Release.Namespace | quote }}]}
+        relabel_configs:
+          - {source_labels: [__meta_kubernetes_pod_label_component], regex: node-agent, action: keep}
+          - {source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_instance], regex: {{ .Release.Name | quote }}, action: keep}
+          - {source_labels: [__meta_kubernetes_pod_container_port_name], regex: metrics, action: keep}
+      {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grafana
+data:
+  datasource.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        uid: sentinel-prometheus
+        type: prometheus
+        access: proxy
+        url: http://{{ .Release.Name }}-prometheus:9090
+        isDefault: true
+        editable: false
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+      - name: sentinel
+        type: file
+        disableDeletion: true
+        options: {path: /var/lib/grafana/dashboards}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-dashboards
+data:
+{{- range $path, $_ := .Files.Glob "dashboards/*.json" }}
+  {{ base $path }}: |
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
+{{- $root := . }}
+{{- range $name := list "prometheus" "grafana" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $root.Release.Name }}-{{ $name }}
+spec:
+  selector: {app.kubernetes.io/instance: {{ $root.Release.Name }}, component: {{ $name }}}
+  ports: [{name: http, port: {{ ternary 9090 3000 (eq $name "prometheus") }}, targetPort: http}]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $root.Release.Name }}-{{ $name }}
+  annotations: {helm.sh/resource-policy: keep}
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if (index $root.Values $name).storageClass }}
+  storageClassName: {{ (index $root.Values $name).storageClass | quote }}
+  {{- end }}
+  resources: {requests: {storage: {{ (index $root.Values $name).storage }}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $root.Release.Name }}-{{ $name }}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/instance: {{ $root.Release.Name }}, component: {{ $name }}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/instance: {{ $root.Release.Name }}, component: {{ $name }}}
+      annotations:
+        checksum/config: {{ $root.Values | toJson | sha256sum }}
+        checksum/dashboards: {{ $root.Files.Get "dashboards/sentinel-self.json" | sha256sum }}
+    spec:
+      {{- if eq $name "prometheus" }}
+      serviceAccountName: {{ $root.Release.Name }}-prometheus
+      automountServiceAccountToken: true
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      securityContext: {runAsNonRoot: true, runAsUser: {{ ternary 65534 472 (eq $name "prometheus") }}, fsGroup: {{ ternary 65534 472 (eq $name "prometheus") }}, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: {{ $name }}
+          image: {{ (index $root.Values $name).image }}
+          ports: [{name: http, containerPort: {{ ternary 9090 3000 (eq $name "prometheus") }}}]
+          {{- if eq $name "prometheus" }}
+          args: [--config.file=/etc/prometheus/prometheus.yml, --storage.tsdb.path=/prometheus, --storage.tsdb.retention.time=7d]
+          volumeMounts:
+            - {name: data, mountPath: /prometheus}
+            - {name: config, mountPath: /etc/prometheus, readOnly: true}
+          {{- else }}
+          env:
+            - {name: GF_SECURITY_ADMIN_USER, value: {{ $root.Values.grafana.adminUser | quote }}}
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom: {secretKeyRef: {name: {{ $root.Values.existingSecret }}, key: grafana-password}}
+            - {name: GF_USERS_ALLOW_SIGN_UP, value: "false"}
+            - {name: GF_AUTH_ANONYMOUS_ENABLED, value: "false"}
+            - {name: GF_ANALYTICS_REPORTING_ENABLED, value: "false"}
+            - {name: GF_ANALYTICS_CHECK_FOR_UPDATES, value: "false"}
+            - {name: GF_PLUGINS_PREINSTALL_DISABLED, value: "true"}
+            {{- if $root.Values.grafana.expose }}
+            - {name: GF_SERVER_ROOT_URL, value: "https://{{ $root.Values.ingress.host }}/grafana/"}
+            - {name: GF_SERVER_SERVE_FROM_SUB_PATH, value: "true"}
+            {{- end }}
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/grafana}
+            - {name: config, mountPath: /etc/grafana/provisioning/datasources/datasource.yaml, subPath: datasource.yaml, readOnly: true}
+            - {name: config, mountPath: /etc/grafana/provisioning/dashboards/dashboards.yaml, subPath: dashboards.yaml, readOnly: true}
+            - {name: dashboards, mountPath: /var/lib/grafana/dashboards, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+          {{- end }}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          resources: {{ index $root.Values.resources $name | toYaml | nindent 12 }}
+          readinessProbe: {httpGet: {path: {{ ternary "/-/ready" "/api/health" (eq $name "prometheus") }}, port: http}}
+          livenessProbe: {httpGet: {path: {{ ternary "/-/healthy" "/api/health" (eq $name "prometheus") }}, port: http}}
+      volumes:
+        - {name: data, persistentVolumeClaim: {claimName: {{ $root.Release.Name }}-{{ $name }}}}
+        - {name: config, configMap: {name: {{ $root.Release.Name }}-{{ $name }}}}
+        - {name: dashboards, configMap: {name: {{ $root.Release.Name }}-dashboards}}
+        - {name: tmp, emptyDir: {sizeLimit: 128Mi}}
+{{- end }}

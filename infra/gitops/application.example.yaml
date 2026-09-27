@@ -1,0 +1,22 @@
+# Set your real repository, revision, cluster and approved values file before applying.
+# This file is a configuration example; no Argo CD installation is claimed.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sentinel
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: REPLACE_WITH_SENTINEL_REPOSITORY_URL
+    targetRevision: REPLACE_WITH_REVIEWED_RELEASE_COMMIT
+    path: infra/helm/sentinel
+    helm:
+      releaseName: sentinel
+      valueFiles: [REPLACE_WITH_COMMITTED_NONSECRET_VALUES_FILE]
+  destination:
+    server: REPLACE_WITH_APPROVED_CLUSTER_API
+    namespace: sentinel-demo
+  # Manual sync is deliberate: deployment and prune remain operator actions.
+  syncPolicy:
+    syncOptions: [CreateNamespace=true]

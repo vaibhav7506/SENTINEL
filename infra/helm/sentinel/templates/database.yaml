@@ -1,0 +1,65 @@
+{{- if .Values.database.internal }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-database
+spec:
+  selector: {app.kubernetes.io/instance: {{ .Release.Name }}, component: database}
+  ports: [{name: postgres, port: 5432, targetPort: postgres}]
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-database
+spec:
+  serviceName: {{ .Release.Name }}-database
+  replicas: 1
+  selector:
+    matchLabels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: database}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/instance: {{ .Release.Name }}, component: database}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 70, runAsGroup: 70, fsGroup: 70, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: timescaledb
+          image: {{ .Values.database.image }}
+          args: [postgres, -c, shared_buffers=128MB, -c, max_connections=50]
+          env:
+            - {name: POSTGRES_DB, value: {{ .Values.database.name | quote }}}
+            - {name: POSTGRES_USER, value: {{ .Values.database.user | quote }}}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+            - {name: TIMESCALEDB_TELEMETRY, value: "off"}
+            - {name: NO_TS_TUNE, value: "true"}
+            - name: POSTGRES_PASSWORD
+              valueFrom: {secretKeyRef: {name: {{ .Values.existingSecret }}, key: postgres-password}}
+          ports: [{name: postgres, containerPort: 5432}]
+          readinessProbe:
+            exec: {command: [pg_isready, -U, {{ .Values.database.user }}, -d, {{ .Values.database.name }}]}
+          livenessProbe:
+            exec: {command: [pg_isready, -U, {{ .Values.database.user }}, -d, {{ .Values.database.name }}]}
+            initialDelaySeconds: 30
+          startupProbe:
+            exec: {command: [pg_isready, -U, {{ .Values.database.user }}, -d, {{ .Values.database.name }}]}
+            failureThreshold: 30
+            periodSeconds: 10
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          resources: {{ .Values.resources.database | toYaml | nindent 12 }}
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql/data}
+            - {name: runtime, mountPath: /var/run/postgresql}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - {name: runtime, emptyDir: {sizeLimit: 16Mi}}
+        - {name: tmp, emptyDir: {sizeLimit: 128Mi}}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ReadWriteOnce]
+        {{- if .Values.database.storageClass }}
+        storageClassName: {{ .Values.database.storageClass | quote }}
+        {{- end }}
+        resources: {requests: {storage: {{ .Values.database.storage }}}}
+{{- end }}

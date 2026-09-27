@@ -1,0 +1,20 @@
+{{- if and (eq .Values.environment "production") .Values.database.internal -}}
+{{- fail "Production requires an external managed Timescale/PostgreSQL database" -}}
+{{- end -}}
+{{- if and (eq .Values.environment "production") .Values.chaos.enabled -}}
+{{- fail "Production chaos is forbidden" -}}
+{{- end -}}
+{{- if and .Values.chaos.enabled (not .Values.demo.enabled) -}}
+{{- fail "Chaos requires the fixed demo service" -}}
+{{- end -}}
+{{- if not .Values.database.internal -}}
+{{- $_ := required "External database host is required" .Values.database.host -}}
+{{- if .Values.networkPolicy.enabled -}}
+{{- $_ := required "External database CIDR is required for bounded egress" .Values.database.externalCIDR -}}
+{{- end -}}
+{{- end -}}
+{{- if .Values.ingress.enabled -}}
+{{- $_ := required "Ingress className is required" .Values.ingress.className -}}
+{{- $_ := required "Ingress host is required" .Values.ingress.host -}}
+{{- $_ := required "Ingress needs an existing trusted TLS Secret" .Values.ingress.tlsSecret -}}
+{{- end -}}

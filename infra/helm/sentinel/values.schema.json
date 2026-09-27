@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "environment",
+    "imageRegistry",
+    "existingSecret"
+  ],
+  "properties": {
+    "imageRegistry": {
+      "type": "string",
+      "pattern": "^$|^[a-z0-9.-]+(?::[0-9]+)?(?:/[a-z0-9._-]+)*$"
+    },
+    "imageTag": {
+      "type": "string",
+      "pattern": "^$|^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$"
+    },
+    "imagePullPolicy": {
+      "enum": [
+        "IfNotPresent",
+        "Always",
+        "Never"
+      ]
+    },
+    "existingSecret": {
+      "type": "string"
+    },
+    "observationHostId": {
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "demo",
+        "production"
+      ]
+    },
+    "imageDigests": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "className": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "tlsSecret": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "controllerNamespace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "database": {
+      "type": "object",
+      "properties": {
+        "internal": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "name": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "storage": {
+          "type": "string"
+        },
+        "storageClass": {
+          "type": "string"
+        },
+        "externalCIDR": {
+          "type": "string"
+        },
+        "sslmode": {
+          "type": "string",
+          "enum": [
+            "require",
+            "verify-full"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "prometheus": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "storage": {
+          "type": "string"
+        },
+        "storageClass": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "grafana": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "adminUser": {
+          "type": "string"
+        },
+        "expose": {
+          "type": "boolean"
+        },
+        "storage": {
+          "type": "string"
+        },
+        "storageClass": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "nodeAgent": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "demo": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "chaos": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "networkPolicy": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "featureHostServiceMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "resources": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

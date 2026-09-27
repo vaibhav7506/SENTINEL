@@ -1,0 +1,7 @@
+{
+  "python:3.14.7-slim-bookworm": "sha256:82bc3c539b8813ada9d68c63b40158fa002f7f33de9bf3312a3dfdc0620dff56",
+  "ghcr.io/astral-sh/uv:0.12.19": "sha256:04d046b13e60d6bcec73cbc5e1cad25d680dea90c8573340950a0ac2d1aef424",
+  "node:22.22.0-alpine": "sha256:e4bf2a82ad0a4037d28035ae71529873c069b13eb0455466ae0bc13363826e34",
+  "python:3.14.7-slim-trixie": "sha256:51dafde81dbdb6ebde285137a295cf18a47ca95234fe388a343719cb97305b3d",
+  "nginxinc/nginx-unprivileged:1.30.5-alpine": "sha256:4714e0b1b2577eaa1a6131d07c958b67f0eb68e6d0521e90c6e5287db8cf0bc5"
+}

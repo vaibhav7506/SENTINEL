@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-settings
+  labels: {{- include "sentinel.labels" . | nindent 4 }}
+data:
+  ENVIRONMENT: {{ .Values.environment | quote }}
+  POSTGRES_HOST: {{ ternary (printf "%s-database" .Release.Name) .Values.database.host .Values.database.internal | quote }}
+  POSTGRES_PORT: {{ .Values.database.port | quote }}
+  POSTGRES_DB: {{ .Values.database.name | quote }}
+  POSTGRES_USER: {{ .Values.database.user | quote }}
+  POSTGRES_SSLMODE: {{ ternary "disable" .Values.database.sslmode .Values.database.internal | quote }}
+  {{- if not .Values.database.internal }}
+  PGSSLROOTCERT: system
+  {{- end }}
+  PROMETHEUS_URL: http://{{ .Release.Name }}-prometheus:9090
+  OBSERVATION_HOST_ID: {{ .Values.observationHostId | quote }}
+  FEATURE_HOST_SERVICE_MAP: {{ .Values.featureHostServiceMap | toJson | quote }}
+  INFERENCE_METRICS_BIND_ADDRESS: "0.0.0.0"
+  LLM_PROVIDER: disabled
+  RUNBOOKOS_ENABLED: "false"
+  CHAOS_ENABLED: {{ .Values.chaos.enabled | quote }}
+  CHAOS_ALLOWED_ENVIRONMENTS: {{ list .Values.environment | toJson | quote }}
+  CHAOS_ALLOWED_NAMESPACES: '["sentinel-demo"]'
+  CHAOS_ALLOWED_TARGETS: '["demo-service"]'
+  DASHBOARD_URL: {{ ternary (printf "https://%s" .Values.ingress.host) "http://127.0.0.1:5173" .Values.ingress.enabled | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-frontend
+data:
+  default.conf: |
+    limit_req_zone $binary_remote_addr zone=console:10m rate=2r/s;
+    server {
+      listen 8080;
+      server_name _;
+      root /usr/share/nginx/html;
+      client_max_body_size 16k;
+      auth_basic "Sentinel";
+      auth_basic_user_file /etc/sentinel/auth/htpasswd;
+      limit_req_status 429;
+      access_log off;
+      location = /healthz { auth_basic off; return 200 "ok"; }
+      location ^~ /api/chaos/ { return 403; }
+      location /api/ {
+        limit_req zone=console burst=20 nodelay;
+        if ($request_method !~ ^(GET|HEAD)$) { return 405; }
+        include /etc/sentinel/auth/api-proxy.conf;
+        rewrite ^/api/(.*)$ /$1 break;
+        proxy_pass http://{{ .Release.Name }}-api:8000;
+        proxy_connect_timeout 3s;
+        proxy_read_timeout 10s;
+      }
+      location / { limit_req zone=console burst=20 nodelay; try_files $uri $uri/ /index.html; }
+      add_header X-Content-Type-Options nosniff always;
+      add_header Referrer-Policy no-referrer always;
+      add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'" always;
+    }
