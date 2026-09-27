@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sentinel-demo
+  labels:
+    # The node agent explicitly needs read-only hostPath, hostPID and hostNetwork.
+    # Ordinary components have no Kubernetes API privileges or host access.
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: v1.37

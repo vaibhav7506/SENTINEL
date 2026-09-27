@@ -1,0 +1,56 @@
+# Deploy only after publishing a real agent image; replace this explicit placeholder.
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sentinel-agent
+  namespace: sentinel
+spec:
+  selector:
+    matchLabels: {app: sentinel-agent}
+  template:
+    metadata:
+      labels: {app: sentinel-agent}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9101"
+        prometheus.io/path: /metrics
+    spec:
+      automountServiceAccountToken: false
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: agent
+          image: REPLACE_WITH_PUBLISHED_SENTINEL_AGENT_IMAGE
+          ports: [{name: metrics, containerPort: 9101}]
+          env:
+            - name: HOST_ID
+              valueFrom: {fieldRef: {fieldPath: spec.nodeName}}
+            - name: HOST_NAME
+              valueFrom: {fieldRef: {fieldPath: spec.nodeName}}
+            - {name: ENVIRONMENT, value: production}
+            - {name: AGENT_BIND_ADDRESS, value: "0.0.0.0"}
+            - {name: AGENT_PORT, value: "9101"}
+            - {name: AGENT_PROCFS_PATH, value: /host/proc}
+            - {name: AGENT_DISK_PATH, value: /host/root}
+          volumeMounts:
+            - {name: proc, mountPath: /host/proc, readOnly: true}
+            - {name: root, mountPath: /host/root, readOnly: true}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources:
+            requests: {cpu: 50m, memory: 32Mi}
+            limits: {cpu: 250m, memory: 128Mi}
+          readinessProbe:
+            httpGet: {path: /metrics, port: metrics}
+          livenessProbe:
+            httpGet: {path: /metrics, port: metrics}
+      volumes:
+        - name: proc
+          hostPath: {path: /proc, type: Directory}
+        - name: root
+          hostPath: {path: /, type: Directory}
