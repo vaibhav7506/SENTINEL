@@ -1,0 +1,11 @@
+{
+  "dataset_path": "C:\\Users\\vs250\\Desktop\\coding\\project\\SENTINEL\\artifacts\\datasets\\efc993ec38e28ad0",
+  "samples": 11,
+  "labels_recomputed_from_database": true,
+  "sha256_verified": true,
+  "feature_vectors_match_database": true,
+  "experiment_groups_disjoint": true,
+  "overlapping_train_test_intervals": false,
+  "no_active_fault": true,
+  "live_unauthorized_and_unsupported_requests_rejected": true
+}
