@@ -1,0 +1,114 @@
+{
+  "verified_at": "2026-09-26T23:11:43.543385+00:00",
+  "status": "passed",
+  "totals": {
+    "predictions": 75,
+    "incidents": 0,
+    "alerts": 0,
+    "proposals": 0,
+    "models": 1,
+    "evaluations": 1,
+    "failure_events": 10,
+    "experiments": 10,
+    "hosts": 2
+  },
+  "hosts": [
+    {
+      "host": "docker-vm",
+      "observed_status": "healthy",
+      "prediction_fresh": true,
+      "raw_telemetry_status": "available",
+      "raw_metric_series": 4
+    },
+    {
+      "host": "windows-workstation",
+      "observed_status": "unknown",
+      "prediction_fresh": false,
+      "raw_telemetry_status": "stale",
+      "raw_metric_series": 0
+    }
+  ],
+  "exact_prediction_values_verified": 75,
+  "evaluation_runs_verified": 1,
+  "held_out_test": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "pr_auc": 0.668068043068043,
+    "confusion_matrix": {
+      "fn": 10,
+      "fp": 0,
+      "tn": 5,
+      "tp": 0
+    }
+  },
+  "experiment_coverage": [
+    {
+      "id": "94c83246-2cd5-42ca-a87f-c7a73f2cc2d9",
+      "coverage": "No advance warning",
+      "eligible_scores": 5,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "417e4016-9aa4-4420-9be6-af62b587c784",
+      "coverage": "No advance warning",
+      "eligible_scores": 4,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "b2f5b2c8-f90e-426f-b4c4-cc309cf148e3",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "109d00c2-e6d6-411b-9a1e-4da8f7ba01c0",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "973f5e09-7f26-42a4-a9d9-d3af6e0bad35",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "4854fe69-14ba-4cd7-8633-f26edd94af6c",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "b35d3c01-8519-421c-b944-91782f7e2341",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "319b7dd9-e56d-4dfe-8056-f0fa74d511d3",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "698716a3-eefc-4718-87af-40400c23e39b",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    },
+    {
+      "id": "4a290ea7-52ab-49ca-bfb7-bbaa5d3d3ed8",
+      "coverage": "No eligible scores",
+      "eligible_scores": 0,
+      "alert_lead_seconds": null
+    }
+  ],
+  "console_routes_get_only": true,
+  "governance": {
+    "enabled": false,
+    "adapter": "mock",
+    "human_approval_required": true,
+    "execution_owner": "RunbookOS"
+  }
+}

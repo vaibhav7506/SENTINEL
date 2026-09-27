@@ -1,0 +1,111 @@
+{
+  "verified_at": "2026-09-26T23:13:25.2398180Z",
+  "phase": 8,
+  "status": "passed",
+  "phase_9_started": false,
+  "implementation_scope": "Eight read-only Console views backed by persisted facts and real Prometheus telemetry",
+  "tests": {
+    "optional_database_tests_not_executed_this_phase": 4,
+    "backend_skipped": 5,
+    "isolated_console_passed": 1,
+    "backend_passed": 87,
+    "total_passed": 88
+  },
+  "checks": {
+    "api_disconnect_and_recovery": "passed",
+    "ruff_lint": "passed",
+    "historical_phase6_phase7_evidence_hashes": "unchanged",
+    "live_prediction_values_verified": 75,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "document_overflow_detected": false,
+    "host_filters": "passed",
+    "live_stack": {
+      "services": 9,
+      "status": "passed",
+      "container_health_checks": 7,
+      "http_checks": 7
+    },
+    "partition_switching": "passed",
+    "mobile_host_detail_verified": true,
+    "read_only_console_routes": true,
+    "frontend": [
+      "lint passed",
+      "typecheck passed",
+      "production build passed"
+    ],
+    "desktop_views_verified": 8,
+    "frozen_model_score_reproduction": "passed",
+    "ruff_format": {
+      "status": "passed",
+      "files": 87
+    },
+    "keyboard_navigation": "passed",
+    "strict_typing": {
+      "status": "passed",
+      "source_files": 36
+    },
+    "mobile_main_views_verified": 7,
+    "container_builds": "API and Console passed",
+    "evaluation_runs_verified": 1
+  },
+  "actual_live_totals": {
+    "predictions": 75,
+    "incidents": 0,
+    "alerts": 0,
+    "proposals": 0,
+    "models": 1,
+    "evaluations": 1,
+    "failure_events": 10,
+    "experiments": 10,
+    "hosts": 2
+  },
+  "actual_held_out_test": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "pr_auc": 0.668068043068043,
+    "confusion_matrix": {
+      "fn": 10,
+      "fp": 0,
+      "tn": 5,
+      "tp": 0
+    }
+  },
+  "limitations": [
+    "Model held-out recall/F1 remain zero; predictive success unproven",
+    "No separate recorded confidence estimate",
+    "Latest 100 ledger records; search filters loaded records",
+    "Four optional unrelated database tests not rerun",
+    "Empty live incident, alert and proposal states are actual; populated joins checked in an isolated disposable fixture database",
+    "RunbookOS remains disabled with mock-only intake and no remediation execution"
+  ],
+  "evidence": {
+    "phase-8-live-console.json": {
+      "sha256": "7d66a7d2e23fd6f0d76bf9cf892d3a2c60ae87012abb86768f7900b7548b7026"
+    },
+    "phase-8-live-inference.json": {
+      "sha256": "700547e4860dedd11450eb7e0ff9da975691aa20e7404e05c99ddf98ce25db17"
+    },
+    "phase-8-browser.json": {
+      "sha256": "8094d50fb926305b5f345b9c3f9604edb33b486c6ce74d985707503990c93260"
+    },
+    "phase-8-overview.jpg": {
+      "sha256": "d6ee461b39ff87cf8be864d58fef12d9b6fba80a79ba2a30fc49f575962aafe0"
+    },
+    "phase-8-host.jpg": {
+      "sha256": "6d2bac9842d545f7a3f101e564674aea0c7581f68612d28b00a428658282c608"
+    },
+    "phase-8-evaluation.jpg": {
+      "sha256": "15d4207aa64042c9a73a27e9beafaa3fe6151656813c30e16202f4d1967dbf1e"
+    },
+    "phase-8-mobile.jpg": {
+      "sha256": "553ece68438a79b31e76e8df3e8717e566ab41bd419417a2700bc03d8ad94143"
+    },
+    "phase-8-disconnected.jpg": {
+      "sha256": "f19a1b96d5e83b591e5b2d71fd31680dcd00a984e3ba4a3c8fac4148c38ac458"
+    }
+  },
+  "remaining_required_work": [],
+  "phase_status": "complete; stopped before Phase 9"
+}

@@ -1,0 +1,108 @@
+{
+  "checked_at": "2026-09-26T23:10:32.218Z",
+  "desktop": [
+    {
+      "bodyWidth": 1425,
+      "focusedElement": "",
+      "heading": "Operational overview",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1440,
+      "focusedElement": "main-content",
+      "heading": "Host inventory",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1425,
+      "focusedElement": "main-content",
+      "heading": "Prediction ledger",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1425,
+      "focusedElement": "main-content",
+      "heading": "Incident evidence",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1425,
+      "focusedElement": "main-content",
+      "heading": "Controlled experiments",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1440,
+      "focusedElement": "main-content",
+      "heading": "Model registry",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1425,
+      "focusedElement": "main-content",
+      "heading": "Model evaluation",
+      "width": 1440
+    },
+    {
+      "bodyWidth": 1425,
+      "heading": "Docker Linux VM",
+      "width": 1440
+    }
+  ],
+  "mobile": [
+    {
+      "bodyWidth": 375,
+      "heading": "Operational overview",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 390,
+      "heading": "Host inventory",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 375,
+      "heading": "Prediction ledger",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 375,
+      "heading": "Incident evidence",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 375,
+      "heading": "Controlled experiments",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 375,
+      "heading": "Model registry",
+      "navigationVisible": false,
+      "width": 390
+    },
+    {
+      "bodyWidth": 375,
+      "heading": "Model evaluation",
+      "navigationVisible": false,
+      "width": 390
+    }
+  ],
+  "verified": [
+    "host search empty state",
+    "observed health filter",
+    "test and validation partition switching",
+    "real raw host telemetry",
+    "menu keyboard opening",
+    "Escape returns focus",
+    "navigation focuses main content",
+    "API disconnection retains last snapshot",
+    "recovery after API restoration",
+    "loading state"
+  ]
+}
