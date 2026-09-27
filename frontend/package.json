@@ -1,0 +1,34 @@
+{
+  "name": "sentinel-console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "lint": "eslint .",
+    "test": "node --test tests/console.test.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "@vitejs/plugin-react": "6.1.1",
+    "vite": "8.3.1",
+    "typescript": "6.0.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "10.11.0",
+    "@eslint/js": "10.0.1",
+    "typescript-eslint": "^8.0.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "eslint-plugin-react-refresh": "^0.4.0"
+  }
+}
