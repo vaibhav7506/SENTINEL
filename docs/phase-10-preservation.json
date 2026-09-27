@@ -1,0 +1,14 @@
+{
+  "verified_at": "2026-09-27T07:54:44.595959+00:00",
+  "status": "passed",
+  "preserved_files_checked": 78,
+  "changed_preserved_files": [],
+  "frozen_models_datasets_native_ml_locks_and_phase_5_to_9_evidence": "unchanged exact SHA-256",
+  "new_receipts": "separate .runtime/local-webhook-receipts.jsonl; phase-10 snapshot retained",
+  "screened_reviewable_files": 151,
+  "configured_credentials_checked": 4,
+  "credential_values_reported": false,
+  "credential_matches_in_screened_files": [],
+  "git_writes_performed": false,
+  "parent_repository_history_audited": false
+}

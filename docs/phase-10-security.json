@@ -1,0 +1,86 @@
+{
+  "verified_at": "2026-09-27T07:52:49.396291+00:00",
+  "status": "passed",
+  "scope": "six locally built application runtime images; critical severity only",
+  "scanner": "Trivy 0.74.0",
+  "critical_gate_includes_unfixed": true,
+  "exceptions": [],
+  "advisory_database": {
+    "Version": 2,
+    "NextUpdate": "2026-09-28T00:40:58.172367368Z",
+    "UpdatedAt": "2026-09-27T00:40:58.172367669Z",
+    "DownloadedAt": "2026-09-27T06:56:17.4303823Z"
+  },
+  "images": [
+    {
+      "component": "api",
+      "local_tag": "sentinel-api:phase10",
+      "image_config_id": "sha256:a75287b2d8a9fc132a07ba3817935a9ea0d607cb4c3b8cc2020dee249e1a0cb5",
+      "configured_user": "sentinel",
+      "platform": "linux/amd64",
+      "size_bytes": 58192983,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "b3662282452aa3f64923d8f68e5cc783093dd7dea1f272406b51c63b970f427e"
+    },
+    {
+      "component": "worker",
+      "local_tag": "sentinel-worker:phase10",
+      "image_config_id": "sha256:84191ba03b8339d305d25b63e2d3bb5fec2fc49da8b5e8d4fa58db35cc5c120a",
+      "configured_user": "sentinel",
+      "platform": "linux/amd64",
+      "size_bytes": 58193251,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "da141b2c5cd3823f579b583288228deafdd7d0b1596d3ab0eec24b167d5dfa42"
+    },
+    {
+      "component": "agent",
+      "local_tag": "sentinel-agent:phase10",
+      "image_config_id": "sha256:f7838f9bf45fea10dd633d8c1d8b021057ec5add4e87b8879f12ecb3fdc742f0",
+      "configured_user": "sentinel",
+      "platform": "linux/amd64",
+      "size_bytes": 46385670,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "bdd81fa3d6ecea989d98cc8c8b9770b6d2245dda0b845d009ef37a9c8d6dee68"
+    },
+    {
+      "component": "demo",
+      "local_tag": "sentinel-demo:phase10",
+      "image_config_id": "sha256:23587078a28ee688c879bc901c6464ca53372f268a5bdfec2a0973a92a37a4c9",
+      "configured_user": "sentinel",
+      "platform": "linux/amd64",
+      "size_bytes": 46725074,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "69ed89d55896c9df51a5a4aa5d4051f5b79e1e8f1dadad70785ab6c688983831"
+    },
+    {
+      "component": "frontend",
+      "local_tag": "sentinel-frontend:phase10",
+      "image_config_id": "sha256:a91264561d3e55748e918534c35f5868e813a3833850d0c85aa3719bc1dafcc4",
+      "configured_user": "101",
+      "platform": "linux/amd64",
+      "size_bytes": 23172233,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "3ac4ada00f366f7153e7d6b56b1255da838f3d81550a7247f67d5918e0776159"
+    },
+    {
+      "component": "inference",
+      "local_tag": "sentinel-inference:phase10",
+      "image_config_id": "sha256:d270d73573816f14ba494b47ea6afd74efe372f815bf0aadf0a1ececc3c19b11",
+      "configured_user": "sentinel",
+      "platform": "linux/amd64",
+      "size_bytes": 398772569,
+      "critical_findings": 0,
+      "scan_status": "passed",
+      "scan_json_sha256": "2df3c2fb02b40e9125834199bd581ceaa287641ac205cba176b36388df9d4024"
+    }
+  ],
+  "initial_scan_findings": "Older Debian Bookworm runtime and Nginx 1.28.2 bases failed; runtime bases upgraded to Debian 13 and Nginx 1.30.5",
+  "other_severities": "not claimed absent",
+  "registry_publication_verified": false,
+  "remote_sbom_or_provenance_verified": false
+}

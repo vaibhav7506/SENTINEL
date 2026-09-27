@@ -1,0 +1,68 @@
+{
+  "verified_at": "2026-09-27T07:52:49.396291+00:00",
+  "scope": "existing local Compose/native processes and isolated new release image fixtures",
+  "existing_compose_services_replaced": false,
+  "nine_services_running": true,
+  "seven_container_health_checks_healthy": true,
+  "local_endpoint_smoke_checks": "passed",
+  "production_proxy_image_fixture": {
+    "status": "passed",
+    "scope": "isolated local production image/proxy fixtures; HTTP loopback only",
+    "checks": {
+      "anonymous_console": 401,
+      "authenticated_console": 200,
+      "authenticated_snapshot": 200,
+      "public_chaos_denied": 403,
+      "read_proxy_mutation_denied": 405,
+      "anonymous_api": 401
+    },
+    "rate_limit_429_observed": true,
+    "existing_services_replaced": false,
+    "external_deployment": false
+  },
+  "linux_image_read_only_frozen_score_reproduction": {
+    "status": "passed",
+    "model_loaded": true,
+    "model_version": "20260926T204848-mlp-1bcd8acd",
+    "unchanged_threshold": 0.9875243902206421,
+    "prediction_id": "68b54feb-e090-4a8b-9e9f-7568d80890b9",
+    "host_id": "docker-vm",
+    "prediction_age_seconds": 9.243487,
+    "horizon_seconds": 600,
+    "failure_probability": 1.0,
+    "anomaly_score": 0.015427529818420549,
+    "frozen_scores_reproduced": true,
+    "model_validation": "Held-out recall/F1 remain zero; no validation claim"
+  },
+  "local_snapshot_as_of": "2026-09-27T07:41:42.606921Z",
+  "local_totals_at_snapshot": {
+    "predictions": 222,
+    "incidents": 6,
+    "alerts": 12,
+    "proposals": 0,
+    "models": 1,
+    "evaluations": 1,
+    "failure_events": 11,
+    "experiments": 11,
+    "hosts": 2
+  },
+  "observed_host_statuses": [
+    {
+      "id": "docker-vm",
+      "status": "healthy",
+      "observation_outcome": "healthy"
+    },
+    {
+      "id": "windows-workstation",
+      "status": "unknown",
+      "observation_outcome": null
+    }
+  ],
+  "new_live_receipt_snapshot_count": 10,
+  "new_receiver_receipt_path": ".runtime/local-webhook-receipts.jsonl",
+  "deployed_linux_continuous_inference_verified": false,
+  "public_https_verified": false,
+  "external_delivery_or_remediation": false,
+  "linux_score_probe_completed_at": "2026-09-27T07:33:16.680993+00:00",
+  "local_endpoint_checks_completed_at": "2026-09-27T07:36:57.728650+00:00"
+}

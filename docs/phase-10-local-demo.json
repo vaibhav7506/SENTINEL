@@ -1,0 +1,2292 @@
+{
+  "scope": "local API or operator port-forward; fixed demo only",
+  "started_at": "2026-09-27T06:56:13.823190+00:00",
+  "forced_model_output": false,
+  "baseline": {
+    "observation": {
+      "host_id": "docker-vm",
+      "experiment_id": null,
+      "request_started_at": "2026-09-27T06:56:13.117557Z",
+      "observed_at": "2026-09-27T06:56:13.144836Z",
+      "latency_seconds": 0.027268472000287147,
+      "status_code": 200,
+      "outcome": "healthy",
+      "breached": false,
+      "criteria": {
+        "probe": "/work?units=100000",
+        "latency_slo_seconds": 0.5,
+        "http_error_status_min": 500
+      },
+      "id": "4e309cdf-b5ad-48b8-bd74-40f62c116da9",
+      "created_at": "2026-09-27T06:56:13.113434Z"
+    },
+    "prediction": {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:56:04.196250Z",
+      "feature_window_end": "2026-09-27T06:56:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.007807917187936497,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492160.0,
+              "first_timestamp": 1790491275.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492160.0,
+              "first_timestamp": 1790491275.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.007807917187936497,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:06:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "816e386d-6583-4bba-ae98-54c7e8c89a41",
+      "created_at": "2026-09-27T06:56:04.088496Z"
+    }
+  },
+  "unchanged_threshold": 0.9875243902206421,
+  "verified_at": "2026-09-27T06:58:04.584902+00:00",
+  "experiment_id": "eec08a76-eb45-4c0c-b23b-e2ac172c4b0c",
+  "failure_event": {
+    "id": "83a278f5-d5c7-4a28-8077-9949938072a8",
+    "experiment_id": "eec08a76-eb45-4c0c-b23b-e2ac172c4b0c",
+    "host_id": "docker-vm",
+    "failure_type": "latency_slo_breach",
+    "observed_at": "2026-09-27T06:56:16.276284+00:00",
+    "confirmed_at": "2026-09-27T06:56:21.950834+00:00",
+    "recovered_at": "2026-09-27T06:57:03.011697+00:00",
+    "criterion": {
+      "probe": "/work?units=100000",
+      "max_span_seconds": 15,
+      "latency_slo_seconds": 0.5,
+      "consecutive_breaches": 3,
+      "http_error_status_min": 500
+    }
+  },
+  "predictions": [
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:58:02.878879Z",
+      "feature_window_end": "2026-09-27T06:58:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.0255042077972224,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "units": "calibrated failure probability",
+          "method": "permutation SHAP",
+          "status": "complete",
+          "max_evals": 1676,
+          "limitations": "Approximate marginal associations with correlated inputs; not causation",
+          "background_rows": 16,
+          "base_probability": 0.14116952754557133,
+          "contribution_sum": 0.8588304724544287,
+          "additivity_residual": 0.0,
+          "background_partition": "train"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492280.0,
+              "first_timestamp": 1790491395.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492280.0,
+              "first_timestamp": 1790491395.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.510999917984009,
+              "last_timestamp": 1790492267.489,
+              "first_timestamp": 1790491381.322,
+              "coverage_seconds": 886.1670000553131
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "e20920bd-6016-4ee9-bb0e-9850c00ece13",
+        "top_drivers": [
+          {
+            "value": 954344.6557832017,
+            "feature": "disk_read_bytes_per_second.median",
+            "contribution": 0.6949556570034474
+          },
+          {
+            "value": 11394386229998.627,
+            "feature": "disk_write_bytes_per_second.rolling_variance",
+            "contribution": -0.17147555526753422
+          },
+          {
+            "value": 6662710512945.71,
+            "feature": "disk_read_bytes_per_second.rolling_variance",
+            "contribution": 0.16444342595059425
+          },
+          {
+            "value": 8212601.444091179,
+            "feature": "disk_read_bytes_per_second.mean",
+            "contribution": 0.12605306948535144
+          },
+          {
+            "value": -20560.833635377443,
+            "feature": "disk_read_bytes_per_second.linear_trend",
+            "contribution": -0.05890087589796167
+          },
+          {
+            "value": 14899908.735998616,
+            "feature": "disk_read_bytes_per_second.std",
+            "contribution": 0.03810349205741659
+          },
+          {
+            "value": 7370.517437722213,
+            "feature": "disk_read_bytes_per_second.latest",
+            "contribution": 0.03736775569268502
+          },
+          {
+            "value": 86728187.36927314,
+            "feature": "disk_read_bytes_per_second.max",
+            "contribution": 0.029163063620217144
+          },
+          {
+            "value": 0.179526027149013,
+            "feature": "latency_p95_seconds.rolling_variance",
+            "contribution": 0.020802315935725346
+          },
+          {
+            "value": 1696451.0803035395,
+            "feature": "disk_read_bytes_per_second.ewma",
+            "contribution": -0.013503212278010324
+          }
+        ],
+        "anomaly_score": 0.0255042077972224,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:08:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "782caf70-bcbd-421f-95eb-cd16e1605d2e",
+      "created_at": "2026-09-27T06:58:02.734446Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:57:01.245908Z",
+      "feature_window_end": "2026-09-27T06:57:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.020054067347622495,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492220.0,
+              "first_timestamp": 1790491335.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492220.0,
+              "first_timestamp": 1790491335.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.50600004196167,
+              "last_timestamp": 1790492207.494,
+              "first_timestamp": 1790491321.327,
+              "coverage_seconds": 886.1670000553131
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.020054067347622495,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:07:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "c377dfc8-be41-4ab0-b6f2-3c1536679cb0",
+      "created_at": "2026-09-27T06:57:01.186817Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:56:04.196250Z",
+      "feature_window_end": "2026-09-27T06:56:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.007807917187936497,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492160.0,
+              "first_timestamp": 1790491275.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492160.0,
+              "first_timestamp": 1790491275.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.48799991607666,
+              "last_timestamp": 1790492147.512,
+              "first_timestamp": 1790491261.336,
+              "coverage_seconds": 886.1760001182556
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.007807917187936497,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:06:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "816e386d-6583-4bba-ae98-54c7e8c89a41",
+      "created_at": "2026-09-27T06:56:04.088496Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:55:01.635582Z",
+      "feature_window_end": "2026-09-27T06:55:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.023161474058699283,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492100.0,
+              "first_timestamp": 1790491215.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492100.0,
+              "first_timestamp": 1790491215.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.483999967575073,
+              "last_timestamp": 1790492087.516,
+              "first_timestamp": 1790491201.335,
+              "coverage_seconds": 886.180999994278
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.023161474058699283,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:05:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "5d89915b-5e56-4987-bcc5-5f01746cf702",
+      "created_at": "2026-09-27T06:55:01.603225Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:54:00.502497Z",
+      "feature_window_end": "2026-09-27T06:54:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.024722133216447006,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492040.0,
+              "first_timestamp": 1790491155.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790492040.0,
+              "first_timestamp": 1790491155.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.480000019073486,
+              "last_timestamp": 1790492027.52,
+              "first_timestamp": 1790491141.34,
+              "coverage_seconds": 886.1800000667572
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.024722133216447006,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:04:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "b75aff78-f085-48b4-8f64-60ac12cf634f",
+      "created_at": "2026-09-27T06:54:00.467746Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:53:04.478497Z",
+      "feature_window_end": "2026-09-27T06:53:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.017735630708383465,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491980.0,
+              "first_timestamp": 1790491095.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491980.0,
+              "first_timestamp": 1790491095.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.4760000705719,
+              "last_timestamp": 1790491967.524,
+              "first_timestamp": 1790491081.344,
+              "coverage_seconds": 886.1799998283386
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [],
+        "anomaly_score": 0.017735630708383465,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:03:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "6c26a13d-4d6e-40a2-9153-867f747b5564",
+      "created_at": "2026-09-27T06:53:04.446754Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:52:03.233529Z",
+      "feature_window_end": "2026-09-27T06:52:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.010842151181828075,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "units": "calibrated failure probability",
+          "method": "permutation SHAP",
+          "status": "complete",
+          "max_evals": 1676,
+          "limitations": "Approximate marginal associations with correlated inputs; not causation",
+          "background_rows": 16,
+          "base_probability": 0.14116952754557133,
+          "contribution_sum": 0.8588304724544288,
+          "additivity_residual": -1.1102230246251565e-16,
+          "background_partition": "train"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491920.0,
+              "first_timestamp": 1790491035.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491920.0,
+              "first_timestamp": 1790491035.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.471999883651733,
+              "last_timestamp": 1790491907.528,
+              "first_timestamp": 1790491021.348,
+              "coverage_seconds": 886.1800000667572
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+        "top_drivers": [
+          {
+            "value": 179745.40446645167,
+            "feature": "disk_read_bytes_per_second.median",
+            "contribution": 0.4611367944363432
+          },
+          {
+            "value": 365123187130433.94,
+            "feature": "disk_read_bytes_per_second.rolling_variance",
+            "contribution": 0.38369840269212396
+          },
+          {
+            "value": 175806357775547.34,
+            "feature": "disk_write_bytes_per_second.rolling_variance",
+            "contribution": -0.09201258353986416
+          },
+          {
+            "value": 15017873.152580574,
+            "feature": "disk_read_bytes_per_second.std",
+            "contribution": 0.06877136839869424
+          },
+          {
+            "value": 7825235.3232386885,
+            "feature": "disk_read_bytes_per_second.mean",
+            "contribution": 0.02430881978943944
+          },
+          {
+            "value": 818.9184280010961,
+            "feature": "disk_read_bytes_per_second.latest",
+            "contribution": 0.01993686342481049
+          },
+          {
+            "value": 6839100.885228001,
+            "feature": "disk_read_bytes_per_second.ewma",
+            "contribution": -0.014685123229332908
+          },
+          {
+            "value": 68041959.46718484,
+            "feature": "disk_write_bytes_per_second.max",
+            "contribution": -0.012533279950730503
+          },
+          {
+            "value": 86728187.36927314,
+            "feature": "disk_read_bytes_per_second.max",
+            "contribution": 0.009729675565015777
+          },
+          {
+            "value": 3524535.7043507826,
+            "feature": "disk_write_bytes_per_second.ewma",
+            "contribution": 0.00931783253327012
+          }
+        ],
+        "anomaly_score": 0.010842151181828075,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:02:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "1db43616-7efe-406d-a920-9f3eaa699774",
+      "created_at": "2026-09-27T06:52:03.132951Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:51:02.251772Z",
+      "feature_window_end": "2026-09-27T06:51:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.017735630708383465,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491860.0,
+              "first_timestamp": 1790490975.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491860.0,
+              "first_timestamp": 1790490975.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.467999935150146,
+              "last_timestamp": 1790491847.532,
+              "first_timestamp": 1790490961.353,
+              "coverage_seconds": 886.1790001392365
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+        "top_drivers": [],
+        "anomaly_score": 0.017735630708383465,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:01:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "b46e2587-7ecd-46fb-af2d-441d94293b90",
+      "created_at": "2026-09-27T06:51:02.220816Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:50:01.182399Z",
+      "feature_window_end": "2026-09-27T06:50:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.021605456704398618,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491800.0,
+              "first_timestamp": 1790490915.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491800.0,
+              "first_timestamp": 1790490915.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.463000059127808,
+              "last_timestamp": 1790491787.537,
+              "first_timestamp": 1790490901.357,
+              "coverage_seconds": 886.1799998283386
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+        "top_drivers": [],
+        "anomaly_score": 0.021605456704398618,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T07:00:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "e0aa0074-9287-46bd-bfe1-c9ca33023040",
+      "created_at": "2026-09-27T06:50:01.146874Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:49:05.039228Z",
+      "feature_window_end": "2026-09-27T06:49:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.01928010386518675,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491740.0,
+              "first_timestamp": 1790490855.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491740.0,
+              "first_timestamp": 1790490855.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 12.45900011062622,
+              "last_timestamp": 1790491727.541,
+              "first_timestamp": 1790490841.362,
+              "coverage_seconds": 886.1789999008179
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+        "top_drivers": [],
+        "anomaly_score": 0.01928010386518675,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T06:59:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "9f38a905-bff6-4bea-8190-8e1ce1146179",
+      "created_at": "2026-09-27T06:49:04.984147Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:48:02.368016Z",
+      "feature_window_end": "2026-09-27T06:48:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.013129718600255913,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491680.0,
+              "first_timestamp": 1790490795.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491680.0,
+              "first_timestamp": 1790490795.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.69700002670288,
+              "last_timestamp": 1790491666.303,
+              "first_timestamp": 1790490781.366,
+              "coverage_seconds": 884.9370000362396
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+        "top_drivers": [],
+        "anomaly_score": 0.013129718600255913,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T06:58:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "a9831913-9c42-47a8-a0b7-8e801c8100e2",
+      "created_at": "2026-09-27T06:48:02.333993Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "predicted_at": "2026-09-27T06:47:05.170829Z",
+      "feature_window_end": "2026-09-27T06:47:00Z",
+      "schema_version": "v1-w900-e60-r300",
+      "probability": 1.0,
+      "anomaly_score": 0.020829184387584743,
+      "horizon_seconds": 600,
+      "explanation": {
+        "shap": {
+          "status": "existing_condition",
+          "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63"
+        },
+        "quality": {
+          "metrics": {
+            "error_rate": {
+              "count": 0,
+              "age_seconds": null,
+              "last_timestamp": null,
+              "first_timestamp": null,
+              "coverage_seconds": 0
+            },
+            "cpu_load_1m": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "cpu_load_5m": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "cpu_load_15m": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "request_rate": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491620.0,
+              "first_timestamp": 1790490735.0,
+              "coverage_seconds": 885.0
+            },
+            "process_count": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "uptime_seconds": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "cpu_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "disk_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "swap_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "latency_p95_seconds": {
+              "count": 60,
+              "age_seconds": 0.0,
+              "last_timestamp": 1790491620.0,
+              "first_timestamp": 1790490735.0,
+              "coverage_seconds": 885.0
+            },
+            "memory_usage_percent": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "memory_available_bytes": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "disk_read_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "disk_write_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "network_receive_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            },
+            "network_transmit_bytes_per_second": {
+              "count": 60,
+              "age_seconds": 13.694000005722046,
+              "last_timestamp": 1790491606.306,
+              "first_timestamp": 1790490721.371,
+              "coverage_seconds": 884.9349999427795
+            }
+          },
+          "service_job": "demo-service",
+          "query_errors": []
+        },
+        "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+        "top_drivers": [],
+        "anomaly_score": 0.020829184387584743,
+        "failure_probability": 1.0,
+        "forecast_valid_until": "2026-09-27T06:57:00+00:00",
+        "model_validation_warning": "Held-out recall/F1 0; poor calibration; not operationally validated"
+      },
+      "id": "fd6e4610-1dde-414d-a501-c0fbd3e8277a",
+      "created_at": "2026-09-27T06:47:05.139785Z"
+    }
+  ],
+  "post_recovery_observation": {
+    "host_id": "docker-vm",
+    "experiment_id": null,
+    "request_started_at": "2026-09-27T06:58:03.271024Z",
+    "observed_at": "2026-09-27T06:58:03.289195Z",
+    "latency_seconds": 0.01816403999873728,
+    "status_code": 200,
+    "outcome": "healthy",
+    "breached": false,
+    "criteria": {
+      "probe": "/work?units=100000",
+      "latency_slo_seconds": 0.5,
+      "http_error_status_min": 500
+    },
+    "id": "018128bc-5dd1-4ed7-af4c-893437f37907",
+    "created_at": "2026-09-27T06:58:03.268683Z"
+  },
+  "incidents": [
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "summary": {
+        "title": "Model threshold crossing requires review",
+        "source": "deterministic_fallback",
+        "summary": "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:58:00+00:00, valid until 2026-09-27T07:08:00+00:00. Separate unfamiliarity score 0.025504; it is not an imminent-failure probability. Held-out recall/F1 0; poor calibration; not operationally validated Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.median\", \"contribution\": 0.6949556570034474, \"value\": 954344.6557832017}, {\"feature\": \"disk_write_bytes_per_second.rolling_variance\", \"contribution\": -0.17147555526753422, \"value\": 11394386229998.627}, {\"feature\": \"disk_read_bytes_per_second.rolling_variance\", \"contribution\": 0.16444342595059425, \"value\": 6662710512945.71}, {\"feature\": \"disk_read_bytes_per_second.mean\", \"contribution\": 0.12605306948535144, \"value\": 8212601.444091179}, {\"feature\": \"disk_read_bytes_per_second.linear_trend\", \"contribution\": -0.05890087589796167, \"value\": -20560.833635377443}, {\"feature\": \"disk_read_bytes_per_second.std\", \"contribution\": 0.03810349205741659, \"value\": 14899908.735998616}, {\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.03736775569268502, \"value\": 7370.517437722213}, {\"feature\": \"disk_read_bytes_per_second.max\", \"contribution\": 0.029163063620217144, \"value\": 86728187.36927314}, {\"feature\": \"latency_p95_seconds.rolling_variance\", \"contribution\": 0.020802315935725346, \"value\": 0.179526027149013}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.013503212278010324, \"value\": 1696451.0803035395}] Recorded active experiments: [] Recent alerts: [{\"id\": \"860c5aa7-2cd0-4550-906c-f2d885a34766\", \"status\": \"delivered\"}, {\"id\": \"da2d7231-855f-44a9-b3ac-05e3f67dde83\", \"status\": \"delivered\"}, {\"id\": \"c17f6113-912e-40a6-bf1f-b873600011ce\", \"status\": \"delivered\"}] Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 1.27490234375, \"cpu_load_5m.delta\": 0.36572265625, \"cpu_load_15m.delta\": 0.35791015625, \"request_rate.delta\": 0.022223703802475736, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.6824445724487, \"cpu_usage_percent.delta\": 5.6000000000000005, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": -1.2671128674176602e-05, \"cpu_load_5m.linear_trend\": 1.067096243936254e-05, \"disk_usage_percent.delta\": 0.5, \"swap_usage_percent.delta\": 4.5, \"cpu_load_15m.linear_trend\": 0.00030741631548434327, \"latency_p95_seconds.delta\": 0.01713636363636356, \"request_rate.linear_trend\": 4.8799674433297985e-05, \"memory_usage_percent.delta\": -0.3999999999999986, \"process_count.linear_trend\": 0.0, \"uptime_seconds.linear_trend\": 0.9989641744492418, \"memory_available_bytes.delta\": 32186368.0, \"cpu_usage_percent.linear_trend\": -0.0020058373251799436, \"disk_usage_percent.linear_trend\": 0.0005788304049452298, \"swap_usage_percent.linear_trend\": 0.0049223342674868855, \"disk_read_bytes_per_second.delta\": 2456.565605073285, \"latency_p95_seconds.linear_trend\": 0.0005086450528421755, \"disk_write_bytes_per_second.delta\": 3343755.296581497, \"memory_usage_percent.linear_trend\": 0.00020312021302886505, \"memory_available_bytes.linear_trend\": -16456.042316444364, \"network_receive_bytes_per_second.delta\": 1160.4406252316548, \"disk_read_bytes_per_second.linear_trend\": -20560.833635377443, \"network_transmit_bytes_per_second.delta\": 1160.4406252316548, \"disk_write_bytes_per_second.linear_trend\": -19999.515206342738, \"network_receive_bytes_per_second.linear_trend\": 0.16992807868877904, \"network_transmit_bytes_per_second.linear_trend\": 0.17156009708874967}",
+        "evidence": [
+          "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:58:00+00:00, valid until 2026-09-27T07:08:00+00:00.",
+          "Separate unfamiliarity score 0.025504; it is not an imminent-failure probability.",
+          "Held-out recall/F1 0; poor calibration; not operationally validated",
+          "Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.median\", \"contribution\": 0.6949556570034474, \"value\": 954344.6557832017}, {\"feature\": \"disk_write_bytes_per_second.rolling_variance\", \"contribution\": -0.17147555526753422, \"value\": 11394386229998.627}, {\"feature\": \"disk_read_bytes_per_second.rolling_variance\", \"contribution\": 0.16444342595059425, \"value\": 6662710512945.71}, {\"feature\": \"disk_read_bytes_per_second.mean\", \"contribution\": 0.12605306948535144, \"value\": 8212601.444091179}, {\"feature\": \"disk_read_bytes_per_second.linear_trend\", \"contribution\": -0.05890087589796167, \"value\": -20560.833635377443}, {\"feature\": \"disk_read_bytes_per_second.std\", \"contribution\": 0.03810349205741659, \"value\": 14899908.735998616}, {\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.03736775569268502, \"value\": 7370.517437722213}, {\"feature\": \"disk_read_bytes_per_second.max\", \"contribution\": 0.029163063620217144, \"value\": 86728187.36927314}, {\"feature\": \"latency_p95_seconds.rolling_variance\", \"contribution\": 0.020802315935725346, \"value\": 0.179526027149013}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.013503212278010324, \"value\": 1696451.0803035395}]",
+          "Recorded active experiments: []",
+          "Recent alerts: [{\"id\": \"860c5aa7-2cd0-4550-906c-f2d885a34766\", \"status\": \"delivered\"}, {\"id\": \"da2d7231-855f-44a9-b3ac-05e3f67dde83\", \"status\": \"delivered\"}, {\"id\": \"c17f6113-912e-40a6-bf1f-b873600011ce\", \"status\": \"delivered\"}]",
+          "Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 1.27490234375, \"cpu_load_5m.delta\": 0.36572265625, \"cpu_load_15m.delta\": 0.35791015625, \"request_rate.delta\": 0.022223703802475736, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.6824445724487, \"cpu_usage_percent.delta\": 5.6000000000000005, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": -1.2671128674176602e-05, \"cpu_load_5m.linear_trend\": 1.067096243936254e-05, \"disk_usage_percent.delta\": 0.5, \"swap_usage_percent.delta\": 4.5, \"cpu_load_15m.linear_trend\": 0.00030741631548434327, \"latency_p95_seconds.delta\": 0.01713636363636356, \"request_rate.linear_trend\": 4.8799674433297985e-05, \"memory_usage_percent.delta\": -0.3999999999999986, \"process_count.linear_trend\": 0.0, \"uptime_seconds.linear_trend\": 0.9989641744492418, \"memory_available_bytes.delta\": 32186368.0, \"cpu_usage_percent.linear_trend\": -0.0020058373251799436, \"disk_usage_percent.linear_trend\": 0.0005788304049452298, \"swap_usage_percent.linear_trend\": 0.0049223342674868855, \"disk_read_bytes_per_second.delta\": 2456.565605073285, \"latency_p95_seconds.linear_trend\": 0.0005086450528421755, \"disk_write_bytes_per_second.delta\": 3343755.296581497, \"memory_usage_percent.linear_trend\": 0.00020312021302886505, \"memory_available_bytes.linear_trend\": -16456.042316444364, \"network_receive_bytes_per_second.delta\": 1160.4406252316548, \"disk_read_bytes_per_second.linear_trend\": -20560.833635377443, \"network_transmit_bytes_per_second.delta\": 1160.4406252316548, \"disk_write_bytes_per_second.linear_trend\": -19999.515206342738, \"network_receive_bytes_per_second.linear_trend\": 0.16992807868877904, \"network_transmit_bytes_per_second.linear_trend\": 0.17156009708874967}"
+        ],
+        "confidenceNotes": "The current model missed every positive held-out test window and had poor held-out calibration. This is an unvalidated model warning, not a confirmed future outage or root cause.",
+        "possiblePattern": "Supplied feature associations may indicate a change in behavior; they do not establish causation.",
+        "recommendedChecks": [
+          "Inspect the supplied telemetry and probe history.",
+          "Check application latency and error status.",
+          "Review the model's poor held-out recall and calibration before operational use."
+        ],
+        "forecast_valid_until": "2026-09-27T07:08:00+00:00"
+      },
+      "prediction_id": "782caf70-bcbd-421f-95eb-cd16e1605d2e",
+      "failure_event_id": null,
+      "status": "open",
+      "predicted_at": "2026-09-27T06:58:02.878879Z",
+      "observed_at": null,
+      "confirmed_at": null,
+      "resolved_at": null,
+      "id": "e20920bd-6016-4ee9-bb0e-9850c00ece13",
+      "created_at": "2026-09-27T06:58:02.734446Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "summary": {
+        "title": "Model threshold crossing requires review",
+        "source": "deterministic_fallback",
+        "summary": "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:52:00+00:00, valid until 2026-09-27T07:02:00+00:00. Separate unfamiliarity score 0.010842; it is not an imminent-failure probability. Held-out recall/F1 0; poor calibration; not operationally validated Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.median\", \"contribution\": 0.4611367944363432, \"value\": 179745.40446645167}, {\"feature\": \"disk_read_bytes_per_second.rolling_variance\", \"contribution\": 0.38369840269212396, \"value\": 365123187130433.94}, {\"feature\": \"disk_write_bytes_per_second.rolling_variance\", \"contribution\": -0.09201258353986416, \"value\": 175806357775547.34}, {\"feature\": \"disk_read_bytes_per_second.std\", \"contribution\": 0.06877136839869424, \"value\": 15017873.152580574}, {\"feature\": \"disk_read_bytes_per_second.mean\", \"contribution\": 0.02430881978943944, \"value\": 7825235.3232386885}, {\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.01993686342481049, \"value\": 818.9184280010961}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.014685123229332908, \"value\": 6839100.885228001}, {\"feature\": \"disk_write_bytes_per_second.max\", \"contribution\": -0.012533279950730503, \"value\": 68041959.46718484}, {\"feature\": \"disk_read_bytes_per_second.max\", \"contribution\": 0.009729675565015777, \"value\": 86728187.36927314}, {\"feature\": \"disk_write_bytes_per_second.ewma\", \"contribution\": 0.00931783253327012, \"value\": 3524535.7043507826}] Recorded active experiments: [] Recent alerts: [{\"id\": \"c17f6113-912e-40a6-bf1f-b873600011ce\", \"status\": \"delivered\"}, {\"id\": \"7f79702a-4548-4335-8c64-e2e6b247f6b2\", \"status\": \"delivered\"}] Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 0.70947265625, \"cpu_load_5m.delta\": 0.63330078125, \"cpu_load_15m.delta\": 0.47705078125, \"request_rate.delta\": 0.022224197706462778, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.6232492923737, \"cpu_usage_percent.delta\": 4.199999999999999, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": 0.0014041576565366994, \"cpu_load_5m.linear_trend\": 0.0011285118236794593, \"disk_usage_percent.delta\": 0.5, \"swap_usage_percent.delta\": 2.5, \"cpu_load_15m.linear_trend\": 0.00068248923543308, \"latency_p95_seconds.delta\": -3.2608695652178166e-05, \"request_rate.linear_trend\": -1.0175926347904407e-05, \"memory_usage_percent.delta\": -1.1000000000000014, \"process_count.linear_trend\": -8.318702608503513e-05, \"uptime_seconds.linear_trend\": 0.9993360236733921, \"memory_available_bytes.delta\": 89026560.0, \"cpu_usage_percent.linear_trend\": 0.007274748007472277, \"disk_usage_percent.linear_trend\": 0.0007194647149049461, \"swap_usage_percent.linear_trend\": 0.0030409783588103718, \"disk_read_bytes_per_second.delta\": 818.9184280010961, \"latency_p95_seconds.linear_trend\": 2.5199806469316706e-05, \"disk_write_bytes_per_second.delta\": 27843.906006553007, \"memory_usage_percent.linear_trend\": -0.00017970769621555022, \"memory_available_bytes.linear_trend\": 14803.95779194415, \"network_receive_bytes_per_second.delta\": 1160.6009459341706, \"disk_read_bytes_per_second.linear_trend\": 18960.121503647162, \"network_transmit_bytes_per_second.delta\": 1160.6009459341706, \"disk_write_bytes_per_second.linear_trend\": 11242.382235692716, \"network_receive_bytes_per_second.linear_trend\": 0.2553602523645273, \"network_transmit_bytes_per_second.linear_trend\": 0.2547571637218316}",
+        "evidence": [
+          "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:52:00+00:00, valid until 2026-09-27T07:02:00+00:00.",
+          "Separate unfamiliarity score 0.010842; it is not an imminent-failure probability.",
+          "Held-out recall/F1 0; poor calibration; not operationally validated",
+          "Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.median\", \"contribution\": 0.4611367944363432, \"value\": 179745.40446645167}, {\"feature\": \"disk_read_bytes_per_second.rolling_variance\", \"contribution\": 0.38369840269212396, \"value\": 365123187130433.94}, {\"feature\": \"disk_write_bytes_per_second.rolling_variance\", \"contribution\": -0.09201258353986416, \"value\": 175806357775547.34}, {\"feature\": \"disk_read_bytes_per_second.std\", \"contribution\": 0.06877136839869424, \"value\": 15017873.152580574}, {\"feature\": \"disk_read_bytes_per_second.mean\", \"contribution\": 0.02430881978943944, \"value\": 7825235.3232386885}, {\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.01993686342481049, \"value\": 818.9184280010961}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.014685123229332908, \"value\": 6839100.885228001}, {\"feature\": \"disk_write_bytes_per_second.max\", \"contribution\": -0.012533279950730503, \"value\": 68041959.46718484}, {\"feature\": \"disk_read_bytes_per_second.max\", \"contribution\": 0.009729675565015777, \"value\": 86728187.36927314}, {\"feature\": \"disk_write_bytes_per_second.ewma\", \"contribution\": 0.00931783253327012, \"value\": 3524535.7043507826}]",
+          "Recorded active experiments: []",
+          "Recent alerts: [{\"id\": \"c17f6113-912e-40a6-bf1f-b873600011ce\", \"status\": \"delivered\"}, {\"id\": \"7f79702a-4548-4335-8c64-e2e6b247f6b2\", \"status\": \"delivered\"}]",
+          "Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 0.70947265625, \"cpu_load_5m.delta\": 0.63330078125, \"cpu_load_15m.delta\": 0.47705078125, \"request_rate.delta\": 0.022224197706462778, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.6232492923737, \"cpu_usage_percent.delta\": 4.199999999999999, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": 0.0014041576565366994, \"cpu_load_5m.linear_trend\": 0.0011285118236794593, \"disk_usage_percent.delta\": 0.5, \"swap_usage_percent.delta\": 2.5, \"cpu_load_15m.linear_trend\": 0.00068248923543308, \"latency_p95_seconds.delta\": -3.2608695652178166e-05, \"request_rate.linear_trend\": -1.0175926347904407e-05, \"memory_usage_percent.delta\": -1.1000000000000014, \"process_count.linear_trend\": -8.318702608503513e-05, \"uptime_seconds.linear_trend\": 0.9993360236733921, \"memory_available_bytes.delta\": 89026560.0, \"cpu_usage_percent.linear_trend\": 0.007274748007472277, \"disk_usage_percent.linear_trend\": 0.0007194647149049461, \"swap_usage_percent.linear_trend\": 0.0030409783588103718, \"disk_read_bytes_per_second.delta\": 818.9184280010961, \"latency_p95_seconds.linear_trend\": 2.5199806469316706e-05, \"disk_write_bytes_per_second.delta\": 27843.906006553007, \"memory_usage_percent.linear_trend\": -0.00017970769621555022, \"memory_available_bytes.linear_trend\": 14803.95779194415, \"network_receive_bytes_per_second.delta\": 1160.6009459341706, \"disk_read_bytes_per_second.linear_trend\": 18960.121503647162, \"network_transmit_bytes_per_second.delta\": 1160.6009459341706, \"disk_write_bytes_per_second.linear_trend\": 11242.382235692716, \"network_receive_bytes_per_second.linear_trend\": 0.2553602523645273, \"network_transmit_bytes_per_second.linear_trend\": 0.2547571637218316}"
+        ],
+        "alert_timing": {
+          "860c5aa7-2cd0-4550-906c-f2d885a34766": {
+            "status": "before_degradation",
+            "lead_seconds": 252.937115
+          },
+          "da2d7231-855f-44a9-b3ac-05e3f67dde83": {
+            "status": "before_degradation",
+            "lead_seconds": 252.911564
+          }
+        },
+        "confidenceNotes": "The current model missed every positive held-out test window and had poor held-out calibration. This is an unvalidated model warning, not a confirmed future outage or root cause.",
+        "possiblePattern": "Supplied feature associations may indicate a change in behavior; they do not establish causation.",
+        "recommendedChecks": [
+          "Inspect the supplied telemetry and probe history.",
+          "Check application latency and error status.",
+          "Review the model's poor held-out recall and calibration before operational use."
+        ],
+        "actual_failure_onset": "2026-09-27T06:56:16.276284+00:00",
+        "forecast_valid_until": "2026-09-27T07:02:00+00:00",
+        "matched_prediction_id": "1db43616-7efe-406d-a920-9f3eaa699774",
+        "prediction_lead_seconds": 253.042755
+      },
+      "prediction_id": "1db43616-7efe-406d-a920-9f3eaa699774",
+      "failure_event_id": "83a278f5-d5c7-4a28-8077-9949938072a8",
+      "status": "recovered",
+      "predicted_at": "2026-09-27T06:52:03.233529Z",
+      "observed_at": "2026-09-27T06:56:16.276284Z",
+      "confirmed_at": "2026-09-27T06:56:21.950834Z",
+      "resolved_at": "2026-09-27T06:57:03.011697Z",
+      "id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+      "created_at": "2026-09-27T06:52:03.132951Z"
+    },
+    {
+      "host_id": "docker-vm",
+      "model_version_id": "db5107bc-6fdd-40ce-9392-afd5733acecc",
+      "summary": {
+        "title": "Model threshold crossing requires review",
+        "source": "deterministic_fallback",
+        "summary": "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:41:00+00:00, valid until 2026-09-27T06:51:00+00:00. Separate unfamiliarity score 0.006298; it is not an imminent-failure probability. Held-out recall/F1 0; poor calibration; not operationally validated Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.8564810244133696, \"value\": 203909.3856722471}, {\"feature\": \"disk_read_bytes_per_second.rate_of_change\", \"contribution\": 0.002537364140152931, \"value\": 230.4227488791651}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.00028071238193660975, \"value\": 35735.945190802995}, {\"feature\": \"disk_write_bytes_per_second.max\", \"contribution\": -0.00023256090935319662, \"value\": 5161132.890551438}, {\"feature\": \"latency_p95_seconds.max\", \"contribution\": 0.0001842118799686432, \"value\": 0.34375}, {\"feature\": \"disk_read_bytes_per_second.delta\", \"contribution\": -0.00015681586228311062, \"value\": 203909.3856722471}, {\"feature\": \"disk_write_bytes_per_second.std\", \"contribution\": 0.00013549602590501308, \"value\": 661428.1626645661}, {\"feature\": \"disk_write_bytes_per_second.mean\", \"contribution\": -0.0001334301196038723, \"value\": 131994.96913237713}, {\"feature\": \"disk_throughput_times_latency\", \"contribution\": -7.894006557762623e-05, \"value\": 12182.97160902016}, {\"feature\": \"swap_usage_percent.median\", \"contribution\": 7.146410644054413e-05, \"value\": 0.0}] Recorded active experiments: [] Recent alerts: [] Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 0.59912109375, \"cpu_load_5m.delta\": 0.32763671875, \"cpu_load_15m.delta\": 0.2265625, \"request_rate.delta\": 2.568243656908553e-05, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.4027354717255, \"cpu_usage_percent.delta\": 10.6, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": 7.2691448418996e-05, \"cpu_load_5m.linear_trend\": 0.0004890425769338068, \"disk_usage_percent.delta\": 0.09999999999999964, \"swap_usage_percent.delta\": 0.0, \"cpu_load_15m.linear_trend\": 0.00033686424489533847, \"latency_p95_seconds.delta\": 0.019386363636363632, \"request_rate.linear_trend\": 8.889609944750935e-06, \"memory_usage_percent.delta\": -1.6999999999999957, \"process_count.linear_trend\": 3.705002688234984e-05, \"uptime_seconds.linear_trend\": 1.000552823205665, \"memory_available_bytes.delta\": 133464064.0, \"cpu_usage_percent.linear_trend\": 0.00048629111792900654, \"disk_usage_percent.linear_trend\": 0.00016598429158291058, \"swap_usage_percent.linear_trend\": 0.0, \"disk_read_bytes_per_second.delta\": 203909.3856722471, \"latency_p95_seconds.linear_trend\": -2.9351404722430795e-05, \"disk_write_bytes_per_second.delta\": 54873.77721680031, \"memory_usage_percent.linear_trend\": -0.0016839244596369935, \"memory_available_bytes.linear_trend\": 133959.11025709021, \"network_receive_bytes_per_second.delta\": 1174.188768798933, \"disk_read_bytes_per_second.linear_trend\": 26.519556286103057, \"network_transmit_bytes_per_second.delta\": 1174.188768798933, \"disk_write_bytes_per_second.linear_trend\": 178.94993974618515, \"network_receive_bytes_per_second.linear_trend\": 0.027129758811079548, \"network_transmit_bytes_per_second.linear_trend\": 0.027129758811079548}",
+        "evidence": [
+          "Host docker-vm, service demo-service: model probability 1.000000; horizon 600s anchored at 2026-09-27T06:41:00+00:00, valid until 2026-09-27T06:51:00+00:00.",
+          "Separate unfamiliarity score 0.006298; it is not an imminent-failure probability.",
+          "Held-out recall/F1 0; poor calibration; not operationally validated",
+          "Supplied SHAP associations: [{\"feature\": \"disk_read_bytes_per_second.latest\", \"contribution\": 0.8564810244133696, \"value\": 203909.3856722471}, {\"feature\": \"disk_read_bytes_per_second.rate_of_change\", \"contribution\": 0.002537364140152931, \"value\": 230.4227488791651}, {\"feature\": \"disk_read_bytes_per_second.ewma\", \"contribution\": -0.00028071238193660975, \"value\": 35735.945190802995}, {\"feature\": \"disk_write_bytes_per_second.max\", \"contribution\": -0.00023256090935319662, \"value\": 5161132.890551438}, {\"feature\": \"latency_p95_seconds.max\", \"contribution\": 0.0001842118799686432, \"value\": 0.34375}, {\"feature\": \"disk_read_bytes_per_second.delta\", \"contribution\": -0.00015681586228311062, \"value\": 203909.3856722471}, {\"feature\": \"disk_write_bytes_per_second.std\", \"contribution\": 0.00013549602590501308, \"value\": 661428.1626645661}, {\"feature\": \"disk_write_bytes_per_second.mean\", \"contribution\": -0.0001334301196038723, \"value\": 131994.96913237713}, {\"feature\": \"disk_throughput_times_latency\", \"contribution\": -7.894006557762623e-05, \"value\": 12182.97160902016}, {\"feature\": \"swap_usage_percent.median\", \"contribution\": 7.146410644054413e-05, \"value\": 0.0}]",
+          "Recorded active experiments: []",
+          "Recent alerts: []",
+          "Causal feature changes: {\"error_rate.delta\": null, \"cpu_load_1m.delta\": 0.59912109375, \"cpu_load_5m.delta\": 0.32763671875, \"cpu_load_15m.delta\": 0.2265625, \"request_rate.delta\": 2.568243656908553e-05, \"process_count.delta\": 0.0, \"uptime_seconds.delta\": 885.4027354717255, \"cpu_usage_percent.delta\": 10.6, \"error_rate.linear_trend\": null, \"cpu_load_1m.linear_trend\": 7.2691448418996e-05, \"cpu_load_5m.linear_trend\": 0.0004890425769338068, \"disk_usage_percent.delta\": 0.09999999999999964, \"swap_usage_percent.delta\": 0.0, \"cpu_load_15m.linear_trend\": 0.00033686424489533847, \"latency_p95_seconds.delta\": 0.019386363636363632, \"request_rate.linear_trend\": 8.889609944750935e-06, \"memory_usage_percent.delta\": -1.6999999999999957, \"process_count.linear_trend\": 3.705002688234984e-05, \"uptime_seconds.linear_trend\": 1.000552823205665, \"memory_available_bytes.delta\": 133464064.0, \"cpu_usage_percent.linear_trend\": 0.00048629111792900654, \"disk_usage_percent.linear_trend\": 0.00016598429158291058, \"swap_usage_percent.linear_trend\": 0.0, \"disk_read_bytes_per_second.delta\": 203909.3856722471, \"latency_p95_seconds.linear_trend\": -2.9351404722430795e-05, \"disk_write_bytes_per_second.delta\": 54873.77721680031, \"memory_usage_percent.linear_trend\": -0.0016839244596369935, \"memory_available_bytes.linear_trend\": 133959.11025709021, \"network_receive_bytes_per_second.delta\": 1174.188768798933, \"disk_read_bytes_per_second.linear_trend\": 26.519556286103057, \"network_transmit_bytes_per_second.delta\": 1174.188768798933, \"disk_write_bytes_per_second.linear_trend\": 178.94993974618515, \"network_receive_bytes_per_second.linear_trend\": 0.027129758811079548, \"network_transmit_bytes_per_second.linear_trend\": 0.027129758811079548}"
+        ],
+        "confidenceNotes": "The current model missed every positive held-out test window and had poor held-out calibration. This is an unvalidated model warning, not a confirmed future outage or root cause.",
+        "possiblePattern": "Supplied feature associations may indicate a change in behavior; they do not establish causation.",
+        "recommendedChecks": [
+          "Inspect the supplied telemetry and probe history.",
+          "Check application latency and error status.",
+          "Review the model's poor held-out recall and calibration before operational use."
+        ],
+        "forecast_valid_until": "2026-09-27T06:51:00+00:00"
+      },
+      "prediction_id": "49993db8-32cf-4265-95eb-9c78ee4187b7",
+      "failure_event_id": null,
+      "status": "forecast_expired_unconfirmed",
+      "predicted_at": "2026-09-27T06:41:17.626438Z",
+      "observed_at": null,
+      "confirmed_at": null,
+      "resolved_at": "2026-09-27T06:51:17.489632Z",
+      "id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+      "created_at": "2026-09-27T06:41:06.953409Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "a5e62f10-9abd-49e3-859a-8e8960d0690b",
+      "incident_id": "e20920bd-6016-4ee9-bb0e-9850c00ece13",
+      "channel": "slack",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:58:02.734446Z",
+      "delivered_at": "2026-09-27T06:58:02.998842Z"
+    },
+    {
+      "id": "130ce9d9-9222-48a9-af33-9d92a618d4dd",
+      "incident_id": "e20920bd-6016-4ee9-bb0e-9850c00ece13",
+      "channel": "generic",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:58:02.734446Z",
+      "delivered_at": "2026-09-27T06:58:02.972035Z"
+    },
+    {
+      "id": "da2d7231-855f-44a9-b3ac-05e3f67dde83",
+      "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+      "channel": "slack",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:52:03.132951Z",
+      "delivered_at": "2026-09-27T06:52:03.364720Z"
+    },
+    {
+      "id": "860c5aa7-2cd0-4550-906c-f2d885a34766",
+      "incident_id": "91c5849c-782a-4d3a-a7e4-bd39f9c5eeeb",
+      "channel": "generic",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:52:03.132951Z",
+      "delivered_at": "2026-09-27T06:52:03.339169Z"
+    },
+    {
+      "id": "c17f6113-912e-40a6-bf1f-b873600011ce",
+      "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+      "channel": "generic",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:41:06.953409Z",
+      "delivered_at": "2026-09-27T06:41:17.898659Z"
+    },
+    {
+      "id": "7f79702a-4548-4335-8c64-e2e6b247f6b2",
+      "incident_id": "99f8907d-4b79-45dd-bb81-7b42a9774e63",
+      "channel": "slack",
+      "status": "delivered",
+      "created_at": "2026-09-27T06:41:06.953409Z",
+      "delivered_at": "2026-09-27T06:41:17.928794Z"
+    }
+  ],
+  "new_pre_failure_alert_lead_seconds": null,
+  "useful_warning_at_least_60_seconds": false,
+  "outcome": "No new pre-failure alert; no predictive-success claim",
+  "baseline_already_high": true,
+  "model_limitation": "Frozen held-out recall/F1 are zero"
+}

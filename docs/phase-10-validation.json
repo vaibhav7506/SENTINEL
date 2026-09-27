@@ -1,0 +1,151 @@
+{
+  "verified_at": "2026-09-27T07:57:55.448925+00:00",
+  "phase_complete": false,
+  "local_release_preparation": "passed",
+  "external_deployment_acceptance": "pending_missing_target",
+  "unique_tests": 211,
+  "suites": [
+    {
+      "suite": "backend",
+      "passed": 107,
+      "skipped": 0
+    },
+    {
+      "suite": "inference",
+      "passed": 29,
+      "skipped": 0
+    },
+    {
+      "suite": "training",
+      "passed": 17,
+      "skipped": 0
+    },
+    {
+      "suite": "agent",
+      "passed": 12,
+      "skipped": 0
+    },
+    {
+      "suite": "demo",
+      "passed": 11,
+      "skipped": 0
+    },
+    {
+      "suite": "legacy",
+      "passed": 18,
+      "skipped": 0
+    },
+    {
+      "suite": "isolated_database",
+      "passed": 11,
+      "skipped": 0
+    },
+    {
+      "suite": "frontend",
+      "passed": 6,
+      "skipped": 0
+    }
+  ],
+  "cross_platform_repeats_not_added_to_total": {
+    "linux_unit_and_model_tests": 46,
+    "database": {
+      "native": {
+        "status": "passed",
+        "tests": 11,
+        "cohorts": 4,
+        "migration_round_trips": 4,
+        "schema_parity_checks": 8,
+        "source_log_sha256": "3de166b424800ee37603e2c126c7ab72039de87a066ae95a355cd6ce03663dc1"
+      },
+      "linux": {
+        "status": "passed",
+        "tests": 11,
+        "cohorts": 4,
+        "migration_round_trips": 4,
+        "schema_parity_checks": 8,
+        "source_log_sha256": "3f7c721dbce44d8bc814a04fd5c3403e0913ec7c8140736b1b6c7686de3a8d51"
+      }
+    }
+  },
+  "quality": {
+    "ruff": "passed",
+    "formatted_python_files": 119,
+    "strict_mypy_production_files": 50,
+    "frontend_lint_typecheck_and_build": "passed",
+    "actionlint": "passed"
+  },
+  "helm": {
+    "status": "passed",
+    "renders": [
+      {
+        "fixture": "demo",
+        "resource_count": 38,
+        "status": "passed",
+        "rendered_sha256": "0f50503b7124fcadcacbd1bab948523c63ab4c0a1e2f5c8bd285a648129671eb"
+      },
+      {
+        "fixture": "production",
+        "resource_count": 37,
+        "status": "passed",
+        "rendered_sha256": "ff40fb2ed18d7d382b624a4a7a0b47804210165768f2aec1f1c9df2988f14dd9"
+      },
+      {
+        "fixture": "minimal",
+        "resource_count": 29,
+        "status": "passed",
+        "rendered_sha256": "f6c037fb8775eae36c8df56fc4945ad63ce94447d6d4c2c0f0db9f795b183b3e"
+      }
+    ],
+    "unsafe_configurations_rejected": 6,
+    "deployed": false
+  },
+  "kubernetes_schema": {
+    "version": "1.37.0",
+    "valid": 104,
+    "invalid": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_cluster_deployed": false
+  },
+  "chart_package_sha256": "c82bc6b2647518290177ac69e4f9dfd49609c016dc47a08548c04d72908ef1bc",
+  "critical_image_scans": {
+    "images": 6,
+    "critical_findings": 0,
+    "exceptions": 0
+  },
+  "model": {
+    "version": "20260926T204848-mlp-1bcd8acd",
+    "threshold": 0.9875243902206421,
+    "held_out_recall": 0,
+    "held_out_f1": 0,
+    "positive_windows_missed": 10,
+    "operationally_validated": false
+  },
+  "local_safe_demo": {
+    "evidence": "phase-10-local-demo.json",
+    "baseline_probability": 1.0,
+    "actual_degradation_and_recovery": true,
+    "new_pre_failure_alert": false,
+    "lead_seconds": null,
+    "predictive_success_claim": false
+  },
+  "external_gates": {
+    "github_actions_run": "not run; no remote",
+    "ghcr_publication": "not performed",
+    "kubernetes_target": "no configured context",
+    "healthy_deployed_workloads": "not verified",
+    "deployed_agents_and_inference": "not verified",
+    "trusted_public_https": "no hostname/TLS target supplied",
+    "deployed_safe_demo": "not performed",
+    "argo_cd_sync": "not performed; optional existing-instance example only"
+  },
+  "required_inputs": [
+    "Approved GitHub repository/GHCR namespace",
+    "Kubernetes context and namespace",
+    "Storage provisioner, enforcing CNI and ingress controller",
+    "DNS hostname and trusted TLS Secret"
+  ],
+  "git_writes_performed": false,
+  "project_complete": false,
+  "remaining_local_warning": "Existing SQLAlchemy DISTINCT ON deprecation warnings; real persistence tests still pass"
+}

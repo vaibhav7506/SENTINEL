@@ -1,0 +1,53 @@
+{
+  "verified_at": "2026-09-27T07:52:49.396291+00:00",
+  "same_platform_weights_preprocessing_history_scores_and_evaluation": "exact across two independent offline fits",
+  "historical_classification_and_threshold": "exact",
+  "historical_calibration_absolute_tolerance": 1e-06,
+  "differences": [
+    {
+      "field": "evaluation.validation.calibration.brier_score",
+      "linux": 0.11289657652378082,
+      "historical_windows": 0.11289656907320023,
+      "absolute_difference": 7.450580596923828e-09
+    },
+    {
+      "field": "evaluation.validation.calibration.ece_10_bins",
+      "linux": 0.0025263610093489985,
+      "historical_windows": 0.00252610185871954,
+      "absolute_difference": 2.5915062945840867e-07
+    },
+    {
+      "field": "evaluation.validation.calibration.bins.0.mean_probability",
+      "linux": 0.15142495930194855,
+      "historical_windows": 0.15142466127872467,
+      "absolute_difference": 2.980232238769531e-07
+    },
+    {
+      "field": "evaluation.test.calibration.brier_score",
+      "linux": 0.490358829498291,
+      "historical_windows": 0.4903591573238373,
+      "absolute_difference": 3.2782554626464844e-07
+    },
+    {
+      "field": "evaluation.test.calibration.ece_10_bins",
+      "linux": 0.520664914449056,
+      "historical_windows": 0.5206652124722799,
+      "absolute_difference": 2.980232238769531e-07
+    },
+    {
+      "field": "evaluation.test.calibration.bins.0.mean_probability",
+      "linux": 0.14098623394966125,
+      "historical_windows": 0.14098593592643738,
+      "absolute_difference": 2.980232238769531e-07
+    },
+    {
+      "field": "evaluation.test.calibration.bins.1.mean_probability",
+      "linux": 0.2162190079689026,
+      "historical_windows": 0.2162187099456787,
+      "absolute_difference": 2.980232238769531e-07
+    }
+  ],
+  "maximum_absolute_difference": 3.2782554626464844e-07,
+  "threshold_exact": true,
+  "frozen_artifacts_changed": false
+}
