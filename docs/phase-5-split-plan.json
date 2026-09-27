@@ -1,0 +1,10 @@
+{
+  "declared_at": "2026-09-26T19:49:22.110401+00:00",
+  "train_boundary": "2026-09-26T17:58:00+00:00",
+  "test_boundary": "2026-09-26T20:16:00+00:00",
+  "validation_campaign_not_before": "2026-09-26T20:05:00+00:00",
+  "test_campaign_not_before": "2026-09-26T20:46:00+00:00",
+  "method": "predeclared chronological partitions with interval purge",
+  "revision_reason": "Stack/processes stopped before usable validation was collected. Previous plan abandoned without fitting/evaluating any model; fresh future held-out period declared.",
+  "failure_definition": "three consecutive SLO breaches within 15 seconds, matching persisted FailureEvent confirmation"
+}

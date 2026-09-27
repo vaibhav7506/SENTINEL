@@ -1,0 +1,6 @@
+{
+  "method": "regularized Platt scaling",
+  "slope": -0.04604896903038025,
+  "intercept": -1.7969582080841064,
+  "fit_partition": "validation"
+}

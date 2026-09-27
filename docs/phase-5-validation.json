@@ -1,0 +1,18 @@
+{
+  "verified_at": "2026-09-26T20:49:55.379729+00:00",
+  "model_version": "20260926T204848-mlp-1bcd8acd",
+  "dataset_sha256": "1bcd8acdc1fab6f90d3b017734bef77c8a2c8a80dc346421313109037884c780",
+  "verified_artifact_count": 7,
+  "reloaded_score_count": 38,
+  "actually_healthy_isolation_forest_inputs_verified": 5,
+  "actual_supervised_feature_and_label_rows_verified": 54,
+  "validation_only_threshold_verified": true,
+  "evaluation_metrics_recomputed": true,
+  "database_model_and_evaluation_verified": true,
+  "later_phase_table_counts": {
+    "predictions": 0,
+    "incidents": 0,
+    "alerts": 0,
+    "remediation_proposals": 0
+  }
+}

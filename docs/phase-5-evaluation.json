@@ -1,0 +1,574 @@
+{
+  "path": "C:\\Users\\vs250\\Desktop\\coding\\project\\SENTINEL\\.runtime\\phase9\\reproducibility\\b16a9529a1f14572b8496a39cbb013da\\second\\20260927T054618-mlp-1bcd8acd",
+  "version": "20260927T054618-mlp-1bcd8acd",
+  "trained_at": "2026-09-27T05:46:19.027330+00:00",
+  "seed": 1729,
+  "dataset_reference": "C:\\Users\\vs250\\Desktop\\coding\\project\\SENTINEL\\artifacts\\datasets\\1bcd8acdc1fab6f9",
+  "dataset_sha256": "1bcd8acdc1fab6f90d3b017734bef77c8a2c8a80dc346421313109037884c780",
+  "dataset_report_sha256": "ff20cae369eb9e85fcf3a42c7060e7fa55f56c5e07eb0eb27a3728288b7fdf1e",
+  "feature_schema": {
+    "version": "v1-w900-e60-r300",
+    "window_seconds": 900,
+    "hash": "ac1a64a8b97f9fed8b7f35c55dccb2013adb8dbd33cc2881ccdcb4a311da8227",
+    "names": [
+      "cpu_usage_percent.latest",
+      "cpu_usage_percent.mean",
+      "cpu_usage_percent.median",
+      "cpu_usage_percent.std",
+      "cpu_usage_percent.min",
+      "cpu_usage_percent.max",
+      "cpu_usage_percent.delta",
+      "cpu_usage_percent.percentage_change",
+      "cpu_usage_percent.linear_trend",
+      "cpu_usage_percent.ewma",
+      "cpu_usage_percent.rolling_variance",
+      "cpu_usage_percent.rate_of_change",
+      "memory_usage_percent.latest",
+      "memory_usage_percent.mean",
+      "memory_usage_percent.median",
+      "memory_usage_percent.std",
+      "memory_usage_percent.min",
+      "memory_usage_percent.max",
+      "memory_usage_percent.delta",
+      "memory_usage_percent.percentage_change",
+      "memory_usage_percent.linear_trend",
+      "memory_usage_percent.ewma",
+      "memory_usage_percent.rolling_variance",
+      "memory_usage_percent.rate_of_change",
+      "memory_available_bytes.latest",
+      "memory_available_bytes.mean",
+      "memory_available_bytes.median",
+      "memory_available_bytes.std",
+      "memory_available_bytes.min",
+      "memory_available_bytes.max",
+      "memory_available_bytes.delta",
+      "memory_available_bytes.percentage_change",
+      "memory_available_bytes.linear_trend",
+      "memory_available_bytes.ewma",
+      "memory_available_bytes.rolling_variance",
+      "memory_available_bytes.rate_of_change",
+      "swap_usage_percent.latest",
+      "swap_usage_percent.mean",
+      "swap_usage_percent.median",
+      "swap_usage_percent.std",
+      "swap_usage_percent.min",
+      "swap_usage_percent.max",
+      "swap_usage_percent.delta",
+      "swap_usage_percent.percentage_change",
+      "swap_usage_percent.linear_trend",
+      "swap_usage_percent.ewma",
+      "swap_usage_percent.rolling_variance",
+      "swap_usage_percent.rate_of_change",
+      "disk_usage_percent.latest",
+      "disk_usage_percent.mean",
+      "disk_usage_percent.median",
+      "disk_usage_percent.std",
+      "disk_usage_percent.min",
+      "disk_usage_percent.max",
+      "disk_usage_percent.delta",
+      "disk_usage_percent.percentage_change",
+      "disk_usage_percent.linear_trend",
+      "disk_usage_percent.ewma",
+      "disk_usage_percent.rolling_variance",
+      "disk_usage_percent.rate_of_change",
+      "disk_read_bytes_per_second.latest",
+      "disk_read_bytes_per_second.mean",
+      "disk_read_bytes_per_second.median",
+      "disk_read_bytes_per_second.std",
+      "disk_read_bytes_per_second.min",
+      "disk_read_bytes_per_second.max",
+      "disk_read_bytes_per_second.delta",
+      "disk_read_bytes_per_second.percentage_change",
+      "disk_read_bytes_per_second.linear_trend",
+      "disk_read_bytes_per_second.ewma",
+      "disk_read_bytes_per_second.rolling_variance",
+      "disk_read_bytes_per_second.rate_of_change",
+      "disk_write_bytes_per_second.latest",
+      "disk_write_bytes_per_second.mean",
+      "disk_write_bytes_per_second.median",
+      "disk_write_bytes_per_second.std",
+      "disk_write_bytes_per_second.min",
+      "disk_write_bytes_per_second.max",
+      "disk_write_bytes_per_second.delta",
+      "disk_write_bytes_per_second.percentage_change",
+      "disk_write_bytes_per_second.linear_trend",
+      "disk_write_bytes_per_second.ewma",
+      "disk_write_bytes_per_second.rolling_variance",
+      "disk_write_bytes_per_second.rate_of_change",
+      "network_receive_bytes_per_second.latest",
+      "network_receive_bytes_per_second.mean",
+      "network_receive_bytes_per_second.median",
+      "network_receive_bytes_per_second.std",
+      "network_receive_bytes_per_second.min",
+      "network_receive_bytes_per_second.max",
+      "network_receive_bytes_per_second.delta",
+      "network_receive_bytes_per_second.percentage_change",
+      "network_receive_bytes_per_second.linear_trend",
+      "network_receive_bytes_per_second.ewma",
+      "network_receive_bytes_per_second.rolling_variance",
+      "network_receive_bytes_per_second.rate_of_change",
+      "network_transmit_bytes_per_second.latest",
+      "network_transmit_bytes_per_second.mean",
+      "network_transmit_bytes_per_second.median",
+      "network_transmit_bytes_per_second.std",
+      "network_transmit_bytes_per_second.min",
+      "network_transmit_bytes_per_second.max",
+      "network_transmit_bytes_per_second.delta",
+      "network_transmit_bytes_per_second.percentage_change",
+      "network_transmit_bytes_per_second.linear_trend",
+      "network_transmit_bytes_per_second.ewma",
+      "network_transmit_bytes_per_second.rolling_variance",
+      "network_transmit_bytes_per_second.rate_of_change",
+      "process_count.latest",
+      "process_count.mean",
+      "process_count.median",
+      "process_count.std",
+      "process_count.min",
+      "process_count.max",
+      "process_count.delta",
+      "process_count.percentage_change",
+      "process_count.linear_trend",
+      "process_count.ewma",
+      "process_count.rolling_variance",
+      "process_count.rate_of_change",
+      "uptime_seconds.latest",
+      "uptime_seconds.mean",
+      "uptime_seconds.median",
+      "uptime_seconds.std",
+      "uptime_seconds.min",
+      "uptime_seconds.max",
+      "uptime_seconds.delta",
+      "uptime_seconds.percentage_change",
+      "uptime_seconds.linear_trend",
+      "uptime_seconds.ewma",
+      "uptime_seconds.rolling_variance",
+      "uptime_seconds.rate_of_change",
+      "cpu_load_1m.latest",
+      "cpu_load_1m.mean",
+      "cpu_load_1m.median",
+      "cpu_load_1m.std",
+      "cpu_load_1m.min",
+      "cpu_load_1m.max",
+      "cpu_load_1m.delta",
+      "cpu_load_1m.percentage_change",
+      "cpu_load_1m.linear_trend",
+      "cpu_load_1m.ewma",
+      "cpu_load_1m.rolling_variance",
+      "cpu_load_1m.rate_of_change",
+      "cpu_load_5m.latest",
+      "cpu_load_5m.mean",
+      "cpu_load_5m.median",
+      "cpu_load_5m.std",
+      "cpu_load_5m.min",
+      "cpu_load_5m.max",
+      "cpu_load_5m.delta",
+      "cpu_load_5m.percentage_change",
+      "cpu_load_5m.linear_trend",
+      "cpu_load_5m.ewma",
+      "cpu_load_5m.rolling_variance",
+      "cpu_load_5m.rate_of_change",
+      "cpu_load_15m.latest",
+      "cpu_load_15m.mean",
+      "cpu_load_15m.median",
+      "cpu_load_15m.std",
+      "cpu_load_15m.min",
+      "cpu_load_15m.max",
+      "cpu_load_15m.delta",
+      "cpu_load_15m.percentage_change",
+      "cpu_load_15m.linear_trend",
+      "cpu_load_15m.ewma",
+      "cpu_load_15m.rolling_variance",
+      "cpu_load_15m.rate_of_change",
+      "request_rate.latest",
+      "request_rate.mean",
+      "request_rate.median",
+      "request_rate.std",
+      "request_rate.min",
+      "request_rate.max",
+      "request_rate.delta",
+      "request_rate.percentage_change",
+      "request_rate.linear_trend",
+      "request_rate.ewma",
+      "request_rate.rolling_variance",
+      "request_rate.rate_of_change",
+      "error_rate.latest",
+      "error_rate.mean",
+      "error_rate.median",
+      "error_rate.std",
+      "error_rate.min",
+      "error_rate.max",
+      "error_rate.delta",
+      "error_rate.percentage_change",
+      "error_rate.linear_trend",
+      "error_rate.ewma",
+      "error_rate.rolling_variance",
+      "error_rate.rate_of_change",
+      "latency_p95_seconds.latest",
+      "latency_p95_seconds.mean",
+      "latency_p95_seconds.median",
+      "latency_p95_seconds.std",
+      "latency_p95_seconds.min",
+      "latency_p95_seconds.max",
+      "latency_p95_seconds.delta",
+      "latency_p95_seconds.percentage_change",
+      "latency_p95_seconds.linear_trend",
+      "latency_p95_seconds.ewma",
+      "latency_p95_seconds.rolling_variance",
+      "latency_p95_seconds.rate_of_change",
+      "cpu_trend_times_latency_trend",
+      "memory_trend_times_latency_trend",
+      "error_trend_times_latency",
+      "disk_throughput_times_latency",
+      "network_change_times_error_rate"
+    ]
+  },
+  "horizon_seconds": 600,
+  "failure_confirmation": {
+    "consecutive_breaches": 3,
+    "max_span_seconds": 15
+  },
+  "label_confirmation_tail_seconds": 15,
+  "negative_label_mode": "no sustained three-breach failure",
+  "split": {
+    "declared_at": "2026-09-26T19:49:22.110401+00:00",
+    "train_boundary": "2026-09-26T17:58:00+00:00",
+    "test_boundary": "2026-09-26T20:16:00+00:00",
+    "validation_campaign_not_before": "2026-09-26T20:05:00+00:00",
+    "test_campaign_not_before": "2026-09-26T20:46:00+00:00",
+    "method": "predeclared chronological partitions with interval purge",
+    "revision_reason": "Stack/processes stopped before usable validation was collected. Previous plan abandoned without fitting/evaluating any model; fresh future held-out period declared.",
+    "failure_definition": "three consecutive SLO breaches within 15 seconds, matching persisted FailureEvent confirmation",
+    "purged_samples": 33,
+    "status": "available",
+    "strict_boundary": "window_start > lower; window_end + purge horizon < upper",
+    "purge_horizon_seconds": 615
+  },
+  "split_counts": {
+    "train": 16,
+    "validation": 23,
+    "test": 15
+  },
+  "positive_failure_types_by_split": {
+    "train": {
+      "latency_slo_breach": 10
+    },
+    "validation": {
+      "latency_slo_breach": 6
+    },
+    "test": {
+      "http_error_slo_breach": 10
+    }
+  },
+  "threshold": 0.9875243902206421,
+  "threshold_selection": "maximize validation F1; ties choose larger threshold",
+  "normalization_fit_partition": "train",
+  "positive_class_weight": 0.6,
+  "training": {
+    "epochs": 31,
+    "best_epoch": 1,
+    "patience": 30,
+    "best_validation_loss": 18.488964080810547,
+    "optimizer": "AdamW lr0.001 weight_decay0.01"
+  },
+  "isolation_forest": {
+    "fit_partition": "fully observed healthy training input windows",
+    "criterion": "All probes across complete input window satisfy the SLO; no future-positive label. Isolated future degradation may be unlabeled. Full input+future interval stays in train.",
+    "input_sha256": "e2a65e3cae81071aa20d8df0ee2f46ad02dd7ae91a275075cc16efb4d959c746",
+    "samples": 5,
+    "estimators": 200,
+    "contamination": "auto"
+  },
+  "calibration": {
+    "method": "regularized Platt scaling",
+    "slope": -0.04604896903038025,
+    "intercept": -1.7969582080841064,
+    "fit_partition": "validation",
+    "trigger": "validation ECE > 0.1 or Brier worse than training prevalence",
+    "poor_calibration_detected": true,
+    "validation_before": {
+      "brier_score": 0.20285911858081818,
+      "ece_10_bins": 0.2543615076852881,
+      "bins": [
+        {
+          "lower": 0.0,
+          "count": 11,
+          "mean_probability": 0.047907233238220215,
+          "observed_rate": 0.27272728085517883
+        },
+        {
+          "lower": 0.1,
+          "count": 1,
+          "mean_probability": 0.13732421398162842,
+          "observed_rate": 0.0
+        },
+        {
+          "lower": 0.2,
+          "count": 7,
+          "mean_probability": 0.268722802400589,
+          "observed_rate": 0.0
+        },
+        {
+          "lower": 0.3,
+          "count": 2,
+          "mean_probability": 0.346429705619812,
+          "observed_rate": 0.5
+        },
+        {
+          "lower": 0.4,
+          "count": 2,
+          "mean_probability": 0.47411513328552246,
+          "observed_rate": 1.0
+        }
+      ]
+    },
+    "validation_after": {
+      "brier_score": 0.11289656907320023,
+      "ece_10_bins": 0.0025260966757069464,
+      "bins": [
+        {
+          "lower": 0.1,
+          "count": 20,
+          "mean_probability": 0.15142466127872467,
+          "observed_rate": 0.15000000596046448
+        },
+        {
+          "lower": 0.9,
+          "count": 3,
+          "mean_probability": 0.9901309609413147,
+          "observed_rate": 1.0
+        }
+      ]
+    }
+  },
+  "evaluation": {
+    "validation": {
+      "samples": 23,
+      "label_distribution": {
+        "0": 17,
+        "1": 6
+      },
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "pr_auc": 0.6146903820816864,
+      "pr_auc_definition": "average precision (step integral)",
+      "roc_auc": 0.5098039215686274,
+      "classification_baselines": {
+        "always_warn_precision": 0.2608695652173913,
+        "always_warn_recall": 1.0,
+        "always_warn_f1": 0.41379310344827586,
+        "never_warn_f1": 0.0,
+        "random_ranking_pr_auc": 0.2608695652173913
+      },
+      "confusion_matrix": {
+        "tn": 17,
+        "fp": 0,
+        "fn": 3,
+        "tp": 3
+      },
+      "non_failure_scoring_host_hours": 0.2833333333333333,
+      "false_warning_windows_per_non_failure_host_hour": 0.0,
+      "false_alert_epochs": 0,
+      "false_alerts_per_non_failure_host_hour": 0.0,
+      "false_alerts_per_non_failure_host_day": 0.0,
+      "alert_epoch_policy": "5-minute host cooldown; offline eligible windows only",
+      "exposure_policy": "one minute per eligible negative row; gaps excluded",
+      "useful_warning_minimum_lead_seconds": 60,
+      "lead_time_by_event": [
+        {
+          "event_id": "380de39a-235d-46be-b794-2035bc243bec",
+          "failure_type": "latency_slo_breach",
+          "earliest_useful_warning": "2026-09-26T20:00:00+00:00",
+          "lead_seconds": 302.413452,
+          "eligible_pre_failure_windows": 6
+        }
+      ],
+      "per_failure_type": {
+        "latency_slo_breach": {
+          "f1": 0.6666666666666666,
+          "pr_auc": 0.6146903820816864,
+          "roc_auc": 0.5098039215686274,
+          "confusion_matrix": {
+            "tn": 17,
+            "fp": 0,
+            "fn": 3,
+            "tp": 3
+          },
+          "lead_time_by_event": [
+            {
+              "event_id": "380de39a-235d-46be-b794-2035bc243bec",
+              "failure_type": "latency_slo_breach",
+              "earliest_useful_warning": "2026-09-26T20:00:00+00:00",
+              "lead_seconds": 302.413452,
+              "eligible_pre_failure_windows": 6
+            }
+          ],
+          "positive_windows": 6,
+          "true_positive_windows": 3,
+          "recall": 0.5,
+          "precision_against_shared_healthy_baseline": 1.0
+        }
+      },
+      "calibration": {
+        "brier_score": 0.11289656907320023,
+        "ece_10_bins": 0.00252610185871954,
+        "bins": [
+          {
+            "lower": 0.1,
+            "count": 20,
+            "mean_probability": 0.15142466127872467,
+            "observed_rate": 0.15
+          },
+          {
+            "lower": 0.9,
+            "count": 3,
+            "mean_probability": 0.9901309609413147,
+            "observed_rate": 1.0
+          }
+        ]
+      },
+      "anomaly_score": {
+        "definition": "negative IsolationForest decision_function; larger is unfamiliar",
+        "mean": 0.00330562321091918,
+        "min": -0.025110221909273978,
+        "max": 0.02707185563637049,
+        "combined_with_failure_probability": false
+      }
+    },
+    "test": {
+      "samples": 15,
+      "label_distribution": {
+        "0": 5,
+        "1": 10
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "pr_auc": 0.668068043068043,
+      "pr_auc_definition": "average precision (step integral)",
+      "roc_auc": 0.3,
+      "classification_baselines": {
+        "always_warn_precision": 0.6666666666666666,
+        "always_warn_recall": 1.0,
+        "always_warn_f1": 0.8,
+        "never_warn_f1": 0.0,
+        "random_ranking_pr_auc": 0.6666666666666666
+      },
+      "confusion_matrix": {
+        "tn": 5,
+        "fp": 0,
+        "fn": 10,
+        "tp": 0
+      },
+      "non_failure_scoring_host_hours": 0.08333333333333333,
+      "false_warning_windows_per_non_failure_host_hour": 0.0,
+      "false_alert_epochs": 0,
+      "false_alerts_per_non_failure_host_hour": 0.0,
+      "false_alerts_per_non_failure_host_day": 0.0,
+      "alert_epoch_policy": "5-minute host cooldown; offline eligible windows only",
+      "exposure_policy": "one minute per eligible negative row; gaps excluded",
+      "useful_warning_minimum_lead_seconds": 60,
+      "lead_time_by_event": [
+        {
+          "event_id": "fb747c5b-5d23-481a-bc6a-67ca8f54ee46",
+          "failure_type": "http_error_slo_breach",
+          "earliest_useful_warning": null,
+          "lead_seconds": null,
+          "eligible_pre_failure_windows": 10
+        }
+      ],
+      "per_failure_type": {
+        "http_error_slo_breach": {
+          "f1": 0.0,
+          "pr_auc": 0.668068043068043,
+          "roc_auc": 0.3,
+          "confusion_matrix": {
+            "tn": 5,
+            "fp": 0,
+            "fn": 10,
+            "tp": 0
+          },
+          "lead_time_by_event": [
+            {
+              "event_id": "fb747c5b-5d23-481a-bc6a-67ca8f54ee46",
+              "failure_type": "http_error_slo_breach",
+              "earliest_useful_warning": null,
+              "lead_seconds": null,
+              "eligible_pre_failure_windows": 10
+            }
+          ],
+          "positive_windows": 10,
+          "true_positive_windows": 0,
+          "recall": 0.0,
+          "precision_against_shared_healthy_baseline": 0.0
+        }
+      },
+      "calibration": {
+        "brier_score": 0.4903591573238373,
+        "ece_10_bins": 0.5206652124722799,
+        "bins": [
+          {
+            "lower": 0.1,
+            "count": 14,
+            "mean_probability": 0.14098593592643738,
+            "observed_rate": 0.6428571428571429
+          },
+          {
+            "lower": 0.2,
+            "count": 1,
+            "mean_probability": 0.2162187099456787,
+            "observed_rate": 1.0
+          }
+        ]
+      },
+      "anomaly_score": {
+        "definition": "negative IsolationForest decision_function; larger is unfamiliar",
+        "mean": 0.015136381601336428,
+        "min": 0.004040456066397802,
+        "max": 0.035777886194539366,
+        "combined_with_failure_probability": false
+      }
+    }
+  },
+  "git_commit": "e6eec75ed0a330c4f8d28d144d009a9f54673923",
+  "git_working_tree": "uncommitted project; commit alone does not identify this source",
+  "dependencies": {
+    "torch": "2.14.0+cpu",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.3",
+    "joblib": "1.6.0"
+  },
+  "limitations": [
+    "Small single-host local chaos dataset; correlated minute windows",
+    "Validation reused for early stopping, calibration and threshold; validation metrics optimistic",
+    "Abrupt injections have no guaranteed precursor; warnings may be coincidental",
+    "Only events with eligible pre-failure windows enter lead-time metrics",
+    "False-alert rates extrapolate short non-failure exposure; no continuous deployment estimate",
+    "Unfamiliarity score is separate from supervised failure probability"
+  ],
+  "evaluated_failure_types": [
+    "http_error_slo_breach"
+  ],
+  "observed_failure_types": {
+    "latency_slo_breach": 4,
+    "http_error_slo_breach": 4
+  },
+  "test_calibration_warning": true,
+  "test_calibration_policy": "Held-out calibration is reported without test adaptation; recalibration requires new validation data",
+  "source_sha256": {
+    "training\\train.py": "bf438e9d3b9d65996ee3b57fc79e09af5e4a72450367e8f66a56e5923b1cc44a",
+    "training\\runtime.py": "64a3ffa80cbec6a83f4580502deefe27b3afcaa0d3f1e4a61b65294ec6dd753c",
+    "training\\labels.py": "7920d385c0aa9343c063db69a2142541b43a4303e203f4889d4e7ac6104ba789",
+    "training\\build_dataset.py": "72f98b307fbf592c99fa47c481a31a7bdda069d7567c8d9b856d782446ae9e2a",
+    "training\\uv.lock": "57bc57735fb4705833b039b31ec134de8134e071fec316243262ba2b12060bd7"
+  },
+  "artifact_sha256": {
+    "best_checkpoint.pt": "edf91aef4419489beaacac84ab7835b08e0551f6187249cec9bb8c29819a23da",
+    "calibration.json": "4d3701eb59121308432f51cee8c3ecd8c6d1ab1e5177c5e0d45fa387caa0ecdd",
+    "history.json": "60081e70b21c13f073509d68ad958a1d06f7730ec0a6dbbb5e2850daa44f46f8",
+    "isolation_forest.joblib": "e835a3ff3086982e96e07287b4d72e1c1a71ecae103a250c88642bf77409079f",
+    "mlp.pt": "6e458078e3c8a0a3c3eb9efe38913b6201c00bc52245c442c25b379a679e4a39",
+    "normalizer.json": "44df63155ab3999c9e4633f41d61b607eee6fc298059c92d61b500b3780ec3c8",
+    "scores.jsonl": "66e519f236665eb1edc852f5507882cb04cb34d7b15e32428027cf70df48fdb0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "declared_at": "2026-09-26T17:33:10.868914+00:00",
+  "train_boundary": "2026-09-26T17:58:00+00:00",
+  "test_boundary": "2026-09-26T19:00:00+00:00",
+  "test_campaign_not_before": "2026-09-26T19:31:00+00:00",
+  "method": "chronological partitions; entire input plus label interval must fit",
+  "revision_reason": "Long actual telemetry gap; previous plan had insufficient training history. Revised before held-out period.",
+  "validation_campaign_not_before": "2026-09-26T18:29:00+00:00",
+  "validation_timing_reason": "More healthy validation horizons within unchanged predeclared boundaries; set before held-out period.",
+  "updated_at": "2026-09-26T18:32:25.128972+00:00",
+  "held_out_revision_reason": "Validation baseline reset by an actual isolated latency spike. Extended before either held-out period began; no test scores observed."
+}
