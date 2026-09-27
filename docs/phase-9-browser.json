@@ -1,0 +1,104 @@
+{
+  "desktop": [
+    {
+      "focus": "",
+      "heading": "Operational overview",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Host inventory",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Prediction ledger",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Incident evidence",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Controlled experiments",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Model registry",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "focus": "main-content",
+      "heading": "Model evaluation",
+      "overflow": false,
+      "width": 1440
+    },
+    {
+      "heading": "Docker Linux VM",
+      "overflow": false,
+      "width": 1440
+    }
+  ],
+  "mobile": [
+    {
+      "heading": "Docker Linux VM",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Operational overview",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Host inventory",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Prediction ledger",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Incident evidence",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Controlled experiments",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Model registry",
+      "overflow": false,
+      "width": 390
+    },
+    {
+      "heading": "Model evaluation",
+      "overflow": false,
+      "width": 390
+    }
+  ],
+  "errors": [],
+  "partition_switch": true,
+  "held_out": true,
+  "filter_empty": true,
+  "unknown_host": true,
+  "host_telemetry": true,
+  "api_disconnected": true,
+  "api_recovered": true,
+  "recovery_kind": "automatic 30-second polling",
+  "menu_escape_focus": true,
+  "checked_at": "2026-09-27T05:55:07.236Z"
+}

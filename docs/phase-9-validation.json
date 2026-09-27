@@ -1,0 +1,129 @@
+{
+  "verified_at": "2026-09-27T06:00:58.730316+00:00",
+  "phase": 9,
+  "status": "passed",
+  "phase_status": "complete; stopped before Phase 10",
+  "phase_10_started": false,
+  "tests": {
+    "python_passed": 194,
+    "frontend_passed": 6,
+    "total_passed": 200,
+    "skipped": 0,
+    "isolated_database_tests": 10,
+    "database_cohorts": 4,
+    "final_inference_database_recheck": {
+      "passed": 4,
+      "skipped": 0,
+      "reason": "fixture independence",
+      "migration_round_trip": "head to base to head"
+    }
+  },
+  "checks": {
+    "ruff": "passed",
+    "ruff_formatted_files": 101,
+    "strict_typing": "passed on 39 production source files",
+    "frontend": [
+      "lint passed",
+      "typecheck passed",
+      "6 tests passed",
+      "production build passed"
+    ],
+    "container_builds": "API, feature worker, observer, Console and demo passed",
+    "live_stack": {
+      "services": 9,
+      "health_checks": 7,
+      "http_checks": 7,
+      "status": "passed"
+    },
+    "required_metrics_scraped": 9,
+    "grafana_self_panels": 12,
+    "desktop_views": 8,
+    "mobile_views": 8,
+    "document_overflow": false,
+    "api_disconnect_recovery": "automatic 30-second polling",
+    "prometheus_outage_recovery": "passed",
+    "database_unavailable_safe_response": "passed against closed local port; live DB preserved",
+    "training_reproducibility": "exact equal weights, history, scores, preprocessing, cutoff and evaluation",
+    "fresh_frozen_scores": "failure probability and anomaly reproduced",
+    "earlier_phase_evidence": "Phase 7 and 8 hashes unchanged",
+    "model_artifacts": "unchanged",
+    "secret_screening": {
+      "verified_at": "2026-09-27T05:59:27.516195+00:00",
+      "status": "passed",
+      "configuration_secrets_screened": 3,
+      "files_screened": 124,
+      "container_log_streams_screened": 4,
+      "credential_matches": 0,
+      "scope": "Screening covers configured nonempty credentials only"
+    },
+    "external_messages_sent": 0,
+    "remediation_executions": 0
+  },
+  "recorded_live_totals": {
+    "predictions": 113,
+    "incidents": 0,
+    "alerts": 0,
+    "proposals": 0,
+    "models": 1,
+    "evaluations": 1,
+    "failure_events": 10,
+    "experiments": 10,
+    "hosts": 2
+  },
+  "frozen_model_threshold": 0.9875243902206421,
+  "held_out_recall": 0.0,
+  "predictive_success_claim": false,
+  "limitations": [
+    "Model missed all ten positive held-out windows and remains poorly calibrated",
+    "Small local dataset; no generalization or production capacity claim",
+    "Read-only endpoints retain existing loopback scope; production auth, HTTPS and distributed limits are gated Phase 10",
+    "Joblib remains a trusted local artifact boundary; hashes do not authenticate publishers",
+    "External LLM/Slack/RunbookOS failures use mocks; only the local webhook receiver is authorized",
+    "SQLAlchemy emits DISTINCT ON deprecation warnings; queries and current pinned version pass integration tests"
+  ],
+  "evidence": {
+    "phase-9-browser.json": {
+      "sha256": "1a7f21bfab9ee38b3d889da50c867c1bfccf8d7a0b0a372ef8f365a3153b06cb"
+    },
+    "phase-9-disconnected.jpg": {
+      "sha256": "a6d0e671278e0dd1b04d6d0c3cfa2798eea020223528342f4631683fb6bad447"
+    },
+    "phase-9-live-inference.json": {
+      "sha256": "32fd0cd5c0f073590cd61bd3dd1eaec60888debf4907e4fe8acd2f5269f38770"
+    },
+    "phase-9-mobile.jpg": {
+      "sha256": "761df3bc16c2e9a5f0e235a56438d922cb97a6aeb974ce246d346ef239ab9169"
+    },
+    "phase-9-overview.jpg": {
+      "sha256": "13cc4c0e9470955e40b6a3724e6e54e7b76fa1c7bbfe2a2dd32d4c57aaf9eca3"
+    },
+    "phase-9-processes.json": {
+      "sha256": "6f710da059fa08aa80966e9483ff1e506d63dd752825a8e330b115800f082371"
+    },
+    "phase-9-prometheus-outage.json": {
+      "sha256": "1b8703d274276b690f3a85fbd0eb00d5e669cdaab5213366a28a77269833db00"
+    },
+    "phase-9-proposal-replay.json": {
+      "sha256": "f2ca5a1bea6ab11e79e44f9eb6515ab9142d6a9095b520acad507ba62e12097b"
+    },
+    "phase-9-runtime.json": {
+      "sha256": "0ceebc70b054c6991d61e0906612977e7c6796beaa9f0cc40c1edd0923ce9fde"
+    },
+    "phase-9-secret-screening.json": {
+      "sha256": "fb6db5d3e75f6547a93f517616e772d117bd062ca272e2cb0a636bef97c875dd"
+    },
+    "phase-9-security-review.md": {
+      "sha256": "f8bc044eb869ceaf177aef1c02e17888e70e244a9a8baed5e2d25af9395677f8"
+    },
+    "phase-9-test-plan.md": {
+      "sha256": "155abf6acbbef348d453dac38f4822b87b4d0dabd448bd3628ebf43c72f67973"
+    },
+    "phase-9-tests.json": {
+      "sha256": "60b3d73a78e8296536cb12e393cd1ceb679f3c331dd9bdd3f092cd1df472c95f"
+    },
+    "phase-9.md": {
+      "sha256": "db425f52549e904d803d444bd61b2329395b1c223f4d09e17246b8325f1f0ccb"
+    }
+  },
+  "remaining_required_work": []
+}

@@ -1,0 +1,18 @@
+# Phase 9 security review
+
+| Area | Review result and implemented boundary |
+|---|---|
+| Secrets and errors | Settings use secret fields; SQL hides parameters; API returns fixed failures and validation messages without input/context; generated request IDs; template paths omit user-controlled path/query data; HTTP client/access debug logs disabled. No real credentials appear in the saved acceptance report. |
+| Injection | SQLAlchemy binds values; PromQL labels JSON-escaped; React escapes text; Slack uses bounded plain-text blocks; LLM can choose only supplied fact IDs and fixed diagnostic checks; no generated commands or arbitrary prose drive actions. |
+| Input and resource bounds | API and direct demo control body cap 16 KiB, streamed read deadline 5 seconds; API work deadline 10 seconds; URI bounds; SQL statement timeout 10 seconds and idle transaction timeout 30 seconds; bounded connection pools, telemetry timeouts, artifact sizes, API response cap 4 MiB, list limits and SQL host aggregates. |
+| CORS and browser policy | No permissive CORS middleware. Console sends same-origin requests and sets CSP, no-referrer and nosniff headers. CSP permits inline styles for existing charts but restricts script/connect sources to self and blocks framing/objects. |
+| Mutation authentication | Both API and independent demo injector require constant-time bearer-token comparison and explicit enabled, environment, namespace and fixed-target authorization. Production remains forbidden even if mistakenly allowlisted. Invalid input is sanitized. |
+| Rate limits | API experiment starts and independent injector starts: six authorized attempts per minute per process. Console: 120 reads per minute per API process. State has bounded memory; cancelling an experiment remains available. These local limits are not distributed production rate limiting. |
+| Chaos | Fixed local demo URLs, fixed failure types, duration 10–120 seconds and latency 1–2000 ms; no shell/SSH/arbitrary host/URL accepted. Injector uses monotonic expiry. Unconfirmed control/cancellation outcomes remain unknown with bounded expiry. Corrupt records cannot bypass scope or reach injector. |
+| Artifacts | Trusted workspace model directory only; resolved artifact locations cannot escape it; required manifest, digests, finite/dimensional contracts and frozen dataset schema checked before pickle loading. Hashes detect corruption, not publisher authenticity. Joblib remains a trusted-local-artifact boundary. |
+| Delivery/restart | Durable sending state precedes HTTP; ambiguous transport/interruption becomes unknown and is not automatically retried; definite rejections get at most three attempts. Unique records and idempotency keys suppress duplicates. Expired forecasts close as unconfirmed and cannot imply host recovery. |
+| Remediation | Optional mock intake only; human approval required, execution state remains not_started. Sentinel exposes no approve/execute mutation route and does not execute remediation. |
+
+The nine-service Compose deployment binds exposed ports to loopback. The API and demo containers run as unprivileged users. Read-only API endpoints are unauthenticated within this existing local scope; production authentication, distributed limits, HTTPS and deployment controls belong to the explicitly gated next phase. This review does not claim those controls exist.
+
+No external LLM/Slack/RunbookOS transmission was performed. Transport failures were mocked, database cohorts were isolated, and the local webhook receiver remained the only authorized delivery destination. Earlier model artifacts, cutoff, evaluation records and phase evidence remain frozen.

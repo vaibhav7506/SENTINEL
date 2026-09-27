@@ -1,0 +1,114 @@
+{
+  "verified_at": "2026-09-27T05:52:42.243962+00:00",
+  "status": "passed",
+  "closed_database_port_fixture": {
+    "liveness": 200,
+    "readiness": 503,
+    "snapshot": 503,
+    "live_database_was_not_stopped": true
+  },
+  "live_snapshot": {
+    "predictions": 113,
+    "incidents": 0,
+    "alerts": 0,
+    "proposals": 0,
+    "models": 1,
+    "evaluations": 1,
+    "failure_events": 10,
+    "experiments": 10,
+    "hosts": 2
+  },
+  "required_self_metrics": {
+    "sentinel_predictions_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 3.0
+      }
+    ],
+    "sentinel_high_risk_predictions_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 0.0
+      }
+    ],
+    "sentinel_alerts_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 0.0
+      }
+    ],
+    "sentinel_alert_failures_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 0.0
+      }
+    ],
+    "sentinel_inference_duration_seconds_count": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 3.0
+      }
+    ],
+    "sentinel_feature_generation_duration_seconds_count": [
+      {
+        "job": "sentinel-worker",
+        "worker": null,
+        "value": 7.0
+      }
+    ],
+    "sentinel_llm_requests_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 0.0
+      }
+    ],
+    "sentinel_llm_failures_total": [
+      {
+        "job": "sentinel-inference",
+        "worker": null,
+        "value": 0.0
+      }
+    ],
+    "sentinel_worker_last_success_timestamp": [
+      {
+        "job": "sentinel-inference",
+        "worker": "inference",
+        "value": 1790488324.165215
+      },
+      {
+        "job": "sentinel-worker",
+        "worker": "features",
+        "value": 1790488320.124925
+      }
+    ]
+  },
+  "grafana_dashboard_panels": 12,
+  "grafana_queries": "all accepted by live Prometheus",
+  "frontend_security_headers": "passed",
+  "unauthenticated_mutation": 401,
+  "missing_host": 404,
+  "frozen_model_threshold": 0.9875243902206421,
+  "frozen_model_artifacts": "unchanged",
+  "earlier_phase_evidence": {
+    "phase-7-proposal-demo.json": "unchanged",
+    "phase-7-live-governance.json": "unchanged",
+    "phase-7-live-inference.json": "unchanged",
+    "phase-8-live-console.json": "unchanged",
+    "phase-8-live-inference.json": "unchanged",
+    "phase-8-browser.json": "unchanged",
+    "phase-8-overview.jpg": "unchanged",
+    "phase-8-host.jpg": "unchanged",
+    "phase-8-evaluation.jpg": "unchanged",
+    "phase-8-mobile.jpg": "unchanged",
+    "phase-8-disconnected.jpg": "unchanged"
+  },
+  "actual_test_recall": 0.0,
+  "predictive_success_claim": false,
+  "phase_10_started": false
+}

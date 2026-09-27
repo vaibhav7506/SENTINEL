@@ -1,0 +1,7 @@
+{
+  "kind": "verified local inference restart after final hardening",
+  "phase9_restarts": 2,
+  "wrapper_pid": 14164,
+  "started_at": "2026-09-27T05:49:06.1541027Z",
+  "previous_owner": 21932
+}
