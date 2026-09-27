@@ -1,0 +1,57 @@
+{
+  "verified_at": "2026-09-26T21:29:59.789986+00:00",
+  "started_at": "2026-09-26T21:26:39.161533+00:00",
+  "model_version": "20260926T204848-mlp-1bcd8acd",
+  "unchanged_validation_threshold": 0.9875243902206421,
+  "live_predictions_checked": 8,
+  "unique_feature_windows": true,
+  "horizon_seconds": 600,
+  "separate_anomaly_scores_verified": true,
+  "delivery_scope": "local test receiver only",
+  "outcomes": [
+    {
+      "failure_event_id": "c13dceec-2547-4fc7-bc8e-afb03bc74655",
+      "failure_type": "latency_slo_breach",
+      "actual_onset": "2026-09-26T21:26:42.417617+00:00",
+      "confirmed_at": "2026-09-26T21:26:48.021218+00:00",
+      "recovered_at": "2026-09-26T21:27:26.840508+00:00",
+      "actual_pre_failure_predictions": 5,
+      "threshold_crossings_before_failure": 0,
+      "pre_failure_probability_range": [
+        0.14048069715499878,
+        0.14132550358772278
+      ],
+      "earliest_pre_failure_alert_id": null,
+      "local_alert_lead_seconds": null,
+      "useful_warning_at_least_60_seconds": false,
+      "outcome": "No pre-failure alert; no predictive-success claim"
+    },
+    {
+      "failure_event_id": "1fc7f171-c970-4825-a3b5-8a38eb3a4dbe",
+      "failure_type": "http_error_slo_breach",
+      "actual_onset": "2026-09-26T21:27:49.427518+00:00",
+      "confirmed_at": "2026-09-26T21:27:53.505501+00:00",
+      "recovered_at": "2026-09-26T21:28:34.308830+00:00",
+      "actual_pre_failure_predictions": 6,
+      "threshold_crossings_before_failure": 0,
+      "pre_failure_probability_range": [
+        0.14048069715499878,
+        0.15242452919483185
+      ],
+      "earliest_pre_failure_alert_id": null,
+      "local_alert_lead_seconds": null,
+      "useful_warning_at_least_60_seconds": false,
+      "outcome": "No pre-failure alert; no predictive-success claim"
+    }
+  ],
+  "actual_alerts": [],
+  "remediation_proposals": 0,
+  "model_limitations": [
+    "Small single-host local chaos dataset; correlated minute windows",
+    "Validation reused for early stopping, calibration and threshold; validation metrics optimistic",
+    "Abrupt injections have no guaranteed precursor; warnings may be coincidental",
+    "Only events with eligible pre-failure windows enter lead-time metrics",
+    "False-alert rates extrapolate short non-failure exposure; no continuous deployment estimate",
+    "Unfamiliarity score is separate from supervised failure probability"
+  ]
+}

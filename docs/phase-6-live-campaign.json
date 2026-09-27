@@ -1,0 +1,89 @@
+{
+  "verified_at": "2026-09-26T21:28:54.641528+00:00",
+  "baseline_seconds": 1377.36853,
+  "baseline_probe_count": 670,
+  "baseline_consecutive_breaches": 3,
+  "prediction_horizon_seconds": 600,
+  "results": [
+    {
+      "experiment": {
+        "id": "417e4016-9aa4-4420-9be6-af62b587c784",
+        "host_id": "docker-vm",
+        "failure_type": "application_latency",
+        "status": "completed",
+        "started_at": "2026-09-26T21:26:40.153301+00:00",
+        "ended_at": "2026-09-26T21:27:26.794325+00:00",
+        "expected_degradation": {
+          "probe": "/work?units=100000",
+          "target": "demo-service",
+          "latency_slo_seconds": 0.5,
+          "consecutive_breaches": 3,
+          "http_error_status_min": 500
+        },
+        "observed_degradation": {
+          "control_outcome": "inactive_observed",
+          "failure_event_ids": [
+            "c13dceec-2547-4fc7-bc8e-afb03bc74655"
+          ],
+          "degradation_confirmed": true
+        }
+      },
+      "failure_event": {
+        "id": "c13dceec-2547-4fc7-bc8e-afb03bc74655",
+        "experiment_id": "417e4016-9aa4-4420-9be6-af62b587c784",
+        "host_id": "docker-vm",
+        "failure_type": "latency_slo_breach",
+        "observed_at": "2026-09-26T21:26:42.417617+00:00",
+        "confirmed_at": "2026-09-26T21:26:48.021218+00:00",
+        "recovered_at": "2026-09-26T21:27:26.840508+00:00",
+        "criterion": {
+          "probe": "/work?units=100000",
+          "max_span_seconds": 15,
+          "latency_slo_seconds": 0.5,
+          "consecutive_breaches": 3,
+          "http_error_status_min": 500
+        }
+      }
+    },
+    {
+      "experiment": {
+        "id": "94c83246-2cd5-42ca-a87f-c7a73f2cc2d9",
+        "host_id": "docker-vm",
+        "failure_type": "http_error",
+        "status": "completed",
+        "started_at": "2026-09-26T21:27:47.530183+00:00",
+        "ended_at": "2026-09-26T21:28:34.262411+00:00",
+        "expected_degradation": {
+          "probe": "/work?units=100000",
+          "target": "demo-service",
+          "latency_slo_seconds": 0.5,
+          "consecutive_breaches": 3,
+          "http_error_status_min": 500
+        },
+        "observed_degradation": {
+          "control_outcome": "inactive_observed",
+          "failure_event_ids": [
+            "1fc7f171-c970-4825-a3b5-8a38eb3a4dbe"
+          ],
+          "degradation_confirmed": true
+        }
+      },
+      "failure_event": {
+        "id": "1fc7f171-c970-4825-a3b5-8a38eb3a4dbe",
+        "experiment_id": "94c83246-2cd5-42ca-a87f-c7a73f2cc2d9",
+        "host_id": "docker-vm",
+        "failure_type": "http_error_slo_breach",
+        "observed_at": "2026-09-26T21:27:49.427518+00:00",
+        "confirmed_at": "2026-09-26T21:27:53.505501+00:00",
+        "recovered_at": "2026-09-26T21:28:34.308830+00:00",
+        "criterion": {
+          "probe": "/work?units=100000",
+          "max_span_seconds": 15,
+          "latency_slo_seconds": 0.5,
+          "consecutive_breaches": 3,
+          "http_error_status_min": 500
+        }
+      }
+    }
+  ]
+}

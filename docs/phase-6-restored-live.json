@@ -1,0 +1,50 @@
+{
+  "verified_at": "2026-09-26T22:14:50.923711+00:00",
+  "status": "passed",
+  "scope": "Restored live state and deduplicated existing local receipt replays; no new chaos, operational alerts, or external messages",
+  "model_version": "20260926T204848-mlp-1bcd8acd",
+  "unchanged_threshold": 0.9875243902206421,
+  "latest_prediction": {
+    "id": "30e9e07b-064e-447a-a769-c76e918de24b",
+    "host": "docker-vm",
+    "predicted_at": "2026-09-26T22:14:02.779416+00:00",
+    "feature_window_end": "2026-09-26T22:14:00+00:00",
+    "forecast_valid_until": "2026-09-26T22:24:00+00:00",
+    "failure_probability": 0.9785581827163696,
+    "anomaly_score": 0.020829184387584743,
+    "horizon_seconds": 600
+  },
+  "score_reproduction": "Both separate scores match the frozen artifacts",
+  "feature_quality_and_freshness_verified": true,
+  "forecast_validity_verified": true,
+  "bounded_list_routes_verified": [
+    "predictions",
+    "incidents",
+    "alerts"
+  ],
+  "database_counts": {
+    "predictions": 18,
+    "alerts": 0,
+    "duplicate_prediction_groups": 0,
+    "active_experiments": 0,
+    "unrecovered_failure_events": 0,
+    "remediation_proposals": 0
+  },
+  "inference_metrics": {
+    "sentinel_inference_heartbeat_timestamp_seconds": 1790460888.8701916,
+    "sentinel_inference_last_success_timestamp_seconds": 1790460842.7964156,
+    "sentinel_predictions_total": 1.0,
+    "sentinel_predictions_created": 1790460156.8313415,
+    "sentinel_inference_errors_total": 0.0,
+    "sentinel_inference_errors_created": 1790460156.831357,
+    "sentinel_shap_explanations_total": 0.0,
+    "sentinel_shap_explanations_created": 1790460156.8313699
+  },
+  "prometheus_inference_scrape_up": true,
+  "local_receiver_available": true,
+  "receiver_restart_deduplication_verified": [
+    "generic",
+    "slack"
+  ],
+  "predictive_success_claim": false
+}
