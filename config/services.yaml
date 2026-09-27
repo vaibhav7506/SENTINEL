@@ -1,0 +1,29 @@
+services:
+  - name: "cf-worker-api"
+    url: "https://your-worker.your-subdomain.workers.dev/health"
+    expected_status: 200
+    expected_latency_ms: 500
+    provider: "cloudflare"
+    provider_resource_id: "your-worker-script-name"
+    env_vars_expected:
+      ENVIRONMENT: "production"
+      API_VERSION: "v1"
+
+  - name: "vercel-frontend"
+    url: "https://your-app.vercel.app/api/health"
+    expected_status: 200
+    expected_latency_ms: 800
+    provider: "vercel"
+    provider_resource_id: "your-project-id"
+    env_vars_expected:
+      NODE_ENV: "production"
+      NEXT_PUBLIC_API_URL: "https://api.example.com"
+
+  - name: "neon-backend"
+    url: "https://your-neon-endpoint.neon.tech/health"
+    expected_status: 200
+    expected_latency_ms: 1000
+    provider: "neon"
+    provider_resource_id: "your-project-id"
+    env_vars_expected:
+      DATABASE_URL: "postgresql://..."
