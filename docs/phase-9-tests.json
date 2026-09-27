@@ -1,0 +1,52 @@
+{
+  "verified_at": "2026-09-27T05:47:52.609501+00:00",
+  "suites": [
+    {
+      "suite": "backend",
+      "passed": 101,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "inference",
+      "passed": 29,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "training",
+      "passed": 13,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "agent",
+      "passed": 12,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "demo",
+      "passed": 11,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "legacy",
+      "passed": 18,
+      "exit_code": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "isolated_database",
+      "passed": 10,
+      "exit_code": 0,
+      "skipped": 0
+    }
+  ],
+  "total_passed": 194,
+  "status": "passed",
+  "frontend": "Run npm test separately; its evidence is recorded in the acceptance report",
+  "isolated_database_cohorts": 4,
+  "migration_round_trips": "base to head for every cohort"
+}

@@ -1,0 +1,15 @@
+{
+  "verified_at": "2026-09-27T05:47:58.395122+00:00",
+  "status": "passed",
+  "prometheus_stopped": {
+    "health": 200,
+    "ready": 503,
+    "telemetry": "unavailable",
+    "samples": []
+  },
+  "prometheus_restored": {
+    "ready": 200,
+    "telemetry": "available"
+  },
+  "no_synthetic_data_or_outage_claim": true
+}
