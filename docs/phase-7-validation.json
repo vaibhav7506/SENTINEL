@@ -1,0 +1,67 @@
+{
+  "verified_at": "2026-09-26T22:33:52.942011+00:00",
+  "phase": 7,
+  "status": "passed",
+  "phase_8_started": false,
+  "implementation_scope": "Optional durable diagnostics proposals; typed adapter with mock intake; no actual RunbookOS approval or execution",
+  "tests": {
+    "backend_passed": 68,
+    "backend_skipped": 4,
+    "inference_contracts_passed": 9,
+    "isolated_proposal_tests_passed": 2,
+    "isolated_inference_tests_passed": 1,
+    "total_passed": 80,
+    "optional_database_tests_not_executed": 2,
+    "note": "Two proposal tests skipped in general backend run were executed in the isolated proposal database"
+  },
+  "checks": {
+    "ruff_lint": "passed",
+    "ruff_format": {
+      "status": "passed",
+      "files": 82
+    },
+    "strict_typing": {
+      "status": "passed",
+      "source_files": 35
+    },
+    "frontend": [
+      "lint passed",
+      "type checking passed",
+      "build passed"
+    ],
+    "container_builds": "passed",
+    "live_stack": {
+      "status": "passed",
+      "services": 9,
+      "http_checks": 7,
+      "container_health_checks": 7
+    },
+    "migration_round_trips": "proposal and inference isolated databases passed",
+    "alembic_schema_parity": "passed",
+    "live_database_revision": "0006_governed_proposals",
+    "live_runbookos_enabled": false,
+    "actual_live_proposals": 0,
+    "actual_remediation_executions": 0,
+    "fresh_frozen_score_reproduction": "passed",
+    "prometheus_inference_scrape_up": true,
+    "earlier_model_and_phase6_evidence_hashes": "unchanged"
+  },
+  "evidence": {
+    "phase-7-proposal-demo.json": {
+      "sha256": "29d5d899f5f7debcc13aa24ef52ddd4410f0539e1b033606eeffec0d31d3d639"
+    },
+    "phase-7-live-governance.json": {
+      "sha256": "31f2dbe8e9f75b20739ae70e08b667da94282aa65d458c1d823a27b269de75fd"
+    },
+    "phase-7-live-inference.json": {
+      "sha256": "33b4ae93136c2d0c96bcd7f960db5bb7323d9b336bf52bce53b5cdae7c43a20e"
+    }
+  },
+  "remaining_required_work": [],
+  "limitations": [
+    "Only mock intake implemented; no authenticated real RunbookOS proposal-intake API was verified",
+    "Human approval and execution remain external; neither was simulated",
+    "Historical isolated replay used test-only cutoff 0.98; live default remains 0.995",
+    "The frozen model is not validated for operational predictive accuracy"
+  ]
+}

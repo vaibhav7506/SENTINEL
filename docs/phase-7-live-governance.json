@@ -1,0 +1,22 @@
+{
+  "verified_at": "2026-09-26T22:31:04.873527+00:00",
+  "status": "passed",
+  "scope": "actual live disabled-mode API and database",
+  "remediation_status": {
+    "enabled": false,
+    "adapter": "disabled",
+    "proposal_threshold": 0.995,
+    "suggested_actions": [
+      "collect_diagnostics"
+    ],
+    "human_approval_required": true,
+    "execution_owner": "RunbookOS",
+    "real_runbookos_intake_implemented": false,
+    "detail": "Mock intake only; no human approval or execution is simulated"
+  },
+  "proposal_api_bounds_verified": true,
+  "database_revision": "0006_governed_proposals",
+  "actual_live_proposals": 0,
+  "sentinel_executed_remediation": false,
+  "isolation_demonstration": "docs/phase-7-proposal-demo.json"
+}

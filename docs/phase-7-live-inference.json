@@ -1,0 +1,54 @@
+{
+  "verified_at": "2026-09-26T22:30:38.317496+00:00",
+  "status": "passed",
+  "scope": "Restored live state and deduplicated existing local receipt replays; no new chaos, operational alerts, or external messages",
+  "model_version": "20260926T204848-mlp-1bcd8acd",
+  "unchanged_threshold": 0.9875243902206421,
+  "latest_prediction": {
+    "id": "1c97384f-f4e1-4969-8369-bc353ff6b202",
+    "host": "docker-vm",
+    "predicted_at": "2026-09-26T22:30:03.022537+00:00",
+    "feature_window_end": "2026-09-26T22:30:00+00:00",
+    "forecast_valid_until": "2026-09-26T22:40:00+00:00",
+    "failure_probability": 0.13653172552585602,
+    "anomaly_score": 0.009322774675793455,
+    "horizon_seconds": 600
+  },
+  "score_reproduction": "Both separate scores match the frozen artifacts",
+  "feature_quality_and_freshness_verified": true,
+  "forecast_validity_verified": true,
+  "bounded_list_routes_verified": [
+    "predictions",
+    "incidents",
+    "alerts"
+  ],
+  "database_counts": {
+    "predictions": 34,
+    "alerts": 0,
+    "duplicate_prediction_groups": 0,
+    "active_experiments": 0,
+    "unrecovered_failure_events": 0,
+    "remediation_proposals": 0
+  },
+  "inference_metrics": {
+    "sentinel_proposal_submissions_total": 0.0,
+    "sentinel_proposal_submissions_created": 1790461782.5441837,
+    "sentinel_proposal_errors_total": 0.0,
+    "sentinel_proposal_errors_created": 1790461782.5442228,
+    "sentinel_inference_heartbeat_timestamp_seconds": 1790461833.4787133,
+    "sentinel_inference_last_success_timestamp_seconds": 1790461803.0367246,
+    "sentinel_predictions_total": 1.0,
+    "sentinel_predictions_created": 1790461782.544357,
+    "sentinel_inference_errors_total": 0.0,
+    "sentinel_inference_errors_created": 1790461782.5443666,
+    "sentinel_shap_explanations_total": 0.0,
+    "sentinel_shap_explanations_created": 1790461782.5443745
+  },
+  "prometheus_inference_scrape_up": true,
+  "local_receiver_available": true,
+  "receiver_restart_deduplication_verified": [
+    "generic",
+    "slack"
+  ],
+  "predictive_success_claim": false
+}
