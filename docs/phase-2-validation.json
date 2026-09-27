@@ -1,0 +1,22 @@
+{
+  "verified_at": 1790433765.586742,
+  "checks": {
+    "required_targets_up": true,
+    "windows_agent_up": true,
+    "real_host_cpu_usage_percent": true,
+    "real_host_memory_usage_percent": true,
+    "real_host_disk_read_bytes_per_second": true,
+    "real_host_network_receive_bytes_per_second": true,
+    "real_host_process_count": true,
+    "real_host_uptime_seconds": true,
+    "demo_sentinel_http_requests_total": true,
+    "demo_sentinel_http_request_duration_seconds_count": true,
+    "demo_sentinel_http_errors_total": true,
+    "demo_sentinel_http_inflight_requests": true,
+    "changing_cpu_usage_percent": true,
+    "changing_memory_usage_percent": true,
+    "grafana_sentinel-hosts": true,
+    "grafana_sentinel-application": true,
+    "grafana_sentinel-self": true
+  }
+}
