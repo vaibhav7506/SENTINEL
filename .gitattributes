@@ -1,0 +1,2 @@
+# Frozen model and dataset files are byte-addressed evidence.
+artifacts/** -text

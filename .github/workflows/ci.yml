@@ -48,6 +48,7 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           backend/.venv/Scripts/python.exe -m pytest -c backend/pyproject.toml backend/tests --ignore=backend/tests/test_feature_database.py --ignore=backend/tests/test_observer_database.py --ignore=backend/tests/test_proposal_database.py --ignore=backend/tests/test_console_database.py --ignore=backend/tests/test_saas_database.py --ignore=backend/tests/test_push_database.py --ignore=backend/tests/test_push_failure_database.py -q
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          New-Item -ItemType Directory -Force .pytest_cache | Out-Null
           inference/.venv/Scripts/python.exe -m pytest -c inference/pyproject.toml inference/tests --ignore=inference/tests/test_database.py --ignore=inference/tests/test_registration_database.py training/tests -q
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           agent/.venv/Scripts/python.exe -m pytest -c agent/pyproject.toml agent/tests -q
