@@ -5,6 +5,10 @@ metadata:
   labels: {{- include "sentinel.labels" . | nindent 4 }}
 data:
   ENVIRONMENT: {{ .Values.environment | quote }}
+  SAAS_ENABLED: "true"
+  SAAS_ALERT_ALLOWED_HOSTS: {{ .Values.alertAllowedHosts | toJson | quote }}
+  SAAS_PUBLIC_API_URL: {{ ternary (printf "https://%s/api" .Values.ingress.host) "http://127.0.0.1:5173/api" .Values.ingress.enabled | quote }}
+  SAAS_ALLOWED_ORIGINS: {{ ternary (list (printf "https://%s" .Values.ingress.host) | toJson) (list "http://127.0.0.1:5173" "http://localhost:5173" | toJson) .Values.ingress.enabled | quote }}
   POSTGRES_HOST: {{ ternary (printf "%s-database" .Release.Name) .Values.database.host .Values.database.internal | quote }}
   POSTGRES_PORT: {{ .Values.database.port | quote }}
   POSTGRES_DB: {{ .Values.database.name | quote }}
@@ -37,16 +41,12 @@ data:
       server_name _;
       root /usr/share/nginx/html;
       client_max_body_size 16k;
-      auth_basic "Sentinel";
-      auth_basic_user_file /etc/sentinel/auth/htpasswd;
       limit_req_status 429;
       access_log off;
-      location = /healthz { auth_basic off; return 200 "ok"; }
+      location = /healthz { return 200 "ok"; }
       location ^~ /api/chaos/ { return 403; }
       location /api/ {
         limit_req zone=console burst=20 nodelay;
-        if ($request_method !~ ^(GET|HEAD)$) { return 405; }
-        include /etc/sentinel/auth/api-proxy.conf;
         rewrite ^/api/(.*)$ /$1 break;
         proxy_pass http://{{ .Release.Name }}-api:8000;
         proxy_connect_timeout 3s;

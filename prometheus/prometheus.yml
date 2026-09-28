@@ -26,3 +26,6 @@ scrape_configs:
   - job_name: sentinel-inference
     static_configs:
       - targets: ["host.docker.internal:8004"]
+  - job_name: sentinel-container-inference
+    static_configs:
+      - targets: ["sentinel-inference:8004"]

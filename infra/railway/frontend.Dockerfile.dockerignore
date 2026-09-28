@@ -1,0 +1,16 @@
+**
+!frontend/
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/index.html
+!frontend/tsconfig.json
+!frontend/vite.config.ts
+!frontend/eslint.config.js
+!frontend/src/
+!frontend/src/**
+!frontend/public/
+!frontend/public/**
+!infra/
+!infra/railway/
+!infra/railway/nginx.conf.template
+!infra/railway/start-frontend.sh

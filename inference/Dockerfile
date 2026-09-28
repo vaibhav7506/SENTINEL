@@ -10,6 +10,9 @@ WORKDIR /app
 COPY backend/app /app/backend/app
 COPY backend/pyproject.toml backend/uv.lock /app/backend/
 COPY --from=build /app/inference/linux /app/inference/linux
+COPY --from=build /usr/local/bin/uv /usr/local/bin/uv
+COPY backend/saas-runtime/requirements.txt /tmp/saas-requirements.txt
+RUN uv pip install --python /app/inference/linux/.venv/bin/python --require-hashes -r /tmp/saas-requirements.txt
 COPY inference/*.py /app/inference/
 COPY training/*.py /app/training/
 COPY artifacts/models/20260926T204848-mlp-1bcd8acd /app/artifacts/models/20260926T204848-mlp-1bcd8acd
@@ -24,9 +27,13 @@ FROM runtime AS test
 USER root
 COPY --from=ghcr.io/astral-sh/uv:0.12.19@sha256:04d046b13e60d6bcec73cbc5e1cad25d680dea90c8573340950a0ac2d1aef424 /uv /usr/local/bin/uv
 RUN --mount=type=cache,id=sentinel-linux-inference,target=/root/.cache/uv uv sync --project inference/linux --frozen --no-install-package sentinel-backend
+RUN uv pip install --python /app/inference/linux/.venv/bin/python --require-hashes -r /tmp/saas-requirements.txt
 COPY backend /app/backend
 COPY inference /app/inference
 COPY training /app/training
 COPY artifacts /app/artifacts
 COPY scripts/check_phase10_database.py /app/scripts/check_phase10_database.py
 CMD ["python", "-m", "pytest", "-c", "inference/pyproject.toml", "inference/tests", "--ignore=inference/tests/test_database.py", "--ignore=inference/tests/test_registration_database.py", "training/tests", "-q", "-p", "no:cacheprovider", "--basetemp=/tmp/sentinel-tests"]
+
+# Railway detects the Dockerfile and builds its final stage by default.
+FROM runtime AS railway

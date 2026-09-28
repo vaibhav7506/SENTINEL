@@ -119,9 +119,12 @@ class HostCollector:
                 self._snapshot = {"sample_success": 0}
             self._previous = None
 
-    def collect(self) -> Iterator[GaugeMetricFamily]:
+    def snapshot(self) -> dict[str, float]:
         with self._lock:
-            snapshot = self._snapshot.copy()
+            return self._snapshot.copy()
+
+    def collect(self) -> Iterator[GaugeMetricFamily]:
+        snapshot = self.snapshot()
         labels = [self.settings.host_id, self.settings.host_name, self.settings.environment]
         for name, value in snapshot.items():
             metric = GaugeMetricFamily(

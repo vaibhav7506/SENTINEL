@@ -1,4 +1,5 @@
 import socket
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field
@@ -15,3 +16,5 @@ class Settings(BaseSettings):
     agent_sample_seconds: float = Field(default=5, ge=0.1, le=300)
     agent_disk_path: str = "/"
     agent_procfs_path: str | None = None
+    agent_identity_path: Path | None = None
+    agent_reporting_seconds: int = Field(default=30, ge=5, le=300)

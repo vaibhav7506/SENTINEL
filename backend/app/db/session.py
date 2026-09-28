@@ -12,7 +12,10 @@ def create_database_engine(settings: Settings) -> AsyncEngine:
         pool_timeout=settings.readiness_timeout_seconds,
         connect_args={
             "connect_timeout": max(1, int(settings.readiness_timeout_seconds)),
-            "options": "-c statement_timeout=10000 -c idle_in_transaction_session_timeout=30000",
+            "options": (
+                "-c statement_timeout=10000 -c idle_in_transaction_session_timeout=30000 "
+                "-c tcp_keepalives_idle=30 -c tcp_keepalives_interval=10 -c tcp_keepalives_count=3"
+            ),
         },
         hide_parameters=True,
     )

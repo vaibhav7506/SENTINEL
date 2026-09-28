@@ -1,0 +1,21 @@
+// Private application/self metrics. Real host agents need their own approved collector.
+prometheus.scrape "sentinel" {
+  targets = [
+    {"__address__" = "sentinel-api.railway.internal:8000", "job" = "sentinel-api"},
+    {"__address__" = "sentinel-features.railway.internal:8002", "job" = "sentinel-worker"},
+    {"__address__" = "sentinel-inference.railway.internal:8004", "job" = "sentinel-inference"},
+  ]
+  scrape_interval = "15s"
+  scrape_timeout = "5s"
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+}
+
+prometheus.remote_write "grafana_cloud" {
+  endpoint {
+    url = sys.env("GRAFANA_CLOUD_REMOTE_WRITE_URL")
+    basic_auth {
+      username = sys.env("GRAFANA_CLOUD_METRICS_INSTANCE_ID")
+      password = sys.env("GRAFANA_CLOUD_METRICS_WRITE_TOKEN")
+    }
+  }
+}

@@ -104,12 +104,15 @@ async def test_missing_host_returns_404_before_any_telemetry(monkeypatch):
     from app.api.console import host_detail
 
     session = AsyncMock()
-    session.get.return_value = None
+    session.scalar.return_value = None
     factory = MagicMock()
     factory.return_value.__aenter__.return_value = session
-    monkeypatch.setattr("app.api.console.async_sessionmaker", lambda engine: factory)
+    monkeypatch.setattr("app.api.console.request_session", lambda request: factory())
+    telemetry = AsyncMock()
+    monkeypatch.setattr("app.api.console.telemetry", telemetry)
     application = SimpleNamespace(state=SimpleNamespace(engine=object()))
     with pytest.raises(HTTPException) as error:
         await host_detail("missing", Request({"type": "http", "app": application}))
     assert error.value.status_code == 404
-    session.scalar.assert_not_called()
+    session.scalar.assert_called_once()
+    telemetry.assert_not_called()

@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: sentinel-agent
+    static_configs:
+      - targets: ["sentinel-agent:9101"]
+  - job_name: sentinel-api
+    static_configs:
+      - targets: ["sentinel-api:8000"]
+  - job_name: sentinel-worker
+    static_configs:
+      - targets: ["sentinel-worker:8002"]
+  - job_name: demo-service
+    static_configs:
+      - targets: ["demo-service:8000"]
+  - job_name: sentinel-observer
+    static_configs:
+      - targets: ["sentinel-observer:8003"]
+  - job_name: sentinel-inference
+    static_configs:
+      - targets: ["sentinel-inference:8004"]

@@ -14,9 +14,7 @@ from app.schemas.health import DependencyHealth, ReadinessResponse
 from app.services.readiness import ReadinessChecker
 
 
-def make_checker(
-    *, extension="2.30.1", revision="0006_governed_proposals", db_error=False, status=200
-):
+def make_checker(*, extension="2.30.1", revision="0008_push_pipeline", db_error=False, status=200):
     engine = MagicMock()
     connection = AsyncMock()
     connection.scalar.side_effect = [extension, revision]
@@ -34,13 +32,13 @@ def make_checker(
 @pytest.mark.parametrize(
     "extension,revision,db_error,status,expected",
     [
-        ("2.30.1", "0006_governed_proposals", False, 200, "ready"),
-        (None, "0006_governed_proposals", False, 200, "not_ready"),
+        ("2.30.1", "0008_push_pipeline", False, 200, "ready"),
+        (None, "0008_push_pipeline", False, 200, "not_ready"),
         ("2.30.1", "0001_timescaledb", False, 200, "not_ready"),
         ("2.30.1", None, False, 200, "not_ready"),
-        ("2.30.1", "0006_governed_proposals", True, 200, "not_ready"),
-        ("2.30.1", "0006_governed_proposals", False, 503, "not_ready"),
-        ("2.30.1", "0006_governed_proposals", True, 503, "not_ready"),
+        ("2.30.1", "0008_push_pipeline", True, 200, "not_ready"),
+        ("2.30.1", "0008_push_pipeline", False, 503, "not_ready"),
+        ("2.30.1", "0008_push_pipeline", True, 503, "not_ready"),
     ],
 )
 async def test_dependency_checks(extension, revision, db_error, status, expected):

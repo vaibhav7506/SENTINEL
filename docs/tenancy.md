@@ -1,0 +1,15 @@
+# Tenancy and push prediction pipeline
+
+Each account owns users, hosts, enrollment tokens, host credentials, raw metrics, feature windows, predictions, incidents, alerts, integrations, audit events and remediation proposals. Shared model versions and frozen evaluations are platform records. One validated global model serves all accounts; it is not trained separately per customer.
+
+Registration creates an account and its OWNER. Authentication derives a principal from a verified session hash. Customer transactions set the PostgreSQL role to `sentinel_app` and set transaction-local `sentinel.account_id`. RLS checks account_id on reads and writes; ownership triggers reject cross-account foreign references. Pool reuse cannot retain a previous account context. Existing baseline rows belong to the explicit development/demo account.
+
+A one-time enrollment token is account owned, expires, can be revoked and is consumed atomically. Enrollment allocates an opaque host ID and one permanent host credential. Its indexed prefix narrows the lookup; constant-time hash verification and revocation checks determine the server-owned account and host. Raw permanent credentials are returned once and persist only in the agent's protected identity file.
+
+`POST /agent/v1/metrics` stores a bounded batch in the Timescale metrics hypertable. The account/host/time index supports bounded retrieval. Retention defaults to 30 days and is configured by the controlled storage migration. Capacity metadata is retained and percentages represent normalized utilization. Heartbeat Online/Stale/Offline depends on each host's expected reporting interval (default 30 seconds; stale after 3 intervals, offline after 10). Heartbeat, observed service health and model risk are separate states.
+
+Redis backs the distributed limiter and Celery broker/results. A Linux Python 3.13 Celery worker and one Beat process schedule active enrolled hosts. The worker bridges to the separately locked Python 3.14 CPU ML runtime. Jobs carry account, host and feature-window identifiers; the scoring process repeats ownership validation before telemetry/model access. Raw samples are read only from that account and host in a causal 900-second window. Feature order/hash, train-only transforms, horizon, threshold and model artifacts remain frozen. Insufficient coverage or stale jobs do not become current forecasts.
+
+Per-host advisory leases and the database host/model/window unique key prevent duplicate predictions. Retries are bounded and idempotent. SHAP runs conditionally on new/renewed high-risk conditions, and current-account incidents, summaries and integration channels stay scoped. Cooldowns and durable delivery records survive restarts; uncertain external sends are explicitly recorded.
+
+Local verification uses separate disposable databases, ten synthetic accounts with ten hosts each, real Redis, Beat, Celery and frozen-model scoring. It also attempts cross-account API reads/writes, direct RLS operations and forged worker envelopes. The test is portfolio-scale evidence and not an enterprise or production benchmark. Hosted isolation remains pending.

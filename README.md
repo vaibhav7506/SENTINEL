@@ -2,7 +2,11 @@
 
 Predictive infrastructure failure detection: given recent infrastructure and application telemetry, estimate the likelihood of meaningful degradation within the next 5–15 minutes.
 
-**Current implementation: Phase 10 release preparation; external deployment acceptance is pending.** Six nonroot release images, gated GitHub Actions, Helm/Kubernetes configuration, an Argo CD example and deployment/demo verifiers are implemented. Local checks cover 211 tests, frozen Linux scoring, authentication and critical image scans. No remote CI run, GHCR publication, Kubernetes deployment or public HTTPS endpoint is verified: this checkout has no Git remote or configured cluster context. See [Phase 10 evidence and remaining gates](docs/phase-10.md) and [deployment instructions](docs/deployment.md).
+**Current work: the SaaS push pipeline is implemented and a real 100-host local Celery/Beat cohort passed. Oracle/Tiger Cloud/Grafana Cloud deployment files are prepared. Docker's filesystem is repaired; remaining local verification needs stable host disk space for the final worker rebuild.** Browser accounts, OWNER/ADMIN/MEMBER roles, PostgreSQL RLS, one-time enrollment, permanent host credentials, encrypted account integrations, audit UI and bounded batched ingestion are implemented. The frozen model and original evaluation remain unchanged. See the [decision record](decision.md), [end-to-end workflow](workflow.md), [current verification](docs/phase3-verification.md), [deployment preparation](docs/phase4-deployment-preparation.md), [tenancy](docs/tenancy.md) and [security](docs/security.md). The earlier [Phase 2 verification](docs/phase2-verification.md) is historical evidence, including preservation of all original demo values at that migration.
+
+The frozen baseline import to [GitHub](https://github.com/vaibhav7506/SENTINEL) completed all 32 commits, spaced by at least five minutes; its monitor is paused. The newer SaaS work is outside that frozen publication manifest and is being verified and prepared as a separate staged series. Six nonroot release images, gated GitHub Actions, Helm/Kubernetes configuration, an Argo CD example and deployment/demo verifiers are implemented. A successful remote CI run, GHCR publication, live deployment and public HTTPS endpoint have not yet been recorded. See [the baseline audit](docs/current-state-audit.md), [baseline verification](docs/baseline-verification.md), [Phase 10 evidence and remaining gates](docs/phase-10.md) and [deployment instructions](docs/deployment.md).
+
+Oracle Always Free Ampere A1 ARM64 is the selected application host after Railway's trial ended. Production uses Tiger Cloud managed TimescaleDB and Grafana Cloud; it does not self-host those development services. The ARM64 image and frozen model have not passed native runtime checks yet; GitHub Actions now requires those gates before ARM images can publish. The Oracle account, VM and DNS are not ready, so hosted endpoints, TLS, remote CI and live tenant isolation remain pending. Existing Railway files are historical preparation.
 
 Real telemetry feeds the frozen MLP and separate Isolation Forest. The model missed every positive held-out window and both Phase 6 live faults; it is not validated for operational prediction. During release checks it also reported high risk while the demo was observed healthy. The safe local demo recorded actual degradation and recovery with no new pre-failure alert. See [the actual evaluation](docs/phase-5.md). Optional RunbookOS diagnostics proposals default to disabled, use mock intake, and require human approval; Sentinel does not execute remediation.
 
@@ -23,6 +27,22 @@ docker compose up --build
 ```
 
 `init_env.py` creates ignored `.env` credentials randomly and refuses to overwrite an existing file. Once images are built, `docker compose up` starts the same stack. The API applies Alembic migrations before serving requests. Database data, Prometheus history, and Grafana settings persist in named volumes.
+
+Open the console and sign up to create a new account. To access the preserved demo data, create its first owner instead, then sign in with that email and your chosen password:
+
+```sh
+docker compose exec sentinel-api python -m app.saas.bootstrap --email YOUR_EMAIL
+```
+
+The command prompts privately for a password and refuses to replace an existing owner. There is no default demo password. Owners create team members through Team & account. Owners and admins enroll machines through Hosts → Add host; the install command displays a temporary token once. Configure `SAAS_PUBLIC_API_URL` and `SAAS_ALLOWED_ORIGINS` for your actual browser address, and `SAAS_ALERT_ALLOWED_HOSTS` for approved HTTPS integration destinations. Grafana remains an operator tool separate from the account console.
+
+For the complete prediction chain, start the existing frozen Python 3.14 inference worker with the optional Compose profile:
+
+```sh
+docker compose --profile inference up --build
+```
+
+This profile registers the frozen model idempotently before starting inference. Allow about 15 minutes for real feature coverage on an empty Prometheus volume. Inference metrics remain on the private Compose network. Run one inference worker per database; stop a separately launched native worker before using this profile. Optional webhooks and the LLM remain disabled until configured. A local receiver in another container must share the worker's loopback namespace or use HTTPS; plain HTTP container hostnames are rejected.
 
 | Service | Local address | Purpose |
 
@@ -58,7 +78,7 @@ docker compose down
 
 ```
 
-`verify_stack.py` validates HTTP responses, frontend API proxying, readiness details, and all nine running services. It returns nonzero on failure. `down` preserves named volumes. Do not remove database volumes unless you intend to erase their data.
+`verify_stack.py` validates HTTP responses, frontend API proxying, readiness details, and all ten running services, including Redis. It returns nonzero on failure. `down` preserves named volumes. Do not remove database volumes unless you intend to erase their data.
 
 ## Implemented architecture
 
@@ -101,13 +121,15 @@ flowchart LR
 
 ```
 
-Prometheus stores raw telemetry. The worker queries it every 60 seconds, computes features over a 15-minute observation window, and stores derived windows in TimescaleDB. Eleven persistence tables are migrated, including objective service observations. Experiment and failure-event records come from real execution and probes; ModelVersion and EvaluationRun store actual offline training results. Online predictions contain actual scores. Fresh threshold crossings conditionally create persisted incidents, explanations, summaries and deduplicated alert deliveries. Local receiver acceptance is evidence of delivery, not evidence of a correct forecast. Actual remediation execution remains external and unverified.
+Prometheus stores the original demo telemetry. The worker queries it every 60 seconds, computes features over a 15-minute observation window, and stores derived windows in TimescaleDB. Phase 2 adds account ownership, authentication and enrollment tables, and a raw metrics hypertable for enrolled hosts. Enrolled host metrics are visible in their account; distributed prediction for these hosts remains outside Phase 2. Experiment and failure-event records come from real execution and probes; ModelVersion and EvaluationRun store actual offline training results. Online predictions contain actual scores. Fresh threshold crossings conditionally create persisted incidents, explanations, summaries and deduplicated alert deliveries. Local receiver acceptance is evidence of delivery, not evidence of a correct forecast. Actual remediation execution remains external and unverified.
 
 ## Repository
 
-- `agent`: psutil sampling, Prometheus exporter, executable entry point, Docker image and tests.
+- `agent`: psutil sampling, Prometheus exporter, protected enrollment identity, authenticated metric upload, executable entry point, Docker image and tests.
 
 - `backend/app/api`, `core`, `db`, `schemas`, `services`: health routes, validated settings, JSON logging, engine lifecycle, readiness checks.
+
+- `backend/app/saas`: account authentication, tenant data access, RBAC, host enrollment, credentials, integrations, immutable audit and private demo-owner bootstrap.
 
 - `backend/app/workers`: feature generation and objective service-observation workers; no model inference.
 
@@ -115,7 +137,7 @@ Prometheus stores raw telemetry. The worker queries it every 60 seconds, compute
 
 - `backend/tests`: dependency failure, timeout, configuration, logging and HTTP contract tests.
 
-- `frontend`: React, TypeScript, Vite and Tailwind skeleton with loading, API failure and unavailable-data states.
+- `frontend`: React and TypeScript console with cookie authentication, account and role context, team management, host enrollment, private integrations and operational views.
 
 - `training`: chronological dataset building, future labels, train-only transforms, PyTorch training, healthy-input Isolation Forest, calibration and offline evaluation; separate environment and lockfile.
 

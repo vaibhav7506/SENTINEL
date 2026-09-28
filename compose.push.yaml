@@ -1,0 +1,55 @@
+# Additive local SaaS worker profile. Existing demo telemetry stays available.
+services:
+  redis:
+    image: redis:8.2.9-alpine
+    command: [redis-server, --appendonly, 'yes', --maxmemory, 256mb, --maxmemory-policy, noeviction]
+    ports: ['127.0.0.1:16379:6379']
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  sentinel-api:
+    environment: &push-env
+      REDIS_URL: redis://redis:6379/0
+      INTEGRATION_ENCRYPTION_KEY: ${INTEGRATION_ENCRYPTION_KEY:?Generate private integration key first}
+      METRIC_RETENTION_DAYS: ${METRIC_RETENTION_DAYS:-30}
+      AGENT_STALE_INTERVALS: ${AGENT_STALE_INTERVALS:-3}
+      AGENT_OFFLINE_INTERVALS: ${AGENT_OFFLINE_INTERVALS:-10}
+    depends_on:
+      redis: {condition: service_healthy}
+  sentinel-push-worker:
+    image: sentinel-push:phase3
+    build: {context: .runtime/phase3/build-context, dockerfile: queue/Dockerfile}
+    environment: &queue-env
+      <<: *push-env
+      POSTGRES_HOST: timescaledb
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-sentinel}
+      POSTGRES_USER: ${POSTGRES_USER:-sentinel}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Private database password required}
+      SAAS_ENABLED: 'true'
+      ENVIRONMENT: development
+      INFERENCE_MAX_AGE_SECONDS: '90'
+      LLM_PROVIDER: ${LLM_PROVIDER:-disabled}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      DASHBOARD_URL: http://127.0.0.1:5173
+      RUNBOOKOS_ENABLED: 'false'
+    depends_on:
+      redis: {condition: service_healthy}
+      sentinel-api: {condition: service_healthy}
+    restart: unless-stopped
+  sentinel-beat:
+    image: sentinel-push:phase3
+    build: {context: .runtime/phase3/build-context, dockerfile: queue/Dockerfile}
+    environment: *queue-env
+    command: [/queue/.venv/bin/celery, -A, 'celery_app:app', beat, --loglevel=WARNING, --schedule=/tmp/sentinel-beat]
+    depends_on:
+      sentinel-push-worker: {condition: service_started}
+    restart: unless-stopped
+volumes:
+  redis-data:

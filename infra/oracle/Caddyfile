@@ -1,0 +1,13 @@
+{$SENTINEL_DOMAIN} {
+    encode zstd gzip
+    @operator_only path /api/metrics /api/docs /api/docs/* /api/openapi.json /api/chaos/*
+    respond @operator_only 404
+    header Strict-Transport-Security "max-age=31536000"
+    handle /api/* {
+        uri strip_prefix /api
+        reverse_proxy sentinel-api:8000
+    }
+    handle {
+        reverse_proxy sentinel-frontend:8080
+    }
+}

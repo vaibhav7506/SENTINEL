@@ -1,0 +1,14 @@
+{
+  "historical_phase6_evidence": "docs/phase-6-validation.json",
+  "inference_contracts_passed": 9,
+  "reason": "Native inference source contains later SaaS work in the other chat; not launched from this older Phase 6 context",
+  "frontend_lint": "passed",
+  "scope": "Resume check of existing deployed containers; newer SaaS source preserved",
+  "stack_status": "passed",
+  "stack_services": 9,
+  "http_checks": 7,
+  "predictive_success_claim": false,
+  "docker_engine": "29.6.2",
+  "native_inference_restarted": false,
+  "verified_at": "2026-09-27T15:55:05.7337211Z"
+}

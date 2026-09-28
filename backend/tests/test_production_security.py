@@ -17,7 +17,14 @@ def test_production_requires_secret_and_forbids_chaos():
 
 
 async def test_production_reads_require_bearer_and_chaos_has_separate_auth():
-    app = create_app(Settings(_env_file=None, environment="production", api_read_token=TOKEN))
+    app = create_app(
+        Settings(
+            _env_file=None,
+            environment="production",
+            api_read_token=TOKEN,
+            postgres_sslmode="require",
+        )
+    )
 
     @app.get("/fixture")
     async def fixture():

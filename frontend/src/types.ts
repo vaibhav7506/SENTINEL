@@ -8,7 +8,7 @@ export interface Prediction {
 export interface Driver { feature: string; contribution: number; value: number | null }
 export interface Host {
   id: string; name: string; environment: string; service_job: string | null; last_seen: string
-  status: string; high_risk: boolean; prediction_fresh: boolean; prediction_age_seconds: number | null
+  status: string; agent_status?: string | null; high_risk: boolean; prediction_fresh: boolean; prediction_age_seconds: number | null
   threshold: number | null; latest_prediction: Prediction | null
   observation: { observed_at: string; breached: boolean; latency_seconds: number; outcome: string } | null
 }

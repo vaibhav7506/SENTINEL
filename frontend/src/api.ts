@@ -2,6 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 
 export async function loadApi(path: string, signal: AbortSignal): Promise<unknown> {
   const response = await fetch(`/api${path}`, { signal })
+  if (response.status === 401) {
+    window.dispatchEvent(new Event('sentinel-session-expired'))
+    throw new Error('Your session ended. Sign in to continue.')
+  }
   if (!response.ok) throw new Error(response.status === 404 ? 'This record was not found.' : `The API could not load this view (HTTP ${response.status}).`)
   const reader = response.body?.getReader()
   if (!reader) throw new Error('The API returned an empty response.')

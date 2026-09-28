@@ -7,8 +7,11 @@ import logging
 import math
 import signal
 import time
+from collections.abc import Callable
+from contextlib import AbstractAsyncContextManager
 from datetime import datetime, timedelta
 from typing import Any
+from uuid import UUID
 
 import httpx
 from prometheus_client import (
@@ -19,7 +22,7 @@ from prometheus_client import (
     start_http_server,
 )
 from sqlalchemy import func, select, text, update
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from app.core.config import Settings
 from app.core.event_loop import create_event_loop
@@ -35,10 +38,13 @@ from app.models import (
     ModelVersion,
     Prediction,
 )
+from app.saas.integrations import decrypt_destination
+from app.saas.models import DEMO_ACCOUNT_ID, AlertChannel
+from app.saas.repository import account_session
 from app.services.proposals import ProposalService
 from inference.alerts import deliver, validate_destination
 from inference.scoring import ROOT, Scorer
-from inference.summaries import HTTPProvider, summarize
+from inference.summaries import HTTPProvider, Provider, summarize
 
 logger = logging.getLogger("sentinel.inference")
 LOCK = 736284061
@@ -111,6 +117,9 @@ class Worker:
         scorer: Scorer,
         client: httpx.AsyncClient,
         registry: CollectorRegistry,
+        account_id: UUID | None = None,
+        host_id: str | None = None,
+        window_end: datetime | None = None,
     ):
         self.settings, self.engine, self.scorer, self.client = (
             settings,
@@ -118,8 +127,15 @@ class Worker:
             scorer,
             client,
         )
-        self.sessions = async_sessionmaker(engine, expire_on_commit=False)
+        self.sessions: Callable[[], AbstractAsyncContextManager[AsyncSession]] = async_sessionmaker(
+            engine, expire_on_commit=False
+        )
+        if account_id is not None:
+            self.sessions = lambda: account_session(engine, account_id)
+        self.scope_host, self.scope_window = host_id, window_end
         self.proposals = ProposalService(settings, engine)
+        if account_id is not None:
+            self.proposals.sessions = self.sessions
         self.proposal_submissions = Counter(
             "sentinel_proposal_submissions",
             "Mock proposal intake acknowledgements",
@@ -140,7 +156,9 @@ class Worker:
         }
         for url in self.destinations.values():
             validate_destination(url)
-        self.provider = HTTPProvider(settings, client) if settings.llm_provider == "http" else None
+        self.provider: Provider | None = (
+            HTTPProvider(settings, client) if settings.llm_provider == "http" else None
+        )
         self.heartbeat = Gauge(
             "sentinel_inference_heartbeat_timestamp_seconds",
             "Live inference heartbeat",
@@ -205,6 +223,7 @@ class Worker:
             if model is None or model.training_metadata != self.scorer.metadata:
                 raise ValueError("Model is not registered with matching frozen metadata")
             self.model_id = model.id
+            await session.execute(text("SELECT pg_advisory_xact_lock(736284063)"))
             await session.execute(
                 update(Alert)
                 .where(Alert.status == "sending")
@@ -366,16 +385,20 @@ class Worker:
         async with self.sessions() as session, session.begin():
             now = await session.scalar(select(func.clock_timestamp()))
             assert isinstance(now, datetime)
+            query = select(FeatureWindow).where(
+                FeatureWindow.window_end <= now,
+                FeatureWindow.window_end
+                >= now - timedelta(seconds=self.settings.inference_max_age_seconds),
+            )
+            if self.scope_host is not None:
+                query = query.where(FeatureWindow.host_id == self.scope_host)
+                if self.scope_window is not None:
+                    query = query.where(FeatureWindow.window_end == self.scope_window)
             windows = (
                 await session.scalars(
-                    select(FeatureWindow)
-                    .where(
-                        FeatureWindow.window_end <= now,
-                        FeatureWindow.window_end
-                        >= now - timedelta(seconds=self.settings.inference_max_age_seconds),
+                    query.distinct(FeatureWindow.host_id).order_by(
+                        FeatureWindow.host_id, FeatureWindow.window_end.desc()
                     )
-                    .distinct(FeatureWindow.host_id)
-                    .order_by(FeatureWindow.host_id, FeatureWindow.window_end.desc())
                 )
             ).all()
             for window in windows:
@@ -458,6 +481,7 @@ class Worker:
                     "quality": window.quality,
                 }
                 prediction = Prediction(
+                    account_id=window.account_id,
                     host_id=window.host_id,
                     model_version_id=self.model_id,
                     predicted_at=predicted_at,
@@ -533,6 +557,7 @@ class Worker:
                     )
                     summary["forecast_valid_until"] = valid_until.isoformat()
                     incident = Incident(
+                        account_id=window.account_id,
                         host_id=window.host_id,
                         model_version_id=self.model_id,
                         prediction_id=prediction.id,
@@ -559,7 +584,20 @@ class Worker:
                         "model_validation_warning": explanation["model_validation_warning"],
                         "timing": "Forecast warning; future degradation is unconfirmed",
                     }
-                    for channel in self.destinations:
+                    configured = list(
+                        (
+                            await session.scalars(
+                                select(AlertChannel).where(
+                                    AlertChannel.account_id == window.account_id,
+                                    AlertChannel.enabled.is_(True),
+                                )
+                            )
+                        ).all()
+                    )
+                    channels = [f"{c.kind}:{c.id}" for c in configured]
+                    if window.account_id == DEMO_ACCOUNT_ID:
+                        channels.extend(self.destinations)
+                    for channel in channels:
                         queued_count += 1
                         last = next((a for a in previous_alerts if a.channel == channel), None)
                         next_attempt = (
@@ -573,6 +611,7 @@ class Worker:
                         )
                         session.add(
                             Alert(
+                                account_id=window.account_id,
                                 incident_id=incident.id,
                                 channel=channel,
                                 status="pending",
@@ -595,6 +634,27 @@ class Worker:
         return count
 
     async def send_pending(self) -> None:
+        async with self.engine.connect() as lease:
+            acquired = await lease.scalar(text("SELECT pg_try_advisory_lock(736284063)"))
+            await lease.commit()
+            if not acquired:
+                return
+            try:
+                async with self.sessions() as session, session.begin():
+                    await session.execute(
+                        update(Alert)
+                        .where(Alert.status == "sending")
+                        .values(
+                            status="unknown",
+                            last_error="Interrupted delivery; outcome unknown",
+                        )
+                    )
+                await self._send_pending()
+            finally:
+                await lease.execute(text("SELECT pg_advisory_unlock(736284063)"))
+                await lease.commit()
+
+    async def _send_pending(self) -> None:
         async with self.sessions() as session, session.begin():
             now = await session.scalar(select(func.clock_timestamp()))
             alerts = (
@@ -624,18 +684,47 @@ class Worker:
                 alert.attempt_count += 1
         # Sending is durable before HTTP: interruption is marked unknown on restart.
         for alert in alerts:
-            destination = self.destinations.get(alert.channel)
-            status, error = (
-                await deliver(
-                    self.client,
-                    destination,
-                    alert.channel,
-                    str(alert.id),
-                    alert.payload,
+            kind = alert.channel.split(":", 1)[0]
+            destination = None
+            if ":" in alert.channel:
+                async with self.sessions() as session:
+                    from uuid import UUID
+
+                    channel_row = await session.scalar(
+                        select(AlertChannel).where(
+                            AlertChannel.id == UUID(alert.channel.split(":", 1)[1]),
+                            AlertChannel.account_id == alert.account_id,
+                            AlertChannel.kind == kind,
+                            AlertChannel.enabled.is_(True),
+                        )
+                    )
+                    if channel_row:
+                        try:
+                            destination = decrypt_destination(
+                                channel_row.destination, alert.account_id, self.settings
+                            )
+                        except Exception:
+                            destination = None
+            elif alert.account_id == DEMO_ACCOUNT_ID:
+                destination = self.destinations.get(alert.channel)
+            if destination and kind == "email":
+                from inference.email_delivery import deliver_email
+
+                status, error = await deliver_email(
+                    destination, alert.payload, str(alert.id), self.settings
                 )
-                if destination
-                else ("failed", "Channel not configured")
-            )
+            else:
+                status, error = (
+                    await deliver(
+                        self.client,
+                        destination,
+                        kind,
+                        str(alert.id),
+                        alert.payload,
+                    )
+                    if destination
+                    else ("failed", "Channel not configured")
+                )
             async with self.sessions() as session, session.begin():
                 stored = await session.get(Alert, alert.id)
                 assert stored is not None
@@ -651,7 +740,7 @@ class Worker:
                 )
                 if status == "delivered":
                     stored.delivered_at = now
-                    self.delivered.labels(stored.channel).inc()
+                    self.delivered.labels(kind).inc()
             if status != "delivered":
                 self.alert_failures.inc()
 
@@ -704,7 +793,15 @@ async def run(once: bool = False) -> None:
             if not acquired:
                 raise RuntimeError("Another inference worker already holds the database lease")
             async with httpx.AsyncClient(follow_redirects=False, trust_env=False) as client:
-                worker = Worker(settings, engine, scorer, client, registry)
+                worker = Worker(
+                    settings,
+                    engine,
+                    scorer,
+                    client,
+                    registry,
+                    account_id=DEMO_ACCOUNT_ID if settings.saas_enabled else None,
+                    host_id=settings.observation_host_id if settings.saas_enabled else None,
+                )
                 await worker.initialize()
                 while not stop.is_set():
                     held = await lock_connection.scalar(

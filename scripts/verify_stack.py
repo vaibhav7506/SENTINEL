@@ -1,4 +1,4 @@
-"""Read-only smoke checks for the Phase 1 stack; exits nonzero on any failure."""
+"""Read-only smoke checks for the current local stack; exits nonzero on failure."""
 
 import json
 import os
@@ -67,6 +67,7 @@ try:
         "sentinel-frontend",
         "demo-service",
         "sentinel-agent",
+        "redis",
     }
     assert {container["Service"] for container in containers} == expected
     assert all(container["State"] == "running" for container in containers)
@@ -75,7 +76,7 @@ try:
         for container in containers
         if container["Service"] not in {"sentinel-worker", "sentinel-observer"}
     )
-    print("PASS nine services running; seven health checks healthy")
+    print("PASS ten services running; eight health checks healthy")
 except Exception as error:
     failed = True
     print(f"FAIL compose_services: {type(error).__name__}")

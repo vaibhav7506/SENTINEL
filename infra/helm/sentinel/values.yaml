@@ -5,6 +5,7 @@ imageTag: ""
 imagePullPolicy: IfNotPresent
 imageDigests: {}
 existingSecret: sentinel-credentials
+alertAllowedHosts: [hooks.slack.com]
 imagePullSecrets: []
 ingress:
   enabled: false

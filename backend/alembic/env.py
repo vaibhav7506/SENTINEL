@@ -1,5 +1,5 @@
 from alembic import context
-from sqlalchemy import create_engine, pool
+from sqlalchemy import Connection, create_engine, pool
 
 from app.core.config import get_settings
 from app.models import Base
@@ -18,12 +18,20 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
+def migrate(connection: Connection) -> None:
+    context.configure(connection=connection, target_metadata=target_metadata)
+    with context.begin_transaction():
+        context.run_migrations()
+
+
 def run_migrations_online() -> None:
+    provided = context.config.attributes.get("connection")
+    if provided is not None:
+        migrate(provided)
+        return
     engine = create_engine(get_settings().database_url, poolclass=pool.NullPool)
     with engine.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
+        migrate(connection)
     engine.dispose()
 
 
