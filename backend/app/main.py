@@ -21,6 +21,12 @@ from app.core.config import Settings, get_settings
 from app.core.logging import configure_logging
 from app.db.session import create_database_engine
 from app.metrics import instrument
+from app.saas.auth import install_authentication
+from app.saas.auth import router as auth_router
+from app.saas.ingestion import authenticate_agent
+from app.saas.ingestion import router as ingestion_router
+from app.saas.installer import router as installer_router
+from app.saas.operations import router as operations_router
 from app.services.prometheus import create_prometheus_client
 from app.services.readiness import ReadinessChecker
 
@@ -36,6 +42,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         engine = create_database_engine(config)
         application.state.engine = engine
         application.state.settings = config
+        from redis.asyncio import Redis
+
+        application.state.redis = Redis.from_url(
+            config.redis_url.get_secret_value(), socket_timeout=2, socket_connect_timeout=2
+        )
         async with create_prometheus_client(config, config.readiness_timeout_seconds) as client:
             application.state.readiness = ReadinessChecker(
                 engine, client, config.readiness_timeout_seconds, config.prometheus_readiness_mode
@@ -44,6 +55,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             try:
                 yield
             finally:
+                await application.state.redis.aclose()
                 await engine.dispose()
                 logger.info("API stopped", extra={"component": "sentinel-api"})
 
@@ -54,6 +66,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(predictions_router)
     application.include_router(proposals_router)
     application.include_router(console_router)
+    if config.saas_enabled:
+        application.include_router(auth_router)
+        application.include_router(operations_router)
+        application.include_router(installer_router)
+        application.include_router(ingestion_router)
     starts: deque[float] = deque(maxlen=6)
     console_reads: deque[float] = deque(maxlen=120)
 
@@ -73,6 +90,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         try:
             if (
                 config.environment == "production"
+                and not config.saas_enabled
                 and request.url.path not in {"/health", "/ready", "/metrics"}
                 and not (
                     request.url.path.startswith("/chaos/")
@@ -102,12 +120,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             if len(request.url.path) > 2048 or len(request.url.query) > 4096:
                 response = JSONResponse(status_code=414, content={"detail": "Request URI too long"})
             elif request.method in {"POST", "PUT", "PATCH", "DELETE"}:
+                if request.url.path in {"/agent/v1/metrics", "/agent/metrics"}:
+                    request.state.agent_identity = await authenticate_agent(request)
                 # Stream with a byte limit even when Content-Length is absent or dishonest.
                 body = b""
                 oversized = False
+                maximum = 131072 if request.url.path == "/agent/v1/metrics" else 16384
                 async with asyncio.timeout(5):
                     async for chunk in request.stream():
-                        if len(body) + len(chunk) > 16384:
+                        if len(body) + len(chunk) > maximum:
                             oversized = True
                             break
                         body += chunk
@@ -144,9 +165,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
             if isinstance(error, HTTPException):
                 response = JSONResponse(
-                    status_code=error.status_code, content={"detail": error.detail}
+                    status_code=error.status_code,
+                    content={"detail": error.detail},
+                    headers=error.headers,
                 )
             else:
+                if isinstance(error, SQLAlchemyError):
+                    request.app.state.database_errors.inc()
                 logger.error("API request failed", extra={"request_id": request_id})
                 response = JSONResponse(
                     status_code=503 if isinstance(error, SQLAlchemyError) else 500,
@@ -166,6 +191,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return response
 
     instrument(application)
+    if config.saas_enabled:
+        install_authentication(application, config)
     return application
 
 

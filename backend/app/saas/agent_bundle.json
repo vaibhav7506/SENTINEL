@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "sha256": "d3f5772c5a91f200be5bd4de64d22a99e9c20935d9c5187a6baff4454c03fd28",
+  "sources": {
+    "pyproject.toml": "1e982dcdd1791ad26472fe26d6c486416c5021e7b589aae89310ea3bd0b45d37",
+    "uv.lock": "2d738ffdf8fbc8bca40c8c49bcbe64434a3ce8b95d37e21e35c8b7dd169470d0",
+    "sentinel_agent/__init__.py": "97c4ec722a9c79b1ea2e47cf5b82cf1dad3bc18f3632cf21a3148d3e4c5792dd",
+    "sentinel_agent/collector.py": "a489fdd81a1541f7925d2ff3c9365a5426b55587688c18b6e2b52a750d697140",
+    "sentinel_agent/config.py": "2b8f602d1b1f7741a4b904a1bed3683b375523dcb12b6232b3157683b03aea53",
+    "sentinel_agent/identity.py": "289277911cfa34c4914d629f7b4402be0dcddd2ac810088fc33e37a5bae0fd5b",
+    "sentinel_agent/main.py": "1d981ec43fd8db20f9d7ddaaacc615a08807e4fd3651aba70f8d5dd68b0bd089",
+    "sentinel_agent/push.py": "5ac86b3c0cfd8cde9961210bfe6ab15c9c7b95fe9ef50a4043747a32cf3af503"
+  }
+}

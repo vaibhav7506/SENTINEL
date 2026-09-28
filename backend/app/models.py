@@ -19,19 +19,35 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
+from app.saas.models import TenantOwned
 
 
-class Host(Base):
+class Host(TenantOwned, Base):
     __tablename__ = "hosts"
+    __table_args__ = (
+        CheckConstraint(
+            "reporting_interval_seconds BETWEEN 5 AND 300",
+            name="hosts_reporting_interval_seconds_check",
+        ),
+    )
     id: Mapped[str] = mapped_column(String(128), primary_key=True)
     name: Mapped[str] = mapped_column(String(256))
     environment: Mapped[str] = mapped_column(String(32))
     service_job: Mapped[str | None] = mapped_column(String(256))
     first_seen: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     last_seen: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    display_name: Mapped[str] = mapped_column(String(256), default="", server_default="")
+    hostname: Mapped[str] = mapped_column(String(256), default="", server_default="")
+    agent_version: Mapped[str] = mapped_column(String(64), default="", server_default="")
+    platform: Mapped[str] = mapped_column(String(64), default="", server_default="")
+    architecture: Mapped[str] = mapped_column(String(64), default="", server_default="")
+    status: Mapped[str] = mapped_column(String(32), default="active", server_default="active")
+    reporting_interval_seconds: Mapped[int] = mapped_column(default=30, server_default="30")
+    capacity: Mapped[dict[str, float]] = mapped_column(JSONB, default=dict, server_default="{}")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
-class FeatureWindow(Base):
+class FeatureWindow(TenantOwned, Base):
     __tablename__ = "feature_windows"
     __table_args__ = (
         CheckConstraint("window_start < window_end", name="feature_window_bounds"),
@@ -66,7 +82,7 @@ class ModelVersion(Record, Base):
     training_metadata: Mapped[dict[str, Any]] = mapped_column(JSONB)
 
 
-class ChaosExperiment(Record, Base):
+class ChaosExperiment(TenantOwned, Record, Base):
     __tablename__ = "chaos_experiments"
     __table_args__ = (
         CheckConstraint("environment IN ('development','test','demo')", name="chaos_environment"),
@@ -82,7 +98,7 @@ class ChaosExperiment(Record, Base):
     observed_degradation: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
 
 
-class FailureEvent(Record, Base):
+class FailureEvent(TenantOwned, Record, Base):
     __tablename__ = "failure_events"
     host_id: Mapped[str] = mapped_column(ForeignKey("hosts.id"))
     experiment_id: Mapped[UUID | None] = mapped_column(ForeignKey("chaos_experiments.id"))
@@ -94,7 +110,7 @@ class FailureEvent(Record, Base):
     evidence: Mapped[dict[str, Any]] = mapped_column(JSONB)
 
 
-class Prediction(Record, Base):
+class Prediction(TenantOwned, Record, Base):
     __tablename__ = "predictions"
     __table_args__ = (
         CheckConstraint("probability BETWEEN 0 AND 1", name="prediction_probability"),
@@ -114,7 +130,7 @@ class Prediction(Record, Base):
     explanation: Mapped[dict[str, Any]] = mapped_column(JSONB)
 
 
-class Incident(Record, Base):
+class Incident(TenantOwned, Record, Base):
     __tablename__ = "incidents"
     __table_args__ = (
         Index(
@@ -136,7 +152,7 @@ class Incident(Record, Base):
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
-class Alert(Record, Base):
+class Alert(TenantOwned, Record, Base):
     __tablename__ = "alerts"
     incident_id: Mapped[UUID] = mapped_column(ForeignKey("incidents.id"))
     channel: Mapped[str] = mapped_column(String(80))
@@ -157,7 +173,7 @@ class EvaluationRun(Record, Base):
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
-class RemediationProposal(Record, Base):
+class RemediationProposal(TenantOwned, Record, Base):
     __tablename__ = "remediation_proposals"
     __table_args__ = (
         UniqueConstraint("incident_id", "runbook_reference", name="proposal_once"),
@@ -191,7 +207,7 @@ class RemediationProposal(Record, Base):
     executed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
-class ServiceObservation(Record, Base):
+class ServiceObservation(TenantOwned, Record, Base):
     __tablename__ = "service_observations"
     __table_args__ = (Index("ix_service_observations_host_time", "host_id", "observed_at"),)
     host_id: Mapped[str] = mapped_column(ForeignKey("hosts.id"))
