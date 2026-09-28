@@ -3,6 +3,8 @@ WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:0.12.19@sha256:04d046b13e60d6bcec73cbc5e1cad25d680dea90c8573340950a0ac2d1aef424 /uv /usr/local/bin/uv
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
+COPY saas-runtime/requirements.txt ./saas-runtime/requirements.txt
+RUN uv pip install --python /app/.venv/bin/python --require-hashes -r saas-runtime/requirements.txt
 COPY app ./app
 COPY alembic ./alembic
 COPY alembic.ini ./

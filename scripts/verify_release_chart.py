@@ -97,11 +97,7 @@ def main() -> None:
                     if container["name"] == "wait-for-api":
                         assert not container.get("env") and not container.get("envFrom")
                 if doc["metadata"]["name"] == "sentinel-frontend":
-                    auth_volume = next(v for v in pod["volumes"] if v["name"] == "frontend-auth")
-                    assert {v["key"] for v in auth_volume["secret"]["items"]} == {
-                        "htpasswd",
-                        "api-proxy.conf",
-                    }
+                    assert not any(v["name"] == "frontend-auth" for v in pod["volumes"])
                 if pod.get("automountServiceAccountToken"):
                     assert doc["metadata"]["name"] == "sentinel-prometheus"
         role = next(d for d in documents if d["kind"] == "Role")
@@ -123,7 +119,17 @@ def main() -> None:
             for d in documents
             if d["kind"] == "ConfigMap" and d["metadata"]["name"] == "sentinel-frontend"
         )
-        assert "auth_basic_user_file" in config["data"]["default.conf"]
+        assert "auth_basic_user_file" not in config["data"]["default.conf"]
+        assert "api-proxy.conf" not in config["data"]["default.conf"]
+        settings = next(
+            d
+            for d in documents
+            if d["kind"] == "ConfigMap" and d["metadata"]["name"] == "sentinel-settings"
+        )
+        assert settings["data"]["SAAS_ENABLED"] == "true"
+        assert settings["data"]["SAAS_PUBLIC_API_URL"].startswith(
+            "http://" if name == "demo" else "https://"
+        )
         assert "location ^~ /api/chaos/ { return 403; }" in config["data"]["default.conf"]
         reports.append(
             {

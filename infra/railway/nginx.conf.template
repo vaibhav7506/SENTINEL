@@ -1,0 +1,42 @@
+pid ${RUNTIME_DIRECTORY}/nginx.pid;
+error_log stderr warn;
+events { worker_connections 512; }
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    access_log off;
+    client_body_temp_path ${RUNTIME_DIRECTORY}/client_temp;
+    proxy_temp_path ${RUNTIME_DIRECTORY}/proxy_temp;
+    fastcgi_temp_path ${RUNTIME_DIRECTORY}/fastcgi_temp;
+    uwsgi_temp_path ${RUNTIME_DIRECTORY}/uwsgi_temp;
+    scgi_temp_path ${RUNTIME_DIRECTORY}/scgi_temp;
+    limit_req_zone $binary_remote_addr zone=console:10m rate=2r/s;
+    server {
+        listen ${PORT};
+        listen [::]:${PORT} ipv6only=on;
+        server_name _;
+        root /usr/share/nginx/html;
+        index index.html;
+        client_max_body_size 16k;
+        auth_basic "Sentinel";
+        auth_basic_user_file ${RUNTIME_DIRECTORY}/htpasswd;
+        limit_req_status 429;
+        location = /healthz { auth_basic off; return 200 "ok"; }
+        location ^~ /api/chaos/ { return 403; }
+        location /api/ {
+            limit_req zone=console burst=20 nodelay;
+            if ($request_method !~ ^(GET|HEAD)$) { return 405; }
+            resolver ${RUNTIME_RESOLVER} valid=10s;
+            set $api_upstream http://${API_UPSTREAM_HOST}:${API_UPSTREAM_PORT};
+            proxy_set_header Authorization "Bearer ${API_READ_TOKEN}";
+            rewrite ^/api/(.*)$ /$1 break;
+            proxy_pass $api_upstream;
+            proxy_connect_timeout 3s;
+            proxy_read_timeout 10s;
+        }
+        location / { limit_req zone=console burst=20 nodelay; try_files $uri $uri/ /index.html; }
+        add_header X-Content-Type-Options nosniff always;
+        add_header Referrer-Policy no-referrer always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'" always;
+    }
+}

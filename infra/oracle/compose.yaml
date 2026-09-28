@@ -1,0 +1,124 @@
+# Standalone managed-database SaaS profile. Use --project-directory repository-root.
+x-settings: &settings
+  ENVIRONMENT: production
+  SAAS_ENABLED: 'true'
+  DATABASE_URL: ${DATABASE_URL:?Set the private Tiger Cloud SSL URL}
+  REDIS_URL: redis://:${REDIS_PASSWORD:?Generate a Redis password}@redis:6379/0
+  INTEGRATION_ENCRYPTION_KEY: ${INTEGRATION_ENCRYPTION_KEY:?Generate a Fernet key}
+  SAAS_PUBLIC_API_URL: https://${SENTINEL_DOMAIN:?Set the DNS hostname}/api
+  SAAS_ALLOWED_ORIGINS: '["https://${SENTINEL_DOMAIN}"]'
+  SAAS_ALERT_ALLOWED_HOSTS: ${SAAS_ALERT_ALLOWED_HOSTS:-["hooks.slack.com"]}
+  DASHBOARD_URL: https://${SENTINEL_DOMAIN}
+  PROMETHEUS_READINESS_MODE: disabled
+  CHAOS_ENABLED: 'false'
+  RUNBOOKOS_ENABLED: 'false'
+  METRIC_RETENTION_DAYS: ${METRIC_RETENTION_DAYS:-30}
+  SENTINEL_BACKUP_CONFIRMED: ${SENTINEL_BACKUP_CONFIRMED:-false}
+  LLM_PROVIDER: ${LLM_PROVIDER:-disabled}
+  LLM_BASE_URL: ${LLM_BASE_URL:-}
+  LLM_API_KEY: ${LLM_API_KEY:-}
+  LLM_MODEL: ${LLM_MODEL:-}
+  SMTP_HOST: ${SMTP_HOST:-}
+  SMTP_USERNAME: ${SMTP_USERNAME:-}
+  SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  SMTP_FROM: ${SMTP_FROM:-}
+x-service: &service
+  platform: linux/arm64
+  restart: unless-stopped
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  read_only: true
+  tmpfs: [/tmp]
+  networks: [sentinel]
+  logging: {driver: json-file, options: {max-size: 10m, max-file: '3'}}
+services:
+  redis:
+    <<: *service
+    image: redis:8.2.9-alpine
+    environment: {REDIS_PASSWORD: '${REDIS_PASSWORD:?Generate a Redis password}'}
+    command: [sh, -c, 'exec redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction --requirepass "$$REDIS_PASSWORD"']
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: [CMD-SHELL, 'REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli ping | grep -q PONG']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    mem_limit: 384m
+  migrate:
+    <<: *service
+    image: ${SENTINEL_API_IMAGE:-sentinel-api-arm64:local}
+    build: {context: backend, target: runtime}
+    environment: *settings
+    command: [python, -m, app.saas.predeploy]
+    restart: 'no'
+    profiles: [ops]
+  register:
+    <<: *service
+    image: ${SENTINEL_PUSH_IMAGE:-sentinel-push-arm64:local}
+    build: {context: ., dockerfile: queue/Dockerfile.arm64}
+    environment: *settings
+    command: [/app/inference/arm64/.venv/bin/python, -m, inference.register]
+    restart: 'no'
+    profiles: [ops]
+  sentinel-api:
+    <<: *service
+    image: ${SENTINEL_API_IMAGE:-sentinel-api-arm64:local}
+    build: {context: backend, target: runtime}
+    environment: *settings
+    command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, '8000', --no-access-log, --proxy-headers, --forwarded-allow-ips, 172.29.71.10]
+    depends_on: {redis: {condition: service_healthy}}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready',timeout=4)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 4
+    mem_limit: 512m
+  sentinel-push-worker:
+    <<: *service
+    image: ${SENTINEL_PUSH_IMAGE:-sentinel-push-arm64:local}
+    build: {context: ., dockerfile: queue/Dockerfile.arm64}
+    environment: *settings
+    depends_on: {sentinel-api: {condition: service_healthy}, redis: {condition: service_healthy}}
+    mem_limit: 3g
+  sentinel-beat:
+    <<: *service
+    image: ${SENTINEL_PUSH_IMAGE:-sentinel-push-arm64:local}
+    build: {context: ., dockerfile: queue/Dockerfile.arm64}
+    environment: *settings
+    command: [/queue/.venv/bin/celery, -A, 'celery_app:app', beat, --loglevel=WARNING, --schedule=/tmp/sentinel-beat]
+    depends_on: {sentinel-push-worker: {condition: service_started}}
+    mem_limit: 256m
+  sentinel-frontend:
+    <<: *service
+    image: ${SENTINEL_FRONTEND_IMAGE:-sentinel-frontend-arm64:local}
+    build: {context: frontend}
+    healthcheck: {test: [CMD-SHELL, 'wget -q -O /dev/null http://127.0.0.1:8080/'], interval: 15s, timeout: 3s, retries: 4}
+    mem_limit: 128m
+  edge:
+    <<: *service
+    build: {context: infra/oracle, dockerfile: edge.Dockerfile}
+    environment: {SENTINEL_DOMAIN: '${SENTINEL_DOMAIN:?Set the DNS hostname}'}
+    ports: ['80:80', '443:443']
+    volumes: [./infra/oracle/Caddyfile:/etc/caddy/Caddyfile:ro, caddy-data:/data, caddy-config:/config]
+    networks: {sentinel: {ipv4_address: 172.29.71.10}}
+    depends_on: {sentinel-api: {condition: service_healthy}, sentinel-frontend: {condition: service_healthy}}
+    mem_limit: 128m
+  alloy:
+    <<: *service
+    image: ${SENTINEL_ALLOY_IMAGE:?Use a reviewed Grafana Alloy image digest}
+    profiles: [observability]
+    environment:
+      GRAFANA_CLOUD_REMOTE_WRITE_URL: ${GRAFANA_CLOUD_REMOTE_WRITE_URL:-}
+      GRAFANA_CLOUD_METRICS_INSTANCE_ID: ${GRAFANA_CLOUD_METRICS_INSTANCE_ID:-}
+      GRAFANA_CLOUD_METRICS_WRITE_TOKEN: ${GRAFANA_CLOUD_METRICS_WRITE_TOKEN:-}
+    command: [run, --server.http.listen-addr=0.0.0.0:12345, --storage.path=/var/lib/alloy, /etc/alloy/config.alloy]
+    volumes: [./infra/oracle/config.alloy:/etc/alloy/config.alloy:ro, alloy-data:/var/lib/alloy]
+    mem_limit: 256m
+networks:
+  sentinel: {ipam: {config: [{subnet: 172.29.71.0/24}]}}
+volumes:
+  redis-data:
+  caddy-data:
+  caddy-config:
+  alloy-data:

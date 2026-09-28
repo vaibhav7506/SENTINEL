@@ -1,0 +1,7 @@
+{
+  "name": "sentinel-railway-infrastructure",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": { "railway": "3.11.0" }
+}
