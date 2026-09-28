@@ -1,0 +1,28 @@
+// Only aggregate Sentinel platform metrics leave the VM.
+prometheus.scrape "sentinel" {
+  targets = [{"__address__" = "sentinel-api:8000", "job" = "sentinel-api"}]
+  scrape_interval = "15s"
+  scrape_timeout = "5s"
+  forward_to = [prometheus.relabel.platform.receiver]
+}
+prometheus.relabel "platform" {
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+  rule {
+    source_labels = ["__name__"]
+    regex = "sentinel_(http_.*|ingestion_.*|database_errors_total|platform_.*)"
+    action = "keep"
+  }
+  rule {
+    regex = "__name__|job|instance|method|route|status_code|reason|le"
+    action = "labelkeep"
+  }
+}
+prometheus.remote_write "grafana_cloud" {
+  endpoint {
+    url = sys.env("GRAFANA_CLOUD_REMOTE_WRITE_URL")
+    basic_auth {
+      username = sys.env("GRAFANA_CLOUD_METRICS_INSTANCE_ID")
+      password = sys.env("GRAFANA_CLOUD_METRICS_WRITE_TOKEN")
+    }
+  }
+}

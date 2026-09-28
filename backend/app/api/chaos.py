@@ -8,9 +8,9 @@ import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
 from pydantic import ValidationError
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from app.models import ChaosExperiment, FailureEvent, Host
+from app.saas.repository import get_for_account, request_session
 from app.services.chaos import ExperimentRequest, enforce_policy, enforce_scope
 
 router = APIRouter(prefix="/chaos", tags=["controlled demo experiments"])
@@ -30,6 +30,11 @@ def injector_times(evidence: dict[str, object], requested: datetime, duration: i
 
 
 def authorize(request: Request, authorization: str | None) -> None:
+    if request.app.state.settings.saas_enabled:
+        from app.saas.security import require_role
+
+        require_role(request, "OWNER", "ADMIN")
+        return
     token = request.app.state.settings.chaos_control_token.get_secret_value()
     if len(token) < 32 or not hmac.compare_digest(authorization or "", "Bearer " + token):
         raise HTTPException(401, "Invalid experiment authorization")
@@ -42,9 +47,8 @@ async def start_experiment(
     authorize(request, authorization)
     settings = request.app.state.settings
     enforce_scope(settings, payload)
-    factory = async_sessionmaker(request.app.state.engine, expire_on_commit=False)
-    async with factory() as session:
-        host = await session.get(Host, payload.host_id)
+    async with request_session(request) as session:
+        host = await get_for_account(session, Host, payload.host_id)
         enforce_policy(settings, payload, host)
         experiment = ChaosExperiment(
             host_id=payload.host_id,
@@ -62,6 +66,17 @@ async def start_experiment(
             },
         )
         session.add(experiment)
+        if settings.saas_enabled:
+            from app.saas.auth import audit
+
+            await session.flush()
+            audit(
+                session,
+                request.state.principal.account_id,
+                "chaos.triggered",
+                experiment.id,
+                request.state.principal.user_id,
+            )
         await session.commit()
         try:
             async with httpx.AsyncClient(timeout=5) as client:
@@ -114,7 +129,7 @@ async def start_experiment(
 
 @router.get("/experiments")
 async def experiments(request: Request) -> list[dict[str, object]]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
+    async with request_session(request) as session:
         rows = (
             await session.scalars(
                 select(ChaosExperiment).order_by(ChaosExperiment.started_at.desc()).limit(100)
@@ -137,7 +152,7 @@ async def experiments(request: Request) -> list[dict[str, object]]:
 
 @router.get("/failure-events")
 async def failures(request: Request) -> list[dict[str, object]]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
+    async with request_session(request) as session:
         rows = (
             await session.scalars(
                 select(FailureEvent).order_by(FailureEvent.observed_at.desc()).limit(100)
@@ -164,8 +179,8 @@ async def cancel(
 ) -> dict[str, object]:
     authorize(request, authorization)
     settings = request.app.state.settings
-    async with async_sessionmaker(request.app.state.engine)() as session:
-        row = await session.get(ChaosExperiment, experiment_id)
+    async with request_session(request) as session:
+        row = await get_for_account(session, ChaosExperiment, experiment_id)
         if row is None:
             raise HTTPException(404, "Experiment not found")
         try:
@@ -182,7 +197,7 @@ async def cancel(
             ) from None
         if payload.host_id != row.host_id or row.environment != settings.environment:
             raise HTTPException(409, "Experiment scope does not match the record")
-        enforce_policy(settings, payload, await session.get(Host, row.host_id))
+        enforce_policy(settings, payload, await get_for_account(session, Host, row.host_id))
     try:
         async with httpx.AsyncClient(timeout=5) as client:
             response = await client.delete(
