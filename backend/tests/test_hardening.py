@@ -137,12 +137,9 @@ async def test_corrupt_experiment_cannot_reach_injector(monkeypatch):
     app.state.engine = object()
     session = AsyncMock()
     session.__aenter__.return_value = session
-    session.get.return_value = SimpleNamespace(parameters={"duration_seconds": "corrupt"})
+    session.scalar.return_value = SimpleNamespace(parameters={"duration_seconds": "corrupt"})
 
-    def factory(*args, **kwargs):
-        return lambda: session
-
-    monkeypatch.setattr(chaos, "async_sessionmaker", factory)
+    monkeypatch.setattr(chaos, "request_session", lambda request: session)
     injector = AsyncMock()
     monkeypatch.setattr(chaos.httpx, "AsyncClient", injector)
     # Create the ASGI client before patching the shared httpx module's class.
