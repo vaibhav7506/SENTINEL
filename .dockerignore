@@ -2,6 +2,12 @@
 !backend/
 !backend/pyproject.toml
 !backend/uv.lock
+!backend/saas-runtime/
+!backend/saas-runtime/**
+!queue/
+!queue/*.py
+!queue/pyproject.toml
+!queue/uv.lock
 !backend/app/
 !backend/app/**
 !backend/tests/

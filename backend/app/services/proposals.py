@@ -1,14 +1,17 @@
 """Persist a suggestion before adapter intake; keep human approval external."""
 
 import asyncio
+from collections.abc import Callable
+from contextlib import AbstractAsyncContextManager
 from datetime import datetime, timedelta
 from uuid import uuid4
 
 from sqlalchemy import func, select, text, update
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from app.core.config import Settings
 from app.models import Incident, ModelVersion, Prediction, RemediationProposal
+from app.saas.auth import audit
 from app.services.runbookos import (
     MockRunbookOSAdapter,
     ProposalReceipt,
@@ -22,7 +25,9 @@ class ProposalService:
         self, settings: Settings, engine: AsyncEngine, adapter: RunbookOSAdapter | None = None
     ):
         self.settings = settings
-        self.sessions = async_sessionmaker(engine, expire_on_commit=False)
+        self.sessions: Callable[[], AbstractAsyncContextManager[AsyncSession]] = async_sessionmaker(
+            engine, expire_on_commit=False
+        )
         self.adapter = adapter or MockRunbookOSAdapter()
 
     async def initialize(self) -> None:
@@ -121,6 +126,8 @@ class ProposalService:
                         execution_status="not_started",
                     )
                 )
+                await session.flush()
+                audit(session, incident.account_id, "remediation.proposed", identifier)
 
     async def submit_pending(self) -> int:
         submitted = 0
@@ -211,7 +218,8 @@ class ProposalService:
                 stored = await session.get(RemediationProposal, identifier)
                 assert stored is not None
                 stored.runbookos_reference = receipt.reference
-                stored.approval_status = receipt.approval_status
+                if stored.approval_status != "approved":
+                    stored.approval_status = receipt.approval_status
                 stored.execution_status = receipt.execution_status
                 stored.submission_status = "submitted"
                 stored.submitted_at = await session.scalar(select(func.clock_timestamp()))
