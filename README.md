@@ -78,7 +78,7 @@ docker compose down
 
 ```
 
-`verify_stack.py` validates HTTP responses, frontend API proxying, readiness details, and all nine running services. It returns nonzero on failure. `down` preserves named volumes. Do not remove database volumes unless you intend to erase their data.
+`verify_stack.py` validates HTTP responses, frontend API proxying, readiness details, and all ten running services, including Redis. It returns nonzero on failure. `down` preserves named volumes. Do not remove database volumes unless you intend to erase their data.
 
 ## Implemented architecture
 
