@@ -1,0 +1,75 @@
+{
+  "status": "local_verification_incomplete_host_disk_space",
+  "load_cohort": {
+    "scope": "Disposable synthetic 100-host simulation; not production benchmark",
+    "accounts": 10,
+    "hosts": 100,
+    "samples": 2900,
+    "hosts_with_actual_frozen_model_predictions": 100,
+    "p50_ingestion_seconds": 0.052622700000029,
+    "p95_ingestion_seconds": 0.07879159999993135,
+    "ingestion_requests_per_second": 17.890987493780816,
+    "ingestion_errors": 0,
+    "database_count_query_seconds": 0.0035425999999461055,
+    "real_beat_and_celery_verified": true,
+    "real_retry_idempotency_verified": true,
+    "adversarial_account_host_checks": 50,
+    "cross_account_job_rejected_before_model_load": true,
+    "predictive_success_claim": false
+  },
+  "protected_hashes_unchanged": 78,
+  "docker_data_disk_repaired": true,
+  "live_migration_revision": "0007_saas_foundation",
+  "disposable_migration_revision": "0008_push_pipeline",
+  "cloud_accounts_ready": false,
+  "live_deployment_verified": false,
+  "new_ci_run_verified": false,
+  "pending": [
+    "host disk space / Windows elevated Docker VHD compaction",
+    "latest queue/failure cohort",
+    "guarded live additive migration/preservation",
+    "browser and stack checks"
+  ],
+  "native_passed_tests": {
+    "backend": 127,
+    "inference_training": 46,
+    "agent": 20,
+    "demo": 11,
+    "legacy": 18,
+    "frontend": 7
+  },
+  "real_windows_agent_lifecycle": {
+    "enrollment": true,
+    "restart_same_host_and_credential": true,
+    "heartbeat_transitions": true,
+    "revoked_push_status": 401,
+    "production_verified": false
+  },
+  "oracle_target_architecture": "arm64",
+  "native_arm64_image_and_model_tests": "pending",
+  "native_lint_format_typing": "passed",
+  "ci_syntax_validation": "passed",
+  "oracle_compose_offline_validation": "passed",
+  "recovery_backup_archive_verified": true,
+  "repair_approval_requested": true,
+  "docker_recovery": {
+    "filesystem_uuid": "9c0ee195-be49-4fee-8444-8570bd27dfe5",
+    "automatic_repair_exit_code": 0,
+    "journal_recovered": true,
+    "filesystem_clean": true,
+    "unused_build_cache_reclaimed_bytes": 43440000000,
+    "windows_compaction_completed": false,
+    "windows_elevation_canceled": true,
+    "containers_restored": 29,
+    "runbookos_control_plane_restore_blocked_by_reserved_port": 8080,
+    "protected_hashes_unchanged": 78
+  },
+  "disposable_database_cohorts": {
+    "cohorts": 5,
+    "passed_contracts": 21,
+    "schema_parity": "passed",
+    "destructive_downgrade_rejected": true,
+    "dependency_failure_and_api_restart_contracts": "passed",
+    "shared_account_rate_limit_across_replicas": "passed"
+  }
+}

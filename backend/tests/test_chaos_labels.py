@@ -137,6 +137,7 @@ def allowed_settings(**changes):
         _env_file=None,
         chaos_enabled=changes.get("environment") != "production",
         api_read_token="test-only-read-token-12345678901234567890",
+        postgres_sslmode="require",
         chaos_allowed_environments=["development"],
         chaos_allowed_namespaces=["sentinel-demo"],
         chaos_allowed_targets=["demo-service"],

@@ -20,7 +20,30 @@ for (const name of await readdir(new URL('../src/', import.meta.url))) {
 const { number, percent, duration, hostLink } = await import(new URL('format.mjs', output))
 const { Drivers, JsonFacts, LineChart, Table } = await import(new URL('ui.mjs', output))
 const { loadApi } = await import(new URL('api.mjs', output))
+const { sessionApi } = await import(new URL('session-api.mjs', output))
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
+
+test('browser mutations use cookies and CSRF headers; expired sessions clear views', async () => {
+  const originalFetch = globalThis.fetch
+  const originalDocument = globalThis.document
+  const originalWindow = globalThis.window
+  let expired = false
+  try {
+    globalThis.document = { cookie: 'sentinel_csrf=csrf_test' }
+    globalThis.window = { dispatchEvent: () => { expired = true } }
+    globalThis.fetch = async (_url, options) => {
+      assert.equal(options.credentials, 'same-origin')
+      assert.equal(options.cache, 'no-store')
+      assert.equal(options.headers.get('X-CSRF-Token'), 'csrf_test')
+      assert.equal(options.headers.get('Content-Type'), 'application/json')
+      return new Response(null, { status: 204 })
+    }
+    await sessionApi('/hosts/enrollment-tokens', { method: 'POST', body: '{}' })
+    globalThis.fetch = async () => new Response('{}', { status: 401 })
+    await assert.rejects(sessionApi('/hosts'))
+    assert.equal(expired, true)
+  } finally { globalThis.fetch = originalFetch; globalThis.document = originalDocument; globalThis.window = originalWindow }
+})
 
 test('missing measurements and lead time stay unknown while real zero is visible', () => {
   assert.equal(number(null), '—')

@@ -5,16 +5,16 @@ from typing import Any
 
 from fastapi import APIRouter, Query, Request
 from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from app.models import Alert, Incident, ModelVersion, Prediction
+from app.saas.repository import request_session
 
 router = APIRouter(tags=["predictions and incidents"])
 
 
 @router.get("/inference/status")
 async def inference_status(request: Request) -> dict[str, Any]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
+    async with request_session(request) as session:
         now = await session.scalar(select(func.clock_timestamp()))
         assert isinstance(now, datetime)
         latest = await session.scalar(
@@ -59,7 +59,7 @@ async def inference_status(request: Request) -> dict[str, Any]:
 
 
 async def records(request: Request, model: Any, limit: int) -> list[dict[str, Any]]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
+    async with request_session(request) as session:
         rows: list[Any] = list(
             (
                 await session.scalars(
@@ -68,7 +68,11 @@ async def records(request: Request, model: Any, limit: int) -> list[dict[str, An
             ).all()
         )
         return [
-            {column.name: getattr(row, column.name) for column in model.__table__.columns}
+            {
+                column.name: getattr(row, column.name)
+                for column in model.__table__.columns
+                if column.name not in {"payload", "parameters"}
+            }
             for row in rows
         ]
 

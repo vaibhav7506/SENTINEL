@@ -9,7 +9,7 @@ from typing import Any
 import httpx
 from fastapi import APIRouter, HTTPException, Request
 from sqlalchemy import case, func, select
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
     Alert,
@@ -23,6 +23,9 @@ from app.models import (
     RemediationProposal,
     ServiceObservation,
 )
+from app.saas.ingestion import heartbeat
+from app.saas.models import DEMO_ACCOUNT_ID, AgentCredential, MetricSample
+from app.saas.repository import get_for_account, request_session
 from app.services.prometheus import create_prometheus_client
 
 router = APIRouter(prefix="/console", tags=["console"])
@@ -66,10 +69,12 @@ async def recent(session: AsyncSession, model: Any, **filters: Any) -> list[Any]
 
 async def incident_view(session: AsyncSession, incident: Incident) -> dict[str, Any]:
     prediction = (
-        await session.get(Prediction, incident.prediction_id) if incident.prediction_id else None
+        await get_for_account(session, Prediction, incident.prediction_id)
+        if incident.prediction_id
+        else None
     )
     event = (
-        await session.get(FailureEvent, incident.failure_event_id)
+        await get_for_account(session, FailureEvent, incident.failure_event_id)
         if incident.failure_event_id
         else None
     )
@@ -84,7 +89,9 @@ async def incident_view(session: AsyncSession, incident: Incident) -> dict[str, 
     }
 
 
-async def hosts_view(session: AsyncSession, now: datetime) -> list[dict[str, Any]]:
+async def hosts_view(
+    session: AsyncSession, now: datetime, settings: Any = None
+) -> list[dict[str, Any]]:
     hosts = (await session.scalars(select(Host).order_by(Host.id).limit(1000))).all()
     host_ids = [host.id for host in hosts]
     predictions = {
@@ -137,6 +144,7 @@ async def hosts_view(session: AsyncSession, now: datetime) -> list[dict[str, Any
             {
                 **record(host),
                 "status": host_status(now, observation, host.id in degraded),
+                "agent_status": heartbeat(host, settings, now) if settings else None,
                 "observation": record(observation) if observation else None,
                 "latest_prediction": record(prediction) if prediction else None,
                 "prediction_age_seconds": age,
@@ -277,10 +285,10 @@ async def experiment_view(session: AsyncSession, experiment: ChaosExperiment) ->
 
 @router.get("/snapshot")
 async def snapshot(request: Request) -> dict[str, Any]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
+    async with request_session(request) as session:
         now = await session.scalar(select(func.clock_timestamp()))
         assert isinstance(now, datetime)
-        hosts = await hosts_view(session, now)
+        hosts = await hosts_view(session, now, request.app.state.settings)
         healthy, risky = await host_counts(session, now)
         tables = {
             "predictions": Prediction,
@@ -403,20 +411,67 @@ async def telemetry(request: Request, host_id: str, now: datetime) -> dict[str, 
         }
 
 
+async def enrolled_telemetry(session: AsyncSession, host_id: str, now: datetime) -> dict[str, Any]:
+    rows = list(
+        (
+            await session.scalars(
+                select(MetricSample)
+                .where(
+                    MetricSample.host_id == host_id,
+                    MetricSample.observed_at > now - timedelta(seconds=1800),
+                    MetricSample.observed_at <= now,
+                )
+                .order_by(MetricSample.observed_at)
+                .limit(1000)
+            )
+        ).all()
+    )
+    names = (
+        "cpu_usage_percent",
+        "memory_usage_percent",
+        "disk_usage_percent",
+        "network_receive_bytes_per_second",
+    )
+    age = (now - rows[-1].observed_at).total_seconds() if rows else None
+    return {
+        "status": "available" if age is not None and age <= 90 else "stale",
+        "sample_age_seconds": age,
+        "window_seconds": 1800,
+        "series": [
+            {
+                "metric": "sentinel_host_" + name,
+                "values": [
+                    [r.observed_at.timestamp(), r.values[name]] for r in rows if name in r.values
+                ],
+            }
+            for name in names
+        ],
+    }
+
+
 @router.get("/hosts/{host_id}")
 async def host_detail(host_id: str, request: Request) -> dict[str, Any]:
-    async with async_sessionmaker(request.app.state.engine)() as session:
-        host = await session.get(Host, host_id)
+    async with request_session(request) as session:
+        host = await get_for_account(session, Host, host_id)
         if not host:
             raise HTTPException(404, "Host not found")
         now = await session.scalar(select(func.clock_timestamp()))
         assert isinstance(now, datetime)
         predictions = await recent(session, Prediction, host_id=host_id)
         incidents = await recent(session, Incident, host_id=host_id)
+        enrolled = (
+            host.account_id != DEMO_ACCOUNT_ID
+            or await session.scalar(
+                select(AgentCredential.id).where(AgentCredential.host_id == host_id).limit(1)
+            )
+            is not None
+        )
         return {
             "as_of": now,
             "host_id": host_id,
             "predictions": [record(p) for p in predictions],
             "incidents": [await incident_view(session, i) for i in incidents],
-            "telemetry": await telemetry(request, host_id, now),
+            "telemetry": await enrolled_telemetry(session, host_id, now)
+            if enrolled
+            else await telemetry(request, host_id, now),
         }
