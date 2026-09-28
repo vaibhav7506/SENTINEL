@@ -1,3 +1,33 @@
+# Current SaaS deployment: Oracle + Tiger Cloud + Grafana Cloud
+
+No cloud deployment is verified. The user requested local verification and deployment files until the VM, domain and managed accounts are ready. See [Phase 4 preparation and pending acceptance](phase4-deployment-preparation.md), [security](security.md), [tenancy](tenancy.md) and [agent enrollment](agent-enrollment.md).
+
+Choose the user-selected Oracle Always Free Ampere A1 ARM64 VM, configure DNS to it, allow inbound 80/443 and restrict SSH to operator access. Native ARM CI builds and frozen model checks must pass before rollout; a Compose configuration check alone is insufficient. Use a clean reviewed repository checkout. Generate `.env.oracle` with `python scripts/init_oracle_env.py --hostname YOUR_DOMAIN`; it generates Redis and Fernet keys without printing them and refuses overwrite. Privately fill `DATABASE_URL` from Tiger Cloud with SSL, immutable ARM64 application image references from a successful CI publication, and a reviewed Alloy image digest. Do not paste private environment values into deployment logs (`docker compose config` without `--quiet` can reveal them).
+
+Select Tiger Cloud near the VM. Allow only required secure application connectivity. Before any hosted migration, verify Timescale extension access and creation/granting of the restricted `sentinel_app` NOLOGIN/NOSUPERUSER/NOBYPASSRLS role. Current bootstrap/auth/scheduler use the trusted connection owner; customer transactions switch to that restricted role. If managed permissions cannot meet this contract, stop the rollout and resolve it; do not disable RLS. Tiger's [managed connection guide](https://www.tigerdata.com/docs/learn/tutorials/create-services-with-terraform) supplies SSL connection-string examples. Prefer certificate verification and preserve the generated integration key with encrypted backups.
+
+Do not merge the root development Compose into the production profile. Run the helper from a private operator session:
+
+```sh
+# Pull/build reviewed images first. Confirm a real backup and a tested restore privately.
+infra/oracle/sentinel.sh config --quiet
+infra/oracle/sentinel.sh --profile ops run --rm -e SENTINEL_BACKUP_CONFIRMED=true migrate
+infra/oracle/sentinel.sh --profile ops run --rm register
+infra/oracle/sentinel.sh up -d --wait
+# Once Grafana Cloud environment values are present:
+infra/oracle/sentinel.sh --profile observability up -d alloy
+```
+
+A failed migration blocks rollout. Keep one Beat scheduler and use the provided Celery command/module; ML runs in a separate locked subprocess. Avoid automatic app-start migrations in production. Revision 0008 is forward-only: rollback restores the verified database backup and matching old application image. Check `/api/health` and `/api/ready` over actual HTTPS, then signup/login/logout, Secure cookies, tenant boundaries, enrollment, raw telemetry, prediction ownership, restart and revocation. Public docs are intentionally blocked. Optional providers never gate liveness.
+
+Import `infra/oracle/platform-dashboard.json` into Grafana Cloud. Alloy uses the official [scrape/remote-write pipeline](https://grafana.com/docs/grafana-cloud/send-data/alloy/tutorials/send-metrics-to-prometheus/) with an additional fixed platform allowlist. Scope the Cloud token to metrics write; never scrape customer agents into that shared observability account. Check metrics arriving after startup and exercise failure counters.
+
+The local profile continues to use the root Compose plus `compose.push.yaml`. Build the sanitized queue context with `python scripts/prepare_push_build.py`, then `docker compose -p sentinel -f compose.yaml -f compose.push.yaml build`. Run the guarded `scripts/upgrade_push_local.py` once for an existing 0007 local database, then bring up Redis, API, frontend, push worker and Beat. A fresh local database may use the root automatic development migration. The original demo worker remains scoped to the development/demo account.
+
+The release material below documents the historical pre-SaaS Kubernetes baseline. Its earlier acceptance claims and head/base/head commands must not be used as current hosted SaaS acceptance. Current migration checks prove forward-only refusal rather than discarding tenant data.
+
+---
+
 # Release and deployment
 
 Phase 10 release preparation is local. **No GitHub CI run, GHCR publication, Kubernetes deployment, Argo CD sync or public HTTPS endpoint has been verified.** The checkout has no Git remote and kubectl has no configured context. These are required acceptance items, not optional claims inferred from manifests.
