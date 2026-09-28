@@ -29,7 +29,9 @@ def main() -> None:
                 if path.is_symlink() or not path.is_file():
                     raise ValueError("Only regular source files are allowed")
                 name = path.relative_to(ROOT / "agent").as_posix()
-                body = path.read_bytes()
+                # Git may expand LF to CRLF on Windows checkout. Package one
+                # canonical byte representation on every build host.
+                body = path.read_bytes().replace(b"\r\n", b"\n")
                 hashes[name] = hashlib.sha256(body).hexdigest()
                 info = tarfile.TarInfo(name)
                 info.size = len(body)
@@ -49,7 +51,9 @@ def main() -> None:
         )
     else:
         (DIRECTORY / "agent_bundle.tar.gz").write_bytes(contents)
-        (DIRECTORY / "agent_bundle.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        (DIRECTORY / "agent_bundle.json").write_text(
+            json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n"
+        )
     print("PASS deterministic, credential-free agent bundle")
 
 
