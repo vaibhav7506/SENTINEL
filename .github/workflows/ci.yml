@@ -101,6 +101,12 @@ jobs:
         options: >-
           --health-cmd "pg_isready -U sentinel -d sentinel"
           --health-interval 5s --health-timeout 3s --health-retries 20
+      redis:
+        image: redis:8.2.9-alpine
+        ports: ["16379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 3s --health-retries 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: docker build --target test -f inference/Dockerfile -t sentinel-inference:test .
